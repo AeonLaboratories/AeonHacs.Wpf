@@ -1,0 +1,30 @@
+﻿<local:HacsCanvas x:Class="HACS.WPF.Views.Break"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HACS.WPF.Views"
+             mc:Ignorable="d" Width="11" Height="9">
+	<Grid VerticalAlignment="Bottom">
+		<Path Stretch="Uniform" Style="{DynamicResource FittingShapeStyle}" VerticalAlignment="Bottom">
+			<Path.Data>
+				<PathGeometry>
+					<PathGeometry.Figures>
+						<PathFigureCollection>
+							<PathFigure IsClosed="False" IsFilled="True" StartPoint="0,8.5">
+								<PathFigure.Segments>
+									<LineSegment Point="0,1"/>
+									<LineSegment Point="2,0" IsStroked="False"/>
+									<LineSegment Point="6,2" IsStroked="False"/>
+									<LineSegment Point="8,1" IsStroked="False"/>
+									<LineSegment Point="8,8.5"/>
+								</PathFigure.Segments>
+							</PathFigure>
+						</PathFigureCollection>
+					</PathGeometry.Figures>
+				</PathGeometry>
+			</Path.Data>
+		</Path>
+		<Path Data="m 0,0 l3-1 l4,2 l3,-1" Stretch="Uniform" Stroke="{DynamicResource EdgeBrush}" VerticalAlignment="Top"/>
+	</Grid>
+</local:HacsCanvas>

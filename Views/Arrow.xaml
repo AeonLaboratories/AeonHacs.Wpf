@@ -1,0 +1,10 @@
+﻿<local:HacsCanvas x:Class="HACS.WPF.Views.Arrow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HACS.WPF.Views"
+             mc:Ignorable="d"
+		     Width="7" Height="17">
+	<Path Fill="{DynamicResource EdgeBrush}" Data="M 3.5,0 7,8.5 H6 L4,3.5 V17 H3 V3.5 L1,8.5 H 0 z"/>
+</local:HacsCanvas>

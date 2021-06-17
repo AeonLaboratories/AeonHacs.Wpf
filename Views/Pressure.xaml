@@ -1,0 +1,30 @@
+﻿<local:Gauge x:Class="HACS.WPF.Views.Pressure"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:converters="clr-namespace:HACS.WPF.Converters"
+    xmlns:local="clr-namespace:HACS.WPF.Views"
+    xmlns:wpf="clr-namespace:HACS.WPF"
+    xmlns:components="clr-namespace:HACS.Components;assembly=HACS"
+    mc:Ignorable="d"
+    x:Name="Field"
+    >
+
+    <Grid>
+        <Label
+            Content="{Binding Component.Pressure, ElementName=Field}"
+            ContentStringFormat="{Binding ContentStringFormat, ElementName=Field}"
+            wpf:HacsViewProperties.BackgroundResourceKey="{Binding Component.Pressure, ElementName=Field, FallbackValue=0, Converter={x:Static converters:PressureToBrushResourceKeyConverter.Default}}"
+			Padding="{Binding Padding, ElementName=Field}"
+            VerticalContentAlignment="{Binding VerticalContentAlignment, ElementName=Field}"
+            HorizontalContentAlignment="{Binding HorizontalContentAlignment, ElementName=Field}"
+            />
+        <Label Content="{Binding DefaultContentString, ElementName=Field}"
+            Background="{DynamicResource HighVacuumBrush}"
+			Padding="{Binding Padding, ElementName=Field}"
+            VerticalContentAlignment="{Binding VerticalContentAlignment, ElementName=Field}"
+            HorizontalContentAlignment="{Binding HorizontalContentAlignment, ElementName=Field}"
+			Visibility="{Binding Source={x:Static wpf:DesignTimeProperties.IsDesignTime}, Converter={x:Static converters:BoolToVisibilityConverter.Hidden}}"/>
+    </Grid>
+</local:Gauge>

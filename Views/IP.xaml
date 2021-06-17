@@ -1,0 +1,42 @@
+﻿<local:View x:Class="HACS.WPF.Views.IP"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HACS.WPF.Views"
+             xmlns:converters="clr-namespace:HACS.WPF.Converters"
+             mc:Ignorable="d"
+			 x:Name="Field">
+	<local:View.Resources>
+		<converters:TransformInverseConverter x:Key="TransformInverter"/>
+	</local:View.Resources>
+	<Grid>
+		<Canvas x:Name="Combustion" Visibility="{Binding CombustionVisibility, ElementName=Field}">
+			<local:IPCombustionTube/>
+		</Canvas>
+		<Canvas x:Name="Manual" Visibility="{Binding BreaksealVisibility, ElementName=Field}">
+			<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" Height="3" Width="7" Canvas.Left="7"/>
+			<Border Height="15" Width="7" Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" Canvas.Left="7" Canvas.Top="3">
+				<Border.OpacityMask>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,2" MappingMode="Absolute" SpreadMethod="Repeat">
+						<GradientStop Color="Transparent" Offset="0.5"/>
+						<GradientStop Color="#FFAFAFAF" Offset="0.5"/>
+					</LinearGradientBrush>
+				</Border.OpacityMask>
+			</Border>
+			<Border Height="15" Width="5" Background="#FFAFAFAF" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" Canvas.Left="8" Canvas.Top="3">
+				<Border.OpacityMask>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,2" MappingMode="Absolute" SpreadMethod="Repeat">
+						<GradientStop Color="#FFAFAFAF" Offset="0.5"/>
+						<GradientStop Color="Transparent" Offset="0.5"/>
+					</LinearGradientBrush>
+				</Border.OpacityMask>
+			</Border>
+			<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" Height="3" Width="7" Canvas.Left="7" Canvas.Top="18"/>
+		</Canvas>
+		<StackPanel x:Name="GasSupply" Visibility="{Binding GasSupplyVisibility, ElementName=Field}">
+			<local:Arrow/>
+			<Label Content="{Binding GasType}" Padding="3,0,3,2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" LayoutTransform="{Binding RenderTransform, RelativeSource={RelativeSource AncestorType={x:Type local:IP}}, Converter={StaticResource TransformInverter}}"/>
+		</StackPanel>
+	</Grid>
+</local:View>

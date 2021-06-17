@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <Company>Aeon Laboratories</Company>
+    <Authors>Tyler Wilson, Jim Wilson</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Settings.ico" />
+    <Resource Include="Themes\Defaults.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\HACS\HACS.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Reference Include="WpfControls.ColorPicker">
+      <HintPath>WpfControls.ColorPicker.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfControls.Core">
+      <HintPath>WpfControls.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfControls.NumericUpDown">
+      <HintPath>WpfControls.NumericUpDown.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:HACS.WPF;assembly=HACS.WPF">
+
+    <Color x:Key="ApplicationBackgroundColor">White</Color>
+
+    <!-- Colors for non-descript parts in diagrams -->
+    <Color x:Key="EdgeColor">Black</Color>          <!--EdgeColor? OutlineColor? StrokeColor?-->
+    <Color x:Key="BodyColor">LightGray</Color>      <!-- FillColor? PartColor? MetalColor? -->
+
+    <Color x:Key="UnknownColor">#FFB3B3B3</Color>
+    <Color x:Key="WarningColor">#FFFFFFA0</Color>
+	<Color x:Key="ErrorColor">Yellow</Color>
+
+    <Color x:Key="OffColor">#FFE1E1E1</Color>
+    <Color x:Key="OnColor">#FFA9D19F</Color>
+
+	<Color x:Key="ClosedColor">IndianRed</Color>
+	<Color x:Key="ClosingColor">LightSalmon</Color>
+	<Color x:Key="OpeningColor">PaleGreen</Color>
+	<Color x:Key="OpenedColor">DarkSeaGreen</Color>
+
+    <Color x:Key="ColdColor">#FFA7C8FE</Color>
+    <Color x:Key="CoolColor">#FFACDBEA</Color>
+    <Color x:Key="NeutralColor">#FFDDDDDD</Color>
+    <Color x:Key="WarmColor">#FFE9D5B6</Color>
+    <Color x:Key="HotColor">#FFFFD99F</Color>
+
+    <Color x:Key="GaugeColor">LightGray</Color>
+    <Color x:Key="VacuumColor">#FFDCE6B9</Color>
+    <Color x:Key="HighVacuumColor">#FFC7E2D1</Color>
+
+	<Color x:Key="GlassColor">#C0E6E6E6</Color>
+    <Color x:Key="FoamColor">#C0FFCFFF</Color>      <!-- for XPS foam parts -->
+
+    
+    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="{DynamicResource ApplicationBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="EdgeBrush" Color="{DynamicResource EdgeColor}"/>
+    <SolidColorBrush x:Key="BodyBrush" Color="{DynamicResource BodyColor}"/>
+
+    <SolidColorBrush x:Key="UnknownBrush" Color="{DynamicResource UnknownColor}"/>
+	<SolidColorBrush x:Key="WarningBrush" Color="{DynamicResource WarningColor}"/>
+	<SolidColorBrush x:Key="ErrorBrush" Color="{DynamicResource ErrorColor}"/>
+
+	<SolidColorBrush x:Key="OffBrush" Color="{DynamicResource OffColor}"/>
+	<SolidColorBrush x:Key="OnBrush" Color="{DynamicResource OnColor}"/>
+
+	<SolidColorBrush x:Key="ClosedBrush" Color="{DynamicResource ClosedColor}"/>
+	<SolidColorBrush x:Key="ClosingBrush" Color="{DynamicResource ClosingColor}"/>
+	<SolidColorBrush x:Key="OpeningBrush" Color="{DynamicResource OpeningColor}"/>
+	<SolidColorBrush x:Key="OpenedBrush" Color="{DynamicResource OpenedColor}"/>
+
+	<SolidColorBrush x:Key="ColdBrush" Color="{DynamicResource ColdColor}"/>
+	<SolidColorBrush x:Key="CoolBrush" Color="{DynamicResource CoolColor}"/>
+	<SolidColorBrush x:Key="NeutralBrush" Color="{DynamicResource NeutralColor}"/>
+	<SolidColorBrush x:Key="WarmBrush" Color="{DynamicResource WarmColor}"/>
+	<SolidColorBrush x:Key="HotBrush" Color="{DynamicResource HotColor}"/>
+
+	<SolidColorBrush x:Key="GaugeBrush" Color="{DynamicResource GaugeColor}"/>
+	<SolidColorBrush x:Key="VacuumBrush" Color="{DynamicResource VacuumColor}"/>
+	<SolidColorBrush x:Key="HighVacuumBrush" Color="{DynamicResource HighVacuumColor}"/>
+
+    <SolidColorBrush x:Key="GlassBrush" Color="{DynamicResource GlassColor}"/>
+    <SolidColorBrush x:Key="FoamBrush" Color="{DynamicResource FoamColor}"/>
+
+	<Style TargetType="{x:Type Shape}" x:Key="FittingShapeStyle">
+		<Setter Property="Fill" Value="{DynamicResource BodyBrush}"/>
+		<Setter Property="Stroke" Value="{DynamicResource EdgeBrush}"/>
+	</Style>
+
+	<Style TargetType="{x:Type Shape}" x:Key="GlassShapeStyle">
+		<Setter Property="Fill" Value="{DynamicResource GlassBrush}"/>
+		<Setter Property="Stroke" Value="{DynamicResource EdgeBrush}"/>
+		<Setter Property="Stretch" Value="Uniform"/>
+	</Style>
+
+	<RotateTransform x:Key="Left" Angle="-90"/>
+	<RotateTransform x:Key="Right" Angle="90"/>
+	<RotateTransform x:Key="Down" Angle="180"/>
+    <ScaleTransform x:Key="Mirror" ScaleX="-1"/>
+    <ScaleTransform x:Key="Flip" ScaleY="-1"/>
+</ResourceDictionary>
