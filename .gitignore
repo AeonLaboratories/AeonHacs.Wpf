@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+WpfControls.ColorPicker.dll
+WpfControls.Core.dll
+WpfControls.NumericUpDown.dll
