@@ -1,0 +1,48 @@
+﻿<local:View x:Class="HACS.WPF.Views.GraphiteReactorHorizontal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HACS.WPF.Views"
+             mc:Ignorable="d"
+			 x:Name="GR">
+	<local:View.Resources>
+		<Style TargetType="{x:Type local:Coldfinger6mm}">
+			<Setter Property="Visibility" Value="Visible"/>
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding Component.Size, ElementName=GR}" Value="Small">
+					<Setter Property="Visibility" Value="Collapsed"/>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+		<Style TargetType="{x:Type local:Coldfinger3mm}">
+			<Setter Property="Visibility" Value="Collapsed"/>
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding Component.Size, ElementName=GR}" Value="Small">
+					<Setter Property="Visibility" Value="Visible"/>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+	</local:View.Resources>
+	<Grid>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+			<local:Valve VerticalAlignment="Center"
+						 Component="{Binding Component.Valve, ElementName=GR}"
+						 HelpText="{Binding Component.Name, ElementName=GR, StringFormat={}{0} Valve, FallbackValue=Valve}"/>
+			<local:FittingHorizontal Margin="-1,0,0,0"/>
+			<local:Heater VerticalAlignment="Center" Elliptical="True" Margin="-1,0,0,0"
+						  Component="{Binding Component.Heater, ElementName=GR}"
+						  HelpText="{Binding Component.Name, ElementName=GR, StringFormat={}{0} Heater, FallbackValue=Heater}"/>
+			<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="4" Height="7" Margin="-1,0,0,0"/>
+			<Grid>
+				<Rectangle Fill="{DynamicResource FoamBrush}" Width="21" Height="21" Margin="2,0,0,0"
+						   local:View.Component="{Binding Component.Coldfinger, ElementName=GR}"
+						   AutomationProperties.HelpText="{Binding Component.Name, ElementName=GR, StringFormat={}{0} Coldfinger, FallbackValue=Coldfinger}"/>
+				<local:Coldfinger6mm x:Name="C6" HorizontalAlignment="Left" LayoutTransform="{DynamicResource Left}" Margin="-1,0,0,0" IsHitTestVisible="False"/>
+				<local:Coldfinger3mm x:Name="C3" HorizontalAlignment="Left" LayoutTransform="{DynamicResource Left}" Margin="-1,0,0,0" IsHitTestVisible="False"/>
+			</Grid>
+			<TextBlock VerticalAlignment="Center" Margin="5,0,0,0"
+					   Text="{Binding Component.Contents, ElementName=GR}"/>
+		</StackPanel>
+	</Grid>
+</local:View>

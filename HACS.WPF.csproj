@@ -25,13 +25,16 @@
 	
   <ItemGroup>
     <Reference Include="WpfControls.ColorPicker">
-      <HintPath>WpfControls.ColorPicker.dll</HintPath>
+      <HintPath>..\WpfControls\ColorPicker\bin\Release\netcoreapp3.1\WpfControls.ColorPicker.dll</HintPath>
     </Reference>
     <Reference Include="WpfControls.Core">
-      <HintPath>WpfControls.Core.dll</HintPath>
+      <HintPath>..\WpfControls\Core\bin\Release\netcoreapp3.1\WpfControls.Core.dll</HintPath>
     </Reference>
     <Reference Include="WpfControls.NumericUpDown">
-      <HintPath>WpfControls.NumericUpDown.dll</HintPath>
+      <HintPath>..\WpfControls\NumericUpDown\bin\Release\netcoreapp3.1\WpfControls.NumericUpDown.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfControls.Viewport">
+      <HintPath>..\WpfControls\Viewport\bin\Release\netcoreapp3.1\WpfControls.Viewport.dll</HintPath>
     </Reference>
   </ItemGroup>
 

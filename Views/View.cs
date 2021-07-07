@@ -228,6 +228,7 @@ namespace HACS.WPF.Views
 
 				fe.ContextMenu.Opened += (sender, e) => ToolTipService.SetIsEnabled(fe, false);
 				fe.ContextMenuOpening += Open;
+				fe.ContextMenuClosing += (sender, e) => ToolTipService.SetIsEnabled(sender as FrameworkElement, true);
 			}
 			else if (oldComponent != null && newComponent == null)
 			{

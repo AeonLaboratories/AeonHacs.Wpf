@@ -1,0 +1,22 @@
+﻿<local:View x:Class="HACS.WPF.Views.CombustionChamber"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:local="clr-namespace:HACS.WPF.Views"
+            mc:Ignorable="d"
+			x:Name="IP">
+	<Grid>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+			<local:IPCombustionTube LayoutTransform="{DynamicResource Right}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+			<local:UTUnion Orientation="Horizontal" Margin="-1,0,0,0"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+			<TextBlock Text="{Binding Component.Sample.LabId, ElementName=IP}" VerticalAlignment="Center" TextAlignment="Right"/>
+			<local:Heater Width="28" Margin="5,0,0,0" Component="{Binding Component.SampleFurnace, ElementName=IP}"
+						  AutomationProperties.HelpText="{Binding Component.Name, ElementName=IP, StringFormat={}{0} Sample Furnace, FallbackValue='Sample Furnace'}"/>
+			<local:Heater Margin="2,0,28,0" Component="{Binding Component.QuartzFurnace, ElementName=IP}"
+						  AutomationProperties.HelpText="{Binding Component.Name, ElementName=IP, StringFormat={}{0} Quartz Furnace, FallbackValue='Quartz Furnace'}"/>
+		</StackPanel>
+	</Grid>
+</local:View>

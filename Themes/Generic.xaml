@@ -72,4 +72,94 @@
 		<Setter Property="Width" Value="19"/>
 	</Style>
 
+
+    <Style TargetType="{x:Type views:UTUnion}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type views:UTUnion}">
+					<StackPanel Orientation="{TemplateBinding Orientation}">
+						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="9" Height="7"/>
+						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="3" Margin="0,-1"/>
+						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="9" Height="4"/>
+						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="3" Margin="0,-1"/>
+						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="9" Height="7"/>
+					</StackPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Horizontal">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type views:UTUnion}">
+							<StackPanel Orientation="{TemplateBinding Orientation}">
+								<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="9"/>
+								<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="3" Height="7" Margin="-1,0"/>
+								<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="4" Height="9"/>
+								<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="3" Height="7" Margin="-1,0"/>
+								<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="9"/>
+							</StackPanel>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+    <Style TargetType="{x:Type views:Restriction}">
+        <Setter Property="Template">
+            <Setter.Value>
+				<ControlTemplate TargetType="{x:Type views:Restriction}">
+					<Path Data="m0.5,0.5 l 3,6 v6 l-3,6 h8 l-3,-6 v-6 l3,-6 z" Stroke="{DynamicResource EdgeBrush}" StrokeLineJoin="Bevel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				</ControlTemplate>
+            </Setter.Value>
+        </Setter>
+		<Style.Triggers>
+			<Trigger Property="Orientation" Value="Horizontal">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type views:Restriction}">
+							<Path Data="m0.5,0.5 l 6,3 h6 l6,-3 v8 l-6,-3 h-6 l-6,3 z" Stroke="{DynamicResource EdgeBrush}" StrokeLineJoin="Bevel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+    </Style>
+
+	<Style TargetType="{x:Type views:CoilTrap}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type views:CoilTrap}">
+					<Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+						<Canvas Width="31" Height="48">
+							<Path Data="m2.5,0 v41.5 a 4,4 0 0 0 4,4 l22,-2.5 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l16,-1.6 a 4,4 0 0 0 4,-4 V0" Stroke="{DynamicResource EdgeBrush}" StrokeThickness="5" StrokeLineJoin="Round"/>
+
+							<Canvas Canvas.Left="7" Canvas.Top="13.5">
+								<Line Canvas.Top="26" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="22" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="18" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="14" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="10" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="6" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="2" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+								<Line Canvas.Top="24" X1="1.5" Y1="3.5" X2="21.5" Y2="1.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="20" X1="1.5" Y1="3.5" X2="21.5" Y2="1.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="16" X1="1.5" Y1="3.5" X2="21.5" Y2="1.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="12" X1="1.5" Y1="3.5" X2="21.5" Y2="1.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="8" X1="1.5" Y1="3.5" X2="21.5" Y2="1.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+								<Line Canvas.Top="4" X1="1.5" Y1="3.5" X2="21.5" Y2="1.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+							</Canvas>
+
+							<Path Canvas.Left="1" Canvas.Top="0" Data="m1.5,0 v41.5 a 4,4 0 0 0 4,4 l22,-2.5" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeLineJoin="Round" StrokeEndLineCap="Round"/>
+							<Path Canvas.Top="0" Canvas.Left="7" Data="m1.5,17 l16,-1.6 a 4,4 0 0 0 4,-4 V0" Stroke="{DynamicResource BodyBrush}" StrokeThickness="3" StrokeStartLineCap="Round"/>
+						</Canvas>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>

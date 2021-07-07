@@ -89,7 +89,6 @@ namespace HACS.WPF.Views
             ColorPicker.Title = BrushName;
             colorPickerContent.Margin = new Thickness(5);
             colorPickerContent.OnColorChanged += (sender, e) => Color = e.Color;
-            //colorPickerContent.BrushSetting = this;
         }
     }
 }
