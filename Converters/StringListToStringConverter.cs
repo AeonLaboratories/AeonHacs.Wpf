@@ -19,9 +19,7 @@ namespace HACS.WPF.Converters
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var returnList = new List<string>();
-			(value as string).Split("\r\n").ToList().ForEach(s => { if (!string.IsNullOrWhiteSpace(s)) returnList.Add(s); });
-			return returnList;
+			return (value as string).Split("\r\n").ToList();
 		}
 	}
 }

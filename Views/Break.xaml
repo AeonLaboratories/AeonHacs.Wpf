@@ -1,12 +1,12 @@
-﻿<local:HacsCanvas x:Class="HACS.WPF.Views.Break"
+﻿<local:View x:Class="HACS.WPF.Views.Break"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HACS.WPF.Views"
-             mc:Ignorable="d" Width="11" Height="9">
-	<Grid VerticalAlignment="Bottom">
-		<Path Stretch="Uniform" Style="{DynamicResource FittingShapeStyle}" VerticalAlignment="Bottom">
+             mc:Ignorable="d">
+	<Canvas Width="11" Height="9">
+		<Path Canvas.Left="1" Stretch="Uniform" Style="{DynamicResource FittingShapeStyle}" >
 			<Path.Data>
 				<PathGeometry>
 					<PathGeometry.Figures>
@@ -25,6 +25,6 @@
 				</PathGeometry>
 			</Path.Data>
 		</Path>
-		<Path Data="m 0,0 l3-1 l4,2 l3,-1" Stretch="Uniform" Stroke="{DynamicResource EdgeBrush}" VerticalAlignment="Top"/>
-	</Grid>
-</local:HacsCanvas>
+		<Path Data="m 0,0 l3-1 l4,2 l3,-1" Stretch="Uniform" Stroke="{DynamicResource EdgeBrush}" />
+	</Canvas>
+</local:View>

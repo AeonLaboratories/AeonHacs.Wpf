@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace HACS.WPF.Views
 {
@@ -14,6 +15,32 @@ namespace HACS.WPF.Views
 	/// </summary>
 	public partial class SettingsPage : UserControl
 	{
+		#region FilterText
+		public static readonly DependencyProperty FilterTextProperty = DependencyProperty.Register
+			(nameof(FilterText), typeof(string), typeof(SettingsPage), new PropertyMetadata("", FilterTextChanged));
+
+		private static void FilterTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is SettingsPage p)
+				p.Filter();
+		}
+
+		public string FilterText { get => (string)GetValue(FilterTextProperty); set => SetValue(FilterTextProperty, value); }
+		#endregion FilterText
+
+		#region MatchCase
+		public static readonly DependencyProperty MatchCaseProperty = DependencyProperty.Register
+			(nameof(MatchCase), typeof(bool), typeof(SettingsPage), new PropertyMetadata(false, MatchCaseChanged));
+
+		private static void MatchCaseChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is SettingsPage p)
+				p.Filter();
+		}
+
+		public bool MatchCase { get => (bool)GetValue(MatchCaseProperty); set => SetValue(MatchCaseProperty, value); }
+		#endregion MatchCase
+
 		protected Core.HacsBase Hacs { get; set; }
 
 		protected List<List<Core.HacsComponent>> Components { get; set; } = new List<List<Core.HacsComponent>>();
@@ -28,6 +55,7 @@ namespace HACS.WPF.Views
 			Hacs = hacs;
 			GetComponents();
 			CreateTree();
+			SetupFilter();
 		}
 
 		protected virtual void GetComponents()
@@ -59,48 +87,71 @@ namespace HACS.WPF.Views
 			});
 		}
 
-		string prevFilter = "";
-		protected virtual void Filter(string filter)
+		protected virtual void Filter()
 		{
-			if (!filter.StartsWith(prevFilter))
-			{
-				SettingsTree.Items.Filter += (list) => { return true; };
-				foreach (var list in SettingsTree.Items.OfType<TreeViewItem>())
-				{
-					list.Items.Filter += (component) => { return true; };
-				}
-			}
+            totalMatches = 0;
+            var filter = SettingsTree.Items.Filter;
+            SettingsTree.Items.Filter = null;
+            foreach (var list in SettingsTree.Items.OfType<TreeViewItem>())
+            {
+                list.IsExpanded = false;
+                list.Items.Filter = list.Items.Filter;
+            }
+            SettingsTree.Items.Filter = filter;
+        }
 
-			if (!string.IsNullOrWhiteSpace(filter))
-			{
-				foreach (var list in SettingsTree.Items.OfType<TreeViewItem>())
-				{
-					list.Items.Filter += (component) => { return (component as INamedObject).Name.ToLower().Contains(filter.ToLower()); };
-				}
-				SettingsTree.Items.Filter += (item) =>
-				{
-					if (item is TreeViewItem type)
-						return type.Items.Count != 0;
-					if (item is INamedObject component)
-						return component.Name.ToLower().Contains(filter.ToLower());
-					return false;
-				};
-			}
-
-			prevFilter = filter;
-		}
-
-		private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		int totalMatches { get; set; }
+        protected virtual void SetupFilter()
 		{
-			Filter((sender as TextBox).Text);
-		}
+			foreach (var list in SettingsTree.Items.OfType<TreeViewItem>())
+			{
+				list.Items.Filter = ContainsFilterText;
+			}
+			SettingsTree.Items.Filter = HasVisibleChildren;
+
+            bool ContainsFilterText(object toFilter)
+            {
+                if (string.IsNullOrWhiteSpace(FilterText))
+                {
+                    totalMatches++;
+                    return true;
+                }
+                if (toFilter is INamedObject no && no.Name.Contains(FilterText, MatchCase ? StringComparison.InvariantCulture : StringComparison.InvariantCultureIgnoreCase))
+                {
+                    totalMatches++;
+                    return true;
+                }
+                return false;
+            }
+
+            bool HasVisibleChildren(object toFilter)
+            {
+                if (string.IsNullOrWhiteSpace(FilterText))
+                    return true;
+                if (toFilter is TreeViewItem tvi && tvi.Items.Count > 0)
+                {
+                    if (totalMatches <= 15)
+                        tvi.IsExpanded = true;
+                    return true;
+                }
+                return false;
+            }
+        }
 
 		private void SettingsTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 		{
 			if (e.NewValue is TreeViewItem)
 				return;
 			if (e.NewValue is INotifyPropertyChanged obj)
-				SettingsPanel.Source = obj;
+			{
+				Breadcrumbs.RootObject = obj;
+			}
 		}
-	}
+
+        private void ClearSearch_Click(object sender, RoutedEventArgs e)
+        {
+			SearchTextBox.Clear();
+			SearchTextBox.Focus();
+        }
+    }
 }

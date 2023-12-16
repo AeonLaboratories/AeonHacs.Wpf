@@ -12,8 +12,6 @@ namespace HACS.WPF.ViewModels
 		public Core.AnalogInputMode AnalogInputMode { get => Component.AnalogInputMode; set => Component.AnalogInputMode = value; }
 		public double MaximumVoltage { get => Component.MaximumVoltage; set => Component.MaximumVoltage = value; }
 		public double MinimumVoltage { get => Component.MinimumVoltage; set => Component.MinimumVoltage = value; }
-		public new bool OverRange => Component.OverRange;
-		public new bool UnderRange => Component.UnderRange;
 
 		public ViewModel Manager => GetFromModel(Component.Manager);
 	}

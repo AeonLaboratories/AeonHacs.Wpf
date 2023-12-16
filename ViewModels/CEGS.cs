@@ -13,9 +13,10 @@ namespace HACS.WPF.ViewModels
 		}
 
 		public TimeSpan Uptime => Component.Uptime;
-		public ViewModel Preferences => GetFromModel(Component?.Preferences);
+		public ViewModel CegsPreferences => GetFromModel(Component?.CegsPreferences);
 		public ViewModel Sample => GetFromModel(Component?.Sample);
+		public bool AutoFeedEnabled => Component?.AutoFeedEnabled ?? false;
 
-		// TODO remaining implementation deferred
-	}
+        // TODO remaining implementation deferred
+    }
 }

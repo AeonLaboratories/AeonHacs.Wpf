@@ -3,7 +3,7 @@
     /// <summary>
     /// Interaction logic for Coldfinger6mm.xaml
     /// </summary>
-    public partial class Coldfinger6mm : HacsCanvas
+    public partial class Coldfinger6mm : View
     {
         public Coldfinger6mm()
         {

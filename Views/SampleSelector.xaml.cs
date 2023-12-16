@@ -1,21 +1,14 @@
 ﻿using HACS.Components;
 using HACS.Core;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HACS.WPF.Views
 {
@@ -24,10 +17,10 @@ namespace HACS.WPF.Views
     /// </summary>
     public partial class SampleSelector : UserControl
     {
-        public List<IInletPort> SelectedSamples { get; protected set; } = new List<IInletPort>();
+        public List<ISample> SelectedSamples { get; protected set; } = new List<ISample>();
 
-        protected ObservableCollection<IInletPort> Available = new ObservableCollection<IInletPort>();
-        protected ObservableCollection<IInletPort> Selected = new ObservableCollection<IInletPort>();
+        protected ObservableCollection<ISample> Available = new ObservableCollection<ISample>();
+        protected ObservableCollection<ISample> Selected = new ObservableCollection<ISample>();
 
         protected ICollectionView AvailableView { get; set; }
 
@@ -39,19 +32,19 @@ namespace HACS.WPF.Views
         {
             InitializeComponent();
 
-            Available = new ObservableCollection<IInletPort>(GetLoadedIPs());
-
-            if (selectAll)
+            var ips = new ObservableCollection<IInletPort>(GetLoadedIPs());
+            foreach (IInletPort ip in ips)
             {
-                foreach (IInletPort ip in Available)
-                    Selected.Add(ip);
+                Available.Add(ip.Sample);
+                if (selectAll)
+                    Selected.Add(ip.Sample);
             }
-            
+
             SelectedListBox.ItemsSource = Selected;
             AvailableListBox.ItemsSource = Available;
 
             AvailableView = CollectionViewSource.GetDefaultView(Available);
-            AvailableView.Filter = (ip) => !Selected.Contains(ip);
+            AvailableView.Filter = (sample) => !Selected.Contains(sample);
 
             ChecklistPanel.ItemsSource = Checks;
             UpdateChecklist();
@@ -62,8 +55,8 @@ namespace HACS.WPF.Views
             var processStrings = new List<string>();
             var processes = new List<ProcessSequence>();
             var checklist = new List<string>();
-            foreach (var ip in Selected)
-                processStrings.Add(ip.Sample.Process);
+            foreach (var sample in Selected)
+                processStrings.Add(sample.Process);
             processes = NamedObject.FindAll<ProcessSequence>(processStrings);
             processes.ForEach(p =>
             {
@@ -95,6 +88,11 @@ namespace HACS.WPF.Views
         protected virtual void EnableDisableOK() =>
             OKButton.IsEnabled = Checks.All(cb => cb.IsChecked ?? false);
 
+        /// <summary>
+        /// Returns the list of IPs which are Loaded or Prepared and
+        /// which also contain Samples with non-blank LabIds.
+        /// </summary>
+        /// <returns></returns>
         protected virtual IEnumerable<IInletPort> GetLoadedIPs() =>
             NamedObject.FindAll<IInletPort>(
                 ip => (!ip?.Sample?.LabId.IsBlank() ?? false) &&
@@ -108,8 +106,8 @@ namespace HACS.WPF.Views
             if (selectedIndex == -1)
                 return;
 
-            foreach (IInletPort ip in AvailableListBox.SelectedItems)
-                Selected.Add(ip);
+            foreach (ISample sample in AvailableListBox.SelectedItems)
+                Selected.Add(sample);
 
             AvailableView.Refresh();
 
@@ -133,7 +131,7 @@ namespace HACS.WPF.Views
 
             var list = SelectedListBox.SelectedItems;
             for (int i = 0; i < list.Count;)
-                Selected.Remove((IInletPort)list[i]);
+                Selected.Remove((ISample)list[i]);
 
             AvailableView.Refresh();
 
@@ -151,9 +149,9 @@ namespace HACS.WPF.Views
 
         private void UpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedListBox.SelectedItem is IInletPort ip)) return;
+            if (!(SelectedListBox.SelectedItem is ISample sample)) return;
 
-            var index = Selected.IndexOf(ip);
+            var index = Selected.IndexOf(sample);
             if (index - 1 >= 0)
                 Selected.Move(index, index - 1);
 
@@ -162,9 +160,9 @@ namespace HACS.WPF.Views
 
         private void DownButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedListBox.SelectedItem is IInletPort ip)) return;
+            if (!(SelectedListBox.SelectedItem is ISample sample)) return;
 
-            var index = Selected.IndexOf(ip);
+            var index = Selected.IndexOf(sample);
             if (index + 1 < Selected.Count)
                 Selected.Move(index, index + 1);
 

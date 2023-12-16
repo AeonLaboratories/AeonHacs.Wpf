@@ -6,6 +6,8 @@ namespace HACS.WPF.ViewModels
 {
 	public class VacuumSystem : HacsComponent
 	{
+		public VacuumSystem() { RunHasDefault = true; }
+
 		[Browsable(false)]
 		public new Components.IVacuumSystem Component
 		{

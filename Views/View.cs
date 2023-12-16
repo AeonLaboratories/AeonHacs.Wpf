@@ -6,6 +6,7 @@ using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
@@ -44,7 +45,9 @@ namespace HACS.WPF.Views
 
 		protected static void SetupToolTip(FrameworkElement fe)
 		{
-			fe.SetBinding(ToolTipProperty, new Binding()
+			var tt = new ToolTip() { Placement = PlacementMode.Absolute };
+			fe.ToolTip = tt;
+			tt.SetBinding(ContentProperty, new Binding()
 			{
 				Source = fe,
 				Path = new PropertyPath(ComponentProperty),
@@ -54,12 +57,24 @@ namespace HACS.WPF.Views
 			});
 			fe.ToolTipOpening += (sender, e) =>
 			{
-				var be = BindingOperations.GetBindingExpression((DependencyObject)sender, ToolTipProperty);
+				var be = BindingOperations.GetBindingExpression(tt, ContentProperty);
 				be?.UpdateTarget();
 				ToolTipUpdateDispatcher.Tag = be;
 				ToolTipUpdateDispatcher.Start();
 			};
 			fe.ToolTipClosing += (sender, e) => ToolTipUpdateDispatcher.Stop();
+			fe.MouseMove += (sender, e) =>
+			{
+				//TODO disect this magic
+				var window = Window.GetWindow(fe);
+				var mouse = e.GetPosition(window);
+				var left = window.WindowState == WindowState.Maximized ? 3 : window.Left + 10;
+				left += SystemParameters.CursorWidth / 2;
+				var top = window.WindowState == WindowState.Maximized ? 3 : window.Top + 10;
+				top += SystemParameters.WindowCaptionHeight + SystemParameters.CursorWidth / 2;
+				tt.HorizontalOffset = mouse.X + left;
+				tt.VerticalOffset = mouse.Y + top;
+			};
 		}
 
 		protected virtual void CreateBindings() { }
@@ -73,23 +88,51 @@ namespace HACS.WPF.Views
                 var panel = new SettingsPanel
                 {
                     Source = component is ViewModel vm ? vm.Component : component
-                };
+				};
 
-                var window = ViewModel.SettingsWindow = new Window();
-				window.Content = new ScrollViewer()
+                var b = new Breadcrumbs()
+                {
+					FontSize = 18,
+                    Margin = new Thickness(5)
+                };
+                b.SetValue(DockPanel.DockProperty, Dock.Top);
+				b.SetBinding(Breadcrumbs.SelectedItemProperty, new Binding() { Path = new PropertyPath(SettingsPanel.SourceProperty), Source = panel, Mode = BindingMode.TwoWay });
+
+				var separator = new Border()
+				{
+					Height = 1,
+					HorizontalAlignment = HorizontalAlignment.Stretch
+				};
+				separator.SetResourceReference(BackgroundProperty, SystemColors.ActiveBorderBrushKey);
+				separator.SetValue(DockPanel.DockProperty, Dock.Top);
+
+				var sv = new ScrollViewer()
 				{
 					Content = panel,
 					HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-					Padding = new Thickness(10),
-					VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+					Padding = new Thickness(5),
+					VerticalScrollBarVisibility = ScrollBarVisibility.Auto
 				};
+
+				var dp = new DockPanel()
+				{
+					LastChildFill = true
+				};
+				dp.Children.Add(b);
+				dp.Children.Add(separator);
+				dp.Children.Add(sv);
+
+                var window = ViewModel.SettingsWindow = new Window();
+
+				window.Content = dp;
 				window.MaxHeight = 0.7 * SystemParameters.PrimaryScreenHeight;
+				window.MaxWidth = 0.25 * SystemParameters.PrimaryScreenWidth;
 				
 				var nameBinding = new Binding($"{nameof(SettingsPanel.Source)}.Name") { Source = panel, FallbackValue = "Properties" };
 				window.SetBinding(Window.TitleProperty, nameBinding);
 				window.ContentRendered += (sender, e) =>
 				{
-					window.SizeToContent = SizeToContent.Width;
+					window.ClearValue(MaxWidthProperty);
 					window.ClearValue(MaxHeightProperty);
 				};
 				window.Closed += (sender, e) => ViewModel.SettingsWindow = null;
@@ -100,11 +143,11 @@ namespace HACS.WPF.Views
 			}
 			else
 			{
-				if (ViewModel.SettingsWindow.Content is ScrollViewer sv && sv.Content is SettingsPanel panel)
+				if (ViewModel.SettingsWindow.Content is DockPanel d && d.Children.OfType<Breadcrumbs>().FirstOrDefault() is Breadcrumbs b)
 				{
 					if (ViewModel.SettingsWindow.WindowState == WindowState.Minimized)
 						ViewModel.SettingsWindow.WindowState = WindowState.Normal;
-					panel.Source = component;
+					b.RootObject = component is ViewModel vm ? vm.Component : component;
 					ViewModel.SettingsWindow.Activate();
 				}
 			}
@@ -118,8 +161,8 @@ namespace HACS.WPF.Views
             if (!(fe.GetValue(ComponentProperty) is INotifyPropertyChanged component))
                 return;
 
-            var viewModel = component as ViewModel;
-			string header = (component as INamedObject)?.Name.Replace("_", "__");
+            var viewModel = component as ViewModel ?? ViewModel.GetFromModel(component);
+			string header = (component as INamedObject)?.Name?.Replace("_", "__");
 
 			ContextMenu contextMenu = fe.ContextMenu;
 			contextMenu.Items.Clear();
@@ -269,7 +312,7 @@ namespace HACS.WPF.Views
 		protected void OnComponentPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (!CheckAccess())
-				Dispatcher.Invoke(() => OnComponentUpdated(sender, e));
+				try { Dispatcher.Invoke(() => OnComponentUpdated(sender, e)); } catch { }
 			else
 				OnComponentUpdated(sender, e);
 		}
@@ -350,7 +393,13 @@ namespace HACS.WPF.Views
 		protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
 		{
 			if (e.ChangedButton == MouseButton.Left && Component is ViewModel viewModel)
-				viewModel.Dispatch();
+			{
+				if (viewModel.RunHasDefault)
+				{
+					viewModel.Dispatch();
+					e.Handled = true;
+				}
+			}
 			base.OnMouseDoubleClick(e);
 		}
     }

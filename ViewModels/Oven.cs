@@ -14,7 +14,7 @@ namespace HACS.WPF.ViewModels
 
 		#region Auto
 		public double Setpoint => Component.Setpoint;
-		public double TargetSetpoint { get => Component.Config.Setpoint; set => Component.Setpoint = value; }
+		public double TargetSetpoint { get => (Component as Components.IAuto).Config.Setpoint; set => Component.Setpoint = value; }
 
         #region Switch
 		public Core.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }

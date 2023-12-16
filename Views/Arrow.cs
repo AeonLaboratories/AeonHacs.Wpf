@@ -1,30 +1,22 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Text;
-//using System.Windows;
-//using System.Windows.Controls;
-//using System.Windows.Data;
-//using System.Windows.Documents;
-//using System.Windows.Input;
-//using System.Windows.Media;
-//using System.Windows.Media.Imaging;
-//using System.Windows.Navigation;
-//using System.Windows.Shapes;
+﻿using HACS.WPF.Media;
+using System.Windows;
+using System.Windows.Controls;
 
-//namespace HACS.WPF.Views
-//{
-//	/// <summary>
-//	/// Interaction logic for Test.xaml
-//	/// </summary>
-//	public partial class Arrow : Drawing
-//	{
-//		static Arrow()
-//		{
-//			DefaultStyleKeyProperty.OverrideMetadata(typeof(Arrow), new FrameworkPropertyMetadata(typeof(Arrow)));
-//		}
+namespace HACS.WPF.Views
+{
+    public class Arrow : Control
+	{
+		#region Direction
+		public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(
+			nameof(Direction), typeof(Direction), typeof(Arrow), new PropertyMetadata(Direction.Down));
 
-//		public Arrow()
-//		{
-//		}
-//	}
-//}
+		public Direction Direction { get => (Direction)GetValue(DirectionProperty); set => SetValue(DirectionProperty, value); }
+		#endregion Direction
+
+		static Arrow()
+		{
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(Arrow), new FrameworkPropertyMetadata(typeof(Arrow)));
+		}
+
+	}
+}

@@ -1,0 +1,28 @@
+﻿<local:View x:Class="HACS.WPF.Views.CC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HACS.WPF.Views"
+             mc:Ignorable="d" 
+			 DataContext="{Binding RelativeSource={RelativeSource Self}}">
+	<StackPanel Orientation="{Binding Orientation}" FlowDirection="{Binding FlowDirection}">
+		<local:Valve HorizontalAlignment="Center"
+							  Component="{Binding Component.Valve}"
+							  HelpText="{Binding Component.Name, StringFormat={}{0} valve, FallbackValue=IP valve}"/>
+		<local:FittingVertical Margin="0,-1,0,0"/>
+		<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="5" Margin="0,-1,0,0"/>
+		<local:UTUnion Margin="0,-1,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+		<Grid Margin="0,-1,0,0">
+			<local:IPCombustionTube VerticalAlignment="Top"/>
+			<StackPanel Margin="0,8,0,0" VerticalAlignment="Top">
+				<local:Heater HorizontalAlignment="Center"
+							  Component="{Binding Component.QuartzFurnace}"
+							  HelpText="{Binding Component.Name, StringFormat={}{0} quartz furnace, FallbackValue=Quartz Furnace}"/>
+				<local:Heater Height="28" HorizontalAlignment="Center" Margin="0,2,0,0"
+							  Component="{Binding Component.SampleFurnace}"
+							  HelpText="{Binding Component.Name, StringFormat={}{0} sample furnace, FallbackValue=Sample Furnace}"/>
+			</StackPanel>
+		</Grid>
+	</StackPanel>
+</local:View>

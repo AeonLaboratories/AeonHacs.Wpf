@@ -11,6 +11,8 @@ namespace HACS.WPF.ViewModels
 		}
 		public double Setpoint => Component.Setpoint;
 		public double TargetSetpoint { get => Component.Config.Setpoint; set => Component.Setpoint = value; }
+		public double MinimumSetpoint { get => Component.MinimumSetpoint; set => Component.MinimumSetpoint = value; }
+		public double MaximumSetpoint { get => Component.MaximumSetpoint; set => Component.MaximumSetpoint = value; }
 		//void TurnOn(double setpoint);
 	}
 }

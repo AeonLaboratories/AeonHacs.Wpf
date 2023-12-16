@@ -60,7 +60,7 @@ namespace HACS.WPF.Views
 
         protected virtual void LoadSources()
 		{
-			SourceComboBox.ItemsSource = Enum.GetValues(typeof(InletPort.Type));
+			SourceComboBox.ItemsSource = Enum.GetValues(typeof(HACS.Core.InletPortType));
 
 			var selectedSourceBinding = new Binding($"{nameof(Selector.SelectedItem)}.{nameof(ProcessSequence.PortType)}") { Source = ProcessComboBox, UpdateSourceTrigger = UpdateSourceTrigger.Explicit };
 			SourceComboBox.SetBinding(Selector.SelectedItemProperty, selectedSourceBinding);

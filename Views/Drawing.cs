@@ -1,10 +1,5 @@
 ﻿using HACS.WPF.Converters;
-using Org.BouncyCastle.Asn1.X509.Qualified;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -12,7 +7,7 @@ using System.Windows.Media;
 
 namespace HACS.WPF.Views
 {
-	public abstract class Drawing : Control
+    public abstract class Drawing : Control
 	{
 		public static readonly DependencyProperty AngleProperty = DependencyProperty.Register(
 			nameof(Angle), typeof(double), typeof(Drawing), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, AngleChanged, CoerceAngle));

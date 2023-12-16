@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -14,7 +15,7 @@ namespace HACS.WPF.Data
 	public class PeriodicBinding : MarkupExtension
 	{
 		protected Binding internalBinding = new Binding();
-		protected DispatcherTimer updateTimer;
+		protected BindingExpression be;
 
 		public virtual PropertyPath Path { get => internalBinding.Path; set => internalBinding.Path = value; }
 
@@ -26,13 +27,34 @@ namespace HACS.WPF.Data
 
 		public virtual string ElementName { get => internalBinding.ElementName; set => internalBinding.ElementName = value; }
 
-		public virtual TimeSpan Interval { get; set; }
+		TimeSpan interval = TimeSpan.FromSeconds(1);
+		public virtual TimeSpan Interval
+		{
+			get => interval;
+			set => SwitchDispatcherTimer(interval, value);
+		}
 
-		~PeriodicBinding() =>
-			updateTimer?.Stop();
+		private Dictionary<TimeSpan, WeakReference<DispatcherTimer>> timers = new Dictionary<TimeSpan, WeakReference<DispatcherTimer>>();
+
+		protected virtual void SwitchDispatcherTimer(TimeSpan currentInterval, TimeSpan newInterval)
+		{
+			var timer = GetTimerFromInterval(currentInterval);
+			timer.Tick -= UpdateBinding;
+			timer = GetTimerFromInterval(newInterval);
+			timer.Tick += UpdateBinding;
+		}
+
+		protected virtual DispatcherTimer GetTimerFromInterval(TimeSpan interval)
+		{
+			if (!timers.TryGetValue(interval, out var @ref) || !@ref.TryGetTarget(out var timer))
+			{
+				timers[interval] = new WeakReference<DispatcherTimer>(timer = new DispatcherTimer(DispatcherPriority.DataBind) { Interval = interval });
+			}
+			return timer;
+		}
 
 		protected virtual void UpdateBinding(object sender, EventArgs e) =>
-			((sender as DispatcherTimer)?.Tag as BindingExpression)?.UpdateTarget();
+			be?.UpdateTarget();
 
 		public override object ProvideValue(IServiceProvider serviceProvider)
 		{
@@ -40,9 +62,7 @@ namespace HACS.WPF.Data
 			internalBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
 
 			var result = internalBinding.ProvideValue(serviceProvider);
-
-			if (!Project.IsInDesignMode)
-				updateTimer = new DispatcherTimer(Interval, DispatcherPriority.DataBind, UpdateBinding, Dispatcher.CurrentDispatcher) { Tag = result };
+			be = result as BindingExpression;
 
 			return result;
 		}

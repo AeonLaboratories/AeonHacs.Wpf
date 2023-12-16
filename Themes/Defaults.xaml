@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:HACS.WPF;assembly=HACS.WPF">
 
-    <Color x:Key="ApplicationBackgroundColor">White</Color>
+    <Color x:Key="ApplicationBackgroundColor">#FFBBBBBB</Color>
 
     <!-- Colors for non-descript parts in diagrams -->
     <Color x:Key="EdgeColor">Black</Color>          <!--EdgeColor? OutlineColor? StrokeColor?-->
@@ -31,7 +31,7 @@
     <Color x:Key="HighVacuumColor">#FFC7E2D1</Color>
 
 	<Color x:Key="GlassColor">#C0E6E6E6</Color>
-    <Color x:Key="FoamColor">#C0FFCFFF</Color>      <!-- for XPS foam parts -->
+    <Color x:Key="FoamColor">#7FC1FF</Color>      <!-- for XPE foam parts -->
 
     
     <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="{DynamicResource ApplicationBackgroundColor}"/>

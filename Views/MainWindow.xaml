@@ -11,23 +11,23 @@
         Background="{DynamicResource ApplicationBackgroundBrush}">
 
 	<Viewport StretchDirection="UpOnly">
-	    <DockPanel LastChildFill="True">
-        
-		    <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Edit">
-                    <MenuItem Header="Samples" Click="Samples_Click"/>       
-                    <MenuItem Header="Process Sequences" Click="ProcessSequences_Click"/>
-                    <MenuItem Header="Device Settings" Click="DeviceSettings_Click"/>
-                    <MenuItem Header="Preferences" Click="Preferences_Click"/>
-                </MenuItem>
-            </Menu>
-        
-		    <StatusBar DockPanel.Dock="Bottom" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1,0,0">
-			    <TextBlock x:Name="HelpText" Text=""/>
-		    </StatusBar>
+		<DockPanel LastChildFill="True">
+
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="Edit">
+					<MenuItem Header="Samples" Click="Samples_Click"/>
+					<MenuItem Header="Process Sequences" Click="ProcessSequences_Click"/>
+					<MenuItem Header="Settings" Click="Settings_Click"/>
+					<MenuItem Header="Preferences" Click="Preferences_Click"/>
+				</MenuItem>
+			</Menu>
+
+			<StatusBar DockPanel.Dock="Bottom" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1,0,0">
+				<TextBlock x:Name="HelpText" Text=""/>
+			</StatusBar>
 
 			<Decorator x:Name="MainContent"/>
 
-	    </DockPanel>
+		</DockPanel>
 	</Viewport>
 </Window>

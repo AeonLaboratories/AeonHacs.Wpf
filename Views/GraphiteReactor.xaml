@@ -3,18 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:wpf="clr-namespace:HACS.WPF"
     xmlns:local="clr-namespace:HACS.WPF.Views"
+    xmlns:c="clr-namespace:HACS.WPF.Converters"
     mc:Ignorable="d" 
-    d:DesignHeight="45" d:DesignWidth="21"
-    Width="21" Height="45"
-    x:Name="GR"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     >
     <local:View.Resources>
         <Style TargetType="{x:Type local:Coldfinger6mm}">
             <Setter Property="Visibility" Value="Visible"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Size, ElementName=GR}" Value="Small">
+                <DataTrigger Binding="{Binding Size}" Value="Small">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -22,16 +20,24 @@
         <Style TargetType="{x:Type local:Coldfinger3mm}">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Size, ElementName=GR}" Value="Small">
+                <DataTrigger Binding="{Binding Size}" Value="Small">
                     <Setter Property="Visibility" Value="Visible"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </local:View.Resources>
-    <Grid>
-        <local:FittingVertical VerticalAlignment="Top"/>
-        <local:FittingVerticalSmall VerticalAlignment="Top" Margin="0,24,0,0"/>
-        <local:Coldfinger6mm x:Name="C6" VerticalAlignment="Top" Margin="0,27,0,0"/>
-        <local:Coldfinger3mm x:Name="C3" VerticalAlignment="Top" Margin="0,27,0,0"/>
-    </Grid>
+    <StackPanel>
+		<local:Valve HorizontalAlignment="Center"
+		    Component="{Binding Component.Valve}" HelpText="{Binding Component.Name, StringFormat={}{0} valve}"/>
+		<local:FittingVertical Margin="0,-1"/>
+		<local:Heater Elliptical="True" HorizontalAlignment="Center" VerticalAlignment="Top"
+		    Component="{Binding Component.Heater}" HelpText="{Binding Component.Name, StringFormat={}{0} heater}"/>
+		<local:FittingVerticalSmall Margin="0,-1"/>
+		<Grid>
+            <local:FTC Margin="0,4,0,0" Height="21" HorizontalAlignment="Stretch"
+                       Component="{Binding Component.Coldfinger}" HelpText="{Binding Component.Name, StringFormat={}{0} Coldfinger}" />
+            <local:Coldfinger6mm x:Name="C6" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False"/>
+			<local:Coldfinger3mm x:Name="C3" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False"/>
+		</Grid>
+    </StackPanel>
 </local:View>

@@ -6,6 +6,8 @@ namespace HACS.WPF.ViewModels
 {
 	public class Valve : HacsDevice
 	{
+		public Valve() { RunHasDefault = true; }
+
 		[Browsable(false)]
 		public new Components.IValve Component
 		{

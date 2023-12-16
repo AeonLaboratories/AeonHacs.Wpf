@@ -50,9 +50,11 @@ namespace HACS.WPF.Behaviors
 			}
 			else if (e.Key == Key.Enter || e.Key == Key.Tab)
 			{
+				/*
 				AssociatedObject.GetBindingExpression(TextBox.TextProperty).ValidateWithoutUpdate();
 				if (Interaction.GetBehaviors(AssociatedObject).OfType<TextBoxValidationBehavior>().Count() < 1 && Validation.GetErrors(AssociatedObject).Count > 0)
 					AssociatedObject.Text = OriginalText;
+				*/
 
 				var scope = FocusManager.GetFocusScope(AssociatedObject);
 				FocusManager.SetFocusedElement(scope, (IInputElement)scope);

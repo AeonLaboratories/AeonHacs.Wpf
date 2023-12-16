@@ -59,10 +59,15 @@ namespace HACS.WPF.ViewModels
 				var modelTypeName = key.Substring(0, dot);
 				var modelName = key[(dot + 1)..];
 
-				// TODO consider allowing matches to a base type if the exact-match ViewModel type doesn't exist
-				model = Core.NamedObject.FindAll(modelName).FirstOrDefault(x => x.GetType().Name == modelTypeName);
+				var list = Core.NamedObject.FindAll(modelName);
+				var type =
+					Type.GetType("HACS.Components." + modelTypeName + ", HACS") ??
+					Type.GetType("HACS.Core." + modelTypeName + ", HACS");
+				if (type != null)
+					model = 
+						list.FirstOrDefault(x => x.GetType() == type) ??
+						list.FirstOrDefault(x => type.IsAssignableFrom(x.GetType()));
 			}
-
 			return NewViewModel(model);
 		}
 
@@ -216,10 +221,16 @@ namespace HACS.WPF.ViewModels
 		/// <returns></returns>
 		public virtual List<Context> Context() => ContextStart;
 
+		public virtual void Run(string command = "") { }
+
+		/// <summary>
+		/// True if Run("") does something.
+		/// </summary>
+		[Browsable(false)]
+		public bool RunHasDefault { get; set; } = false;
+
 		public void Dispatch(string command = "") =>
 			Task.Run(() => Run(command));
-
-		public virtual void Run(string command = "") { }
 
 		protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e) =>
 			NotifyPropertyChanged(this, e);

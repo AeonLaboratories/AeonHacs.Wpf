@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Collections.Generic;
 using HACS.Core;
+using System;
 
 namespace HACS.WPF.ViewModels
 {
 	public class Switch : OnOff
 	{
+		public Switch() { RunHasDefault = true; }
+
 		[Browsable(false)]
 		public new Components.ISwitch Component
 		{
@@ -25,12 +28,12 @@ namespace HACS.WPF.ViewModels
 		}
 		public override void Run(string command = "")
 		{
-			if (command == TurnOnCaption)
+			if (command.IsBlank())
+				Component?.TurnOnOff(Component.Config.State.IsOff());
+			else if (command == TurnOnCaption)
 				Component?.TurnOn();
 			else if (command == TurnOffCaption)
 				Component?.TurnOff();
-			base.Run(command);
 		}
-
 	}
 }

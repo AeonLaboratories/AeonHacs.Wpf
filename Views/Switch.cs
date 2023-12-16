@@ -24,7 +24,7 @@ namespace HACS.WPF.Views
 		protected void AttachBackgroundResource()
 		{
 			var backgroundResourceKeyBinding = new Binding(nameof(ViewModels.Switch.IsOn)) { Source = Component };
-			backgroundResourceKeyBinding.Converter = OnOffResourceKeyConverter.Default;
+			backgroundResourceKeyBinding.Converter = BoolToResourceKeyConverter.Default;
 			backgroundResourceKeyBinding.FallbackValue = "OffBrush";
 			SetBinding(HacsViewProperties.BackgroundResourceKeyProperty, backgroundResourceKeyBinding);
 		}

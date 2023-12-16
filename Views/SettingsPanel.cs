@@ -1,6 +1,5 @@
 ﻿using HACS.WPF.Behaviors;
 using HACS.WPF.Data;
-using HACS.WPF.ViewModels;
 using Microsoft.Xaml.Behaviors;
 using Newtonsoft.Json;
 using System;
@@ -15,10 +14,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace HACS.WPF.Views
 {
-	public class SettingsPanel : StackPanel
+    public class SettingsPanel : StackPanel
 	{
 		public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
 			nameof(Source), typeof(object), typeof(SettingsPanel), new FrameworkPropertyMetadata(null, SourceChanged));
@@ -44,7 +44,6 @@ namespace HACS.WPF.Views
 
 		protected List<DependencyObject> BoundObjects { get; private set; } = new List<DependencyObject>();
 
-		public SettingsPanel FirstPanel { get; set; }
 		protected Stack<object> Sources { get; set; } = new Stack<object>();
 
 		protected virtual void SourceChanged(object oldSource, object newSource)
@@ -86,7 +85,6 @@ namespace HACS.WPF.Views
 			if (Source == null) 
 				return;
 			PopulateView();
-
 		}
 
 		protected virtual void ResetLayout()
@@ -109,7 +107,7 @@ namespace HACS.WPF.Views
 		{
 			var properties = type.GetProperties();
 			return properties.Where(p =>
-				!p.GetGetMethod().IsStatic &&
+				/* !p.GetGetMethod().IsStatic && */
 				Browsable(p) &&
 				!typeof(Delegate).IsAssignableFrom(p.PropertyType)
 			).ToList();
@@ -117,14 +115,6 @@ namespace HACS.WPF.Views
 
 		protected virtual void PopulateView()
 		{
-			var firstPanel = FirstPanel ?? this;
-			if (this == firstPanel && Sources.Count > 0)
-			{
-				var button = new Button() { Content = "Back" };
-				button.Click += (sender, e) => { firstPanel.Source = firstPanel.Sources.Pop(); };
-				Children.Add(button);
-			}
-
 			if (Source is ICollection collection)
 			{
 				PopulateFrom(collection);
@@ -137,11 +127,9 @@ namespace HACS.WPF.Views
 		}
 
 		protected virtual void PopulateFrom(ICollection collection)
-		{
-			var firstPanel = FirstPanel ?? this;
-
-			// generate a TextBox or Button for each item in the collection
-			var enumerator = collection.GetEnumerator();
+		{            
+            // generate a TextBox or Button for each item in the collection
+            var enumerator = collection.GetEnumerator();
 			enumerator.Reset();
 			for (int i = 0; i < collection.Count; ++i)
 			{
@@ -175,21 +163,34 @@ namespace HACS.WPF.Views
 				{
 					var button = new Button();
 					var content = "";
+					var component = item;
+
 					if (collection is IDictionary)
 					{
 						var dictionaryEnumerator = enumerator as IDictionaryEnumerator;
 						content = dictionaryEnumerator.Key.ToString();
 
 						if (dictionaryEnumerator.Value is Core.INamedObject namedObject)
+						{
 							content += $" ({namedObject?.Name})";
+							component = namedObject;
+						}
 					}
 					else if (item is Core.INamedObject namedObject)
+					{
 						content = $"{namedObject?.Name}";
+						component = namedObject;
+					}
 					else
 						content = $"{item}";
 
 					button.Content = content.Replace("_", "__");
-					button.Click += (sender, e) => { firstPanel.Sources.Push(firstPanel.Source); firstPanel.Source = item; };
+					View.SetComponent(button, component as INotifyPropertyChanged);
+					button.Click += (sender, e) =>
+					{
+                        var topLevelPanel = button.GetSelfAndAncestors().Where(obj => obj is SettingsPanel).Cast<SettingsPanel>().Last();
+                        topLevelPanel.Source = component;
+					};
 					Children.Add(button);
 				}
 			}
@@ -270,14 +271,13 @@ namespace HACS.WPF.Views
 						valueBinding.ValidationRules.Add(NumericValidationRule.Double);
 						Interaction.GetBehaviors(valueControl).Add(new TextBoxValidationBehavior());
 						valueBinding.NotifyOnValidationError = true;
-						valueBinding.StringFormat = "0.##########";
+						valueBinding.StringFormat = "G10";
 					}
 
 					dependencyProperty = TextBox.TextProperty;
 				}
 				else
 				{
-					var firstPanel = FirstPanel ?? this;
 					if (value is INotifyPropertyChanged model)
 					{
 						var button = new Button();
@@ -288,26 +288,22 @@ namespace HACS.WPF.Views
 								{ 
 									Source = this, 
 									Converter = Converters.PlainContentConverter.Default,
-									FallbackValue = "<nameless>", 
-									TargetNullValue = "<nameless>" 
+									FallbackValue = displayName, 
+									TargetNullValue = displayName
 								};
 							button.SetBinding(ContentControl.ContentProperty, contentBinding);
 						}
 						else
-							button.Content = "<nameless>";
+							button.Content = displayName;
 
 						//TODO is there a better property to use? Maybe we should make an attached property?
-						dependencyProperty = TagProperty;
-						button.Click += (sender, e) =>
-						{
-							firstPanel.Sources.Push(firstPanel.Source);
-							firstPanel.Source = button.Tag;
-						};
+						dependencyProperty = View.ComponentProperty;
+						button.Click += (sender, e) => { Source = View.GetComponent(button); };
 						valueControl = button;
 					}
 					else
 					{
-						valueControl = new SettingsPanel() { FirstPanel = firstPanel, Source = value };
+						valueControl = new SettingsPanel() { Source = value };
 						dependencyProperty = SourceProperty;
 					}
 				}
@@ -328,7 +324,32 @@ namespace HACS.WPF.Views
 			{
 				valueControl.SetBinding(dependencyProperty, valueBinding);
 				BoundObjects.Add(valueControl);
-			}
+
+				//TODO add support for multiline textboxes
+                if (valueControl is TextBox tb && !tb.AcceptsReturn && editable)
+                {
+                    var be = tb.GetBindingExpression(dependencyProperty);
+                    tb.KeyDown += CaptureEnter;
+					tb.TextChanged += MaintainCaret;
+
+                    void CaptureEnter(object sender, KeyEventArgs e)
+                    {
+                        if (e.Key == Key.Enter)
+                        {
+                            be.UpdateSource();
+                            e.Handled = true;
+                        }
+                    }
+
+					void MaintainCaret(object sender, TextChangedEventArgs e)
+					{
+						if (e.Changes.LastOrDefault() is TextChange tc)
+						{
+							tb.CaretIndex = tc.Offset + tc.AddedLength;
+						}
+					}
+                }
+            }
 
 			if (valueControl is ComboBox cb && value is null)
 				cb.SelectedIndex = 0;

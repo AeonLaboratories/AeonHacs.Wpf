@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace HACS.WPF.Views
 {
 	/// <summary>
-	/// Interaction logic for Arrow.xaml
+	/// Interaction logic for PortPressureSensor.xaml
 	/// </summary>
-	public partial class Arrow : HacsCanvas
+	public partial class PortPressureSensor : View
 	{
-		public Arrow()
+		public PortPressureSensor()
 		{
 			InitializeComponent();
 		}

@@ -10,25 +10,37 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="450" d:DesignWidth="800"
 	>
-    
-	<Grid  
-        >
-		<DockPanel Margin="10,10">
-			<TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" DockPanel.Dock="Top" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" TextChanged="SearchTextBox_TextChanged">
-				<wpf:WatermarkService.Watermark>
-                    <TextBlock Text="Search..."/><!--FontSize="{Binding FontSize, ElementName=SearchTextBox}"-->
-                </wpf:WatermarkService.Watermark>
-			</TextBox>
-			<TreeView x:Name="SettingsTree" DockPanel.Dock="Top" Margin="0,5,0,0" HorizontalAlignment="Left" Width="250" SelectedItemChanged="SettingsTree_SelectedItemChanged"/>
+
+    <Grid>
+        <DockPanel Margin="10,10">
+            <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Width="250">
+                <ToggleButton DockPanel.Dock="Right" Padding="0" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                              IsChecked="{Binding MatchCase, RelativeSource={RelativeSource AncestorType={x:Type local:SettingsPage}}}"
+                              ToolTip="Match Case">
+                    <TextBlock Text="Aa" TextDecorations="Underline,OverLine" VerticalAlignment="Center" FontSize="10"/>
+                </ToggleButton>
+                <Grid Margin="0,0,5,0">
+                    <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" VerticalAlignment="Top"
+                         Text="{Binding FilterText, RelativeSource={RelativeSource AncestorType={x:Type local:SettingsPage}}, UpdateSourceTrigger=PropertyChanged}">
+                        <wpf:WatermarkService.Watermark>
+                            <TextBlock Text="Search..."/>
+                            <!--FontSize="{Binding FontSize, ElementName=SearchTextBox}"-->
+                        </wpf:WatermarkService.Watermark>
+                    </TextBox>
+                    <Button Content="✕" HorizontalAlignment="Right" Padding="0,-4,0,-2" Margin="0,0,4,0" VerticalAlignment="Center"
+                            Background="Transparent" BorderThickness="0" Click="ClearSearch_Click" Foreground="Gray"/>
+                </Grid>
+            </DockPanel>
+            <TreeView x:Name="SettingsTree" DockPanel.Dock="Top" Margin="0,5,0,0" HorizontalAlignment="Left" Width="250" SelectedItemChanged="SettingsTree_SelectedItemChanged"/>
 		</DockPanel>
 		<Border HorizontalAlignment="Left" Margin="265,10,0,10" Width="1" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
 		<DockPanel Margin="271,5,10,10">
-            <Label DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0" FontSize="18" local:View.Component="{Binding Source, ElementName=SettingsPanel}">
-                <TextBlock Text="{Binding Source.Name, ElementName=SettingsPanel}"/>
-            </Label>
-			<Border DockPanel.Dock="Top" Margin="0,5,0,0" HorizontalAlignment="Stretch" Height="1" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+            <DockPanel DockPanel.Dock="Top">
+                <local:Breadcrumbs x:Name="Breadcrumbs" DockPanel.Dock="Left" FontSize="18" />
+            </DockPanel>
+            <Border DockPanel.Dock="Top" Margin="0,5,0,0" HorizontalAlignment="Stretch" Height="1" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
 			<ScrollViewer DockPanel.Dock="Top" Margin="0,5,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Padding="0,0,5,0">
-				<local:SettingsPanel x:Name="SettingsPanel"/>
+				<local:SettingsPanel x:Name="SettingsPanel" Source="{Binding SelectedItem, ElementName=Breadcrumbs, Mode=TwoWay}"/>
 			</ScrollViewer>
 		</DockPanel>
 	</Grid>

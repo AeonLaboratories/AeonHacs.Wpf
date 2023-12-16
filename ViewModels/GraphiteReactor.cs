@@ -21,7 +21,7 @@ namespace HACS.WPF.ViewModels
 		public int GraphitizingTemperature { get => Component.GraphitizingTemperature; set => Component.GraphitizingTemperature = value; }
 		public Utilities.Stopwatch StateStopwatch => Component.StateStopwatch;
 		public Utilities.Stopwatch ProgressStopwatch => Component.ProgressStopwatch;
-		public double PressureMinimum { get => Component.PressureMinimum; set => Component.PressureMinimum = value; }
+		public double PriorPressure { get => Component.PriorPressure; set => Component.PriorPressure = value; }
 		public int PressurePeak { get => Component.PressurePeak; set => Component.PressurePeak = value; }
 		public string Contents => Component.Contents;
 		public bool Busy => Component.Busy;

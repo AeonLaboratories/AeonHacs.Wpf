@@ -1,14 +1,10 @@
-﻿using Org.BouncyCastle.Asn1.Cms;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Text;
-using System.Windows;
 using System.Windows.Data;
 
 namespace HACS.WPF.Converters
 {
-	[ValueConversion(typeof(TimeSpan), typeof(string))]
+    [ValueConversion(typeof(TimeSpan), typeof(string))]
 	public class TimeSpanToStringConverter : IValueConverter
 	{
 		public static TimeSpanToStringConverter Default = new TimeSpanToStringConverter();

@@ -10,5 +10,6 @@ namespace HACS.WPF.ViewModels
 			protected set => base.Component = value;
 		}
 		public double Pressure => Component.Pressure;
+		public double MaxPressure { get => Component.MaxPressure; set => Component.MaxPressure = value; }
 	}
 }

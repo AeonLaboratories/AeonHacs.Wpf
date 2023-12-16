@@ -23,6 +23,8 @@ namespace HACS.WPF.ViewModels
 		public bool IsFalling => Component.IsFalling;
 		public double Rising { get => Component.Rising; set => Component.Rising = value; }
 		public bool IsRising => Component.IsRising;
+		public double MaxValue { get => Component.MaxValue; set => Component.MaxValue = value; }
+		public double MinValue { get => Component.MinValue; set => Component.MinValue = value; }
 		public bool OverRange => Component.OverRange;
 		public bool UnderRange => Component.UnderRange;
 		public bool Zeroing => Component.Zeroing;

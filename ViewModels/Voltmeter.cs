@@ -14,5 +14,6 @@ namespace HACS.WPF.ViewModels
 		public double MinimumVoltage { get => Component.MinimumVoltage; set => Component.MinimumVoltage = value; }
 		public new bool OverRange => Component.OverRange;
 		public new bool UnderRange => Component.OverRange;
+
 	}
 }

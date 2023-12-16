@@ -45,10 +45,11 @@ namespace HACS.WPF.Views
 			InitializeComponent();
 			InletPortComboBox.ItemsSource = NamedObject.FindAll<IInletPort>();
 			InletPortComboBox.DisplayMemberPath = "Name";
-			PortTypeComboBox.ItemsSource = Enum.GetValues(typeof(InletPort.Type));
+			PortTypeComboBox.ItemsSource = Enum.GetValues(typeof(HACS.Core.InletPortType));
 			MassUnitsComboBox.ItemsSource = Enum.GetValues(typeof(MassUnits));
 			ProcessComboBox.ItemsSource = NamedObject.CachedList<ProcessSequence>();
 			ProcessComboBox.DisplayMemberPath = "Name";
+			d13CRow.Visibility = NamedObject.FindAll<Id13CPort>().Count() > 0 ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public SampleEditor(ISample sample) : this()
@@ -107,6 +108,14 @@ namespace HACS.WPF.Views
 
 					if (ip.State == LinePort.States.Empty || LabIDTextBox.Text != Sample.LabId)
 						ip.State = LinePort.States.Loaded;
+				}
+
+				if (ip.State == LinePort.States.Loaded &&
+					NamedObject.FirstOrDefault<CEGS>() is CEGS cegs &&
+					(cegs.InletPorts?.Contains(ip) ?? false))
+				{
+					if (!cegs.Busy)
+						cegs.InletPort = ip;
 				}
 			}
 
@@ -178,17 +187,20 @@ namespace HACS.WPF.Views
 			v.Filter = (item) =>
 			{
 				return item is ProcessSequence ps && 
-					PortTypeComboBox.SelectedItem is InletPort.Type portType &&
+					PortTypeComboBox.SelectedItem is HACS.Core.InletPortType portType &&
 					ps.PortType == portType;
 			};
 
 			ProcessComboBox.SelectedValue = Sample.Process;
 			if (ProcessComboBox.SelectedIndex == -1 && ProcessComboBox.Items.Count > 0)
 				ProcessComboBox.SelectedValue = ProcessComboBox.Items[0];
-
-			var isCombustion = PortTypeComboBox.SelectedItem is InletPort.Type portType && 
-				portType == InletPort.Type.Combustion;
-			NotifyRaiseCheckBox.Visibility = isCombustion ? Visibility.Visible : Visibility.Collapsed;
+            
+			// TODO: Should this functionality be completely removed or should 'independentFurnaces' be a
+			//           system property that can be set in the settings file.
+            var isCombustion = PortTypeComboBox.SelectedItem is HACS.Core.InletPortType portType && 
+				portType == HACS.Core.InletPortType.Combustion;
+			var independentFurnaces = false;
+			NotifyRaiseCheckBox.Visibility = isCombustion && independentFurnaces ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void AliquotsTextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -9,7 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <ProjectReference Include="..\HACS\HACS.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="WpfControls.ColorPicker">
+      <HintPath>..\WpfControls.ColorPicker.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfControls.Core">
+      <HintPath>..\WpfControls.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfControls.NumericUpDown">
+      <HintPath>..\WpfControls.NumericUpDown.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfControls.Viewport">
+      <HintPath>..\WpfControls.Viewport.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -18,24 +40,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Resource>
   </ItemGroup>
-	
-  <ItemGroup>
-    <ProjectReference Include="..\HACS\HACS.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <Reference Include="WpfControls.ColorPicker">
-      <HintPath>..\WpfControls\ColorPicker\bin\Release\netcoreapp3.1\WpfControls.ColorPicker.dll</HintPath>
-    </Reference>
-    <Reference Include="WpfControls.Core">
-      <HintPath>..\WpfControls\Core\bin\Release\netcoreapp3.1\WpfControls.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="WpfControls.NumericUpDown">
-      <HintPath>..\WpfControls\NumericUpDown\bin\Release\netcoreapp3.1\WpfControls.NumericUpDown.dll</HintPath>
-    </Reference>
-    <Reference Include="WpfControls.Viewport">
-      <HintPath>..\WpfControls\Viewport\bin\Release\netcoreapp3.1\WpfControls.Viewport.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
 
 </Project>

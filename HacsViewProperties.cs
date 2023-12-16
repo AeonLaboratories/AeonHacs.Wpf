@@ -25,24 +25,23 @@ namespace HACS.WPF
 		public static readonly DependencyProperty BackgroundResourceKeyProperty = DependencyProperty.RegisterAttached(
 			"BackgroundResourceKey", typeof(string), typeof(HacsViewProperties), new FrameworkPropertyMetadata(null, BackgroundResourceKeyChanged));
 
-		public static void SetBackgroundResourceKey(Control control, string key) =>
+		public static void SetBackgroundResourceKey(FrameworkElement control, string key) =>
 			control.SetValue(BackgroundResourceKeyProperty, key);
 
-		public static string GetBackgroundResourceKey(Control control) =>
+		public static string GetBackgroundResourceKey(FrameworkElement control) =>
 			(string)control.GetValue(BackgroundResourceKeyProperty);
 
 		static void BackgroundResourceKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			if (d is Control c)
+			if (d is FrameworkElement c)
 			{
 				if (e.NewValue is string key && !key.IsBlank())
-					c.SetResourceReference(Control.BackgroundProperty, key);
+					c.SetResourceReference(Panel.BackgroundProperty, key);
 				else
-					c.SetResourceReference(Control.BackgroundProperty, null);
+					c.SetResourceReference(Panel.BackgroundProperty, null);
 			}
 		}
 
 		#endregion BackgroundResourceKey
-
 	}
 }

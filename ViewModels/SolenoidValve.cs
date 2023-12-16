@@ -6,6 +6,8 @@ namespace HACS.WPF.ViewModels
 {
 	public class SolenoidValve : ManagedSwitch
 	{
+		public SolenoidValve() { RunHasDefault = true; }
+
 		[Browsable(false)]
 		public new Components.ISolenoidValve Component
 		{

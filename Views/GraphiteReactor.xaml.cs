@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using GRSize = HACS.Components.GraphiteReactor.Sizes;
 
@@ -9,6 +10,13 @@ namespace HACS.WPF.Views
     /// </summary>
     public partial class GraphiteReactor : View
     {
+        //#region Orientation
+        //public static readonly DependencyProperty OrientationProperty = StackPanel.OrientationProperty.AddOwner(
+        //    typeof(GraphiteReactor));
+
+        //public Orientation Orientation { get => (Orientation)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
+        //#endregion Orientation
+
         public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
             nameof(Size), typeof(GRSize), typeof(GraphiteReactor));
 

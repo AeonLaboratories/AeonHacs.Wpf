@@ -1,39 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HACS.WPF.Views
 {
-	/// <summary>
-	/// Interaction logic for IP.xaml
-	/// </summary>
-	public partial class IP : View
+    /// <summary>
+    /// Interaction logic for IP.xaml
+    /// </summary>
+    public partial class InletPort : View
 	{
 		#region PortType
 
 		public static readonly DependencyProperty PortTypeProperty = DependencyProperty.Register(
-			nameof(PortType), typeof(HACS.Components.InletPort.Type), typeof(IP));
+			nameof(PortType), typeof(HACS.Core.InletPortType), typeof(InletPort));
 
-		public HACS.Components.InletPort.Type PortType
+		public HACS.Core.InletPortType PortType
 		{
-			get => (HACS.Components.InletPort.Type)GetValue(PortTypeProperty);
+			get => (HACS.Core.InletPortType)GetValue(PortTypeProperty);
 			set => SetValue(PortTypeProperty, value);
 		}
 
         #endregion PortType
 
         public static readonly DependencyProperty GasTypeProperty = DependencyProperty.Register(
-            nameof(GasType), typeof(object), typeof(IP));
+            nameof(GasType), typeof(object), typeof(InletPort));
 
         public object GasType
 		{
@@ -44,7 +36,7 @@ namespace HACS.WPF.Views
         #region View Visiblity
 
         public static readonly DependencyProperty CombustionVisibilityProperty = DependencyProperty.Register(
-            nameof(CombustionVisibility), typeof(Visibility), typeof(IP));
+            nameof(CombustionVisibility), typeof(Visibility), typeof(InletPort));
         public Visibility CombustionVisibility
         {
             get => (Visibility)GetValue(CombustionVisibilityProperty);
@@ -53,7 +45,7 @@ namespace HACS.WPF.Views
 
 
         public static readonly DependencyProperty NeedleVisibilityProperty = DependencyProperty.Register(
-            nameof(NeedleVisibility), typeof(Visibility), typeof(IP));
+            nameof(NeedleVisibility), typeof(Visibility), typeof(InletPort));
         public Visibility NeedleVisibility
         {
             get => (Visibility)GetValue(NeedleVisibilityProperty);
@@ -62,7 +54,7 @@ namespace HACS.WPF.Views
 
 
         public static readonly DependencyProperty BreaksealVisibilityProperty = DependencyProperty.Register(
-            nameof(BreaksealVisibility), typeof(Visibility), typeof(IP));
+            nameof(BreaksealVisibility), typeof(Visibility), typeof(InletPort));
         public Visibility BreaksealVisibility
         {
             get => (Visibility)GetValue(BreaksealVisibilityProperty);
@@ -70,14 +62,14 @@ namespace HACS.WPF.Views
         }
 
         public static readonly DependencyProperty GasSupplyVisibilityProperty = DependencyProperty.Register(
-            nameof(GasSupplyVisibility), typeof(Visibility), typeof(IP));
+            nameof(GasSupplyVisibility), typeof(Visibility), typeof(InletPort));
         public Visibility GasSupplyVisibility
         {
             get => (Visibility)GetValue(GasSupplyVisibilityProperty);
             set => SetValue(GasSupplyVisibilityProperty, value);
         }
 
-        [ValueConversion(typeof(HACS.Components.InletPort.Type), typeof(Visibility))]
+        [ValueConversion(typeof(Core.InletPortType), typeof(Visibility))]
         class SelectedVisibilityConverter : IValueConverter
         {
             public static SelectedVisibilityConverter Default = new SelectedVisibilityConverter();
@@ -95,7 +87,7 @@ namespace HACS.WPF.Views
         }
         #endregion View Visiblity
 
-        public IP()
+        public InletPort()
 		{
 			InitializeComponent();
 		}
@@ -104,7 +96,7 @@ namespace HACS.WPF.Views
 		{
 			base.CreateBindings();
 
-			SetBinding(PortTypeProperty, new Binding("Component.PortType") { Source = this, FallbackValue = Components.InletPort.Type.Combustion, TargetNullValue = Components.InletPort.Type.Combustion });
+			SetBinding(PortTypeProperty, new Binding("Component.PortType") { Source = this, FallbackValue = HACS.Core.InletPortType.Combustion, TargetNullValue = HACS.Core.InletPortType.Combustion });
 		}
 
         protected override void OnMouseDoubleClick(MouseButtonEventArgs e)

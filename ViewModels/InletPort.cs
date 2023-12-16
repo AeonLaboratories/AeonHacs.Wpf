@@ -16,7 +16,7 @@ namespace HACS.WPF.ViewModels
 			protected set => base.Component = value;
 		}
 
-		public Components.InletPort.Type PortType { get => Component.PortType; set => Component.PortType = value; }
+		public HACS.Core.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
 
 		public ViewModel QuartzFurnace
 		{	
@@ -24,7 +24,6 @@ namespace HACS.WPF.ViewModels
 			set { }
 		}
 		public ViewModel SampleFurnace => GetFromModel(Component?.SampleFurnace);
-		public ViewModel Fan => GetFromModel(Component?.Fan);
 
 		public List<ViewModel> PathToFirstTrap
 		{
