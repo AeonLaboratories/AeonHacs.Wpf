@@ -7,7 +7,7 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="HACS.WPF;component/Themes/Defaults.xaml"/>
+		<ResourceDictionary Source="AeonHacs.Hacs.Wpf;component/Themes/Defaults.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 
 	<Style TargetType="{x:Type v:View}">

@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:HACS.WPF.Views"
     xmlns:wpf="clr-namespace:HACS.WPF"
     xmlns:converters="clr-namespace:HACS.WPF.Converters"
-    xmlns:components="clr-namespace:HACS.Components;assembly=HACS"
+    xmlns:components="clr-namespace:HACS.Components;assembly=AeonHacs.Hacs"
     mc:Ignorable="d"
     x:Name="Field"
     >

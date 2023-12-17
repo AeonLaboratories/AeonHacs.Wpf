@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<Deterministic>True</Deterministic>
+		<Title>Aeon Laboratories WPF UI Elements</Title>
+		<Description>User Interface Modules for HacsComponent classes</Description>
+		<Authors>Jim Wilson, Tyler Wilson</Authors>
+		<Company>Aeon Laboratories</Company>
+		<Copyright>Aeon Laboratories, 2022</Copyright>
+		<AssemblyName>AeonHacs.Hacs.Wpf</AssemblyName>
+		<RepositoryUrl>https://github.com/AeonLaboratories/HACS.WPF</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/AeonLaboratories/HACS.WPF</PackageProjectUrl>
+		<VersionPrefix>3.1.0</VersionPrefix>
+		<VersionSuffix></VersionSuffix>
+		<Version>$(VersionPrefix)$(VersionSuffix)</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AeonHacs.Hacs" Version="3.1.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="WpfControls.ColorPicker">
+			<HintPath>..\WpfControls.ColorPicker.dll</HintPath>
+		</Reference>
+		<Reference Include="WpfControls.Core">
+			<HintPath>..\WpfControls.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="WpfControls.NumericUpDown">
+			<HintPath>..\WpfControls.NumericUpDown.dll</HintPath>
+		</Reference>
+		<Reference Include="WpfControls.Viewport">
+			<HintPath>..\WpfControls.Viewport.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Resources\Settings.ico" />
+		<Resource Include="Themes\Defaults.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Resource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>
