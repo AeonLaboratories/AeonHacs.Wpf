@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace HACS.WPF.Behaviors
+namespace AeonHacs.Wpf.Behaviors
 {
 	public class TextBoxValidationBehavior : Behavior<TextBox>
 	{

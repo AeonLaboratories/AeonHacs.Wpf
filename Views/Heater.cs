@@ -1,4 +1,4 @@
-﻿using HACS.WPF.Converters;
+﻿using AeonHacs.Wpf.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public class Heater : View
 	{

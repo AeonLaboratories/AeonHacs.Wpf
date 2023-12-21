@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Pyrometer : Thermometer
 	{
@@ -28,14 +28,14 @@ namespace HACS.WPF.ViewModels
 		public double InternalTemperature => Component.InternalTemperature;
 		public double MeasuringFieldDiameter => Component.MeasuringFieldDiameter;
 
-		public Core.OnOffState OnOffState => Component.OnOffState;
+		public AeonHacs.OnOffState OnOffState => Component.OnOffState;
 		public bool IsOn => Component.IsOn;
 		public bool IsOff => Component.IsOff;
 		public long MillisecondsOn => Component.MillisecondsOn;
 		public long MillisecondsOff => Component.MillisecondsOff;
 		public long MillisecondsInState => Component.MillisecondsInState;
 
-		public Core.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
+		public AeonHacs.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
 
 		public ViewModel SerialController => GetFromModel(Component.SerialController);
 

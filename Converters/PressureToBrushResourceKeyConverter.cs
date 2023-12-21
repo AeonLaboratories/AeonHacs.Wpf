@@ -1,11 +1,10 @@
-﻿using HACS.Core;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
-	[ValueConversion(typeof(double), typeof(string))]
+    [ValueConversion(typeof(double), typeof(string))]
 	public class PressureToBrushResourceKeyConverter : IValueConverter
 	{
 		public static Components.IPressure Ambient;

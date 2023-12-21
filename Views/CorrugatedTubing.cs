@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public class CorrugatedTubing : Control
 	{

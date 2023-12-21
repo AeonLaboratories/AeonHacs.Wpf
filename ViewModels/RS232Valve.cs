@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class RS232Valve : CpwValve
 	{

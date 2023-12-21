@@ -1,4 +1,4 @@
-﻿using HACS.WPF.Views;
+﻿using AeonHacs.Wpf.Views;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace HACS.WPF.Behaviors
+namespace AeonHacs.Wpf.Behaviors
 {
 
 	public class ScalableWindowBehavior : Behavior<MainWindow>

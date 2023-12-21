@@ -1,7 +1,7 @@
-﻿using HACS.Core;
-using HACS.WPF.Behaviors;
-using HACS.WPF.Converters;
-using HACS.WPF.ViewModels;
+﻿using AeonHacs;
+using AeonHacs.Wpf.Behaviors;
+using AeonHacs.Wpf.Converters;
+using AeonHacs.Wpf.ViewModels;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	public class View : ContentControl
 	{

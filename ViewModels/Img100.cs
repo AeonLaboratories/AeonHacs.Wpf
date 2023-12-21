@@ -1,4 +1,4 @@
-﻿namespace HACS.WPF.ViewModels
+﻿namespace AeonHacs.Wpf.ViewModels
 {
 	public class Img100 : SwitchedManometer
 	{

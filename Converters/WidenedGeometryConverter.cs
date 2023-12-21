@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	[ValueConversion(typeof(Geometry), typeof(Geometry))]
 	public class WidenedGeometryConverter : IMultiValueConverter

@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="HACS.WPF.Views.ProcessSequenceEditor"
+﻿<UserControl x:Class="AeonHacs.Wpf.Views.ProcessSequenceEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:HACS.WPF.Views"
-             xmlns:components="clr-namespace:HACS.Components;assembly=AeonHacs.Hacs"
+             xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
+             xmlns:components="clr-namespace:AeonHacs.Components;assembly=AeonHacs.Hacs"
              
              mc:Ignorable="d"
              d:DesignWidth="300"

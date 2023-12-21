@@ -1,12 +1,12 @@
-﻿using HACS.Components;
-using HACS.Core;
+﻿using AeonHacs.Components;
+using AeonHacs;
 using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	/// <summary>
 	/// Interaction logic for SampleManager.xaml

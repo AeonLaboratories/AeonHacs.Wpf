@@ -1,5 +1,5 @@
-﻿using HACS.Core;
-using HACS.WPF.ViewModels;
+﻿using AeonHacs;
+using AeonHacs.Wpf.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	/// <summary>
 	/// Interaction logic for SettingsPage.xaml
@@ -41,16 +41,16 @@ namespace HACS.WPF.Views
 		public bool MatchCase { get => (bool)GetValue(MatchCaseProperty); set => SetValue(MatchCaseProperty, value); }
 		#endregion MatchCase
 
-		protected Core.HacsBase Hacs { get; set; }
+		protected AeonHacs.HacsBase Hacs { get; set; }
 
-		protected List<List<Core.HacsComponent>> Components { get; set; } = new List<List<Core.HacsComponent>>();
+		protected List<List<AeonHacs.HacsComponent>> Components { get; set; } = new List<List<AeonHacs.HacsComponent>>();
 
 		protected SettingsPage()
 		{
 			InitializeComponent();
 		}
 
-		public SettingsPage(Core.HacsBase hacs) : this()
+		public SettingsPage(AeonHacs.HacsBase hacs) : this()
 		{
 			Hacs = hacs;
 			GetComponents();
@@ -60,7 +60,7 @@ namespace HACS.WPF.Views
 
 		protected virtual void GetComponents()
 		{
-			foreach (var componentsOfType in Core.NamedObject.CachedList<Core.HacsComponent>().OrderBy(x => x.Name, new AlphanumericComparer()).OrderBy(x => x.GetType().Name).GroupBy(x => x.GetType().Name))
+			foreach (var componentsOfType in AeonHacs.NamedObject.CachedList<AeonHacs.HacsComponent>().OrderBy(x => x.Name, new AlphanumericComparer()).OrderBy(x => x.GetType().Name).GroupBy(x => x.GetType().Name))
 			{
 				Components.Add(componentsOfType.ToList());
 			}

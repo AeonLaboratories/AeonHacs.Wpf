@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	public class StringListToStringConverter : IValueConverter
 	{

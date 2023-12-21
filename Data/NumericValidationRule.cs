@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Controls;
 
-namespace HACS.WPF.Data
+namespace AeonHacs.Wpf.Data
 {
 	public class NumericValidationRule : ValidationRule
 	{

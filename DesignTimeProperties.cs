@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
 	public static class DesignTimeProperties
 	{

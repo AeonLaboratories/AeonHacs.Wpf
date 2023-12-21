@@ -1,4 +1,4 @@
-﻿using HACS.WPF.Media;
+﻿using AeonHacs.Wpf.Media;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	[ValueConversion(typeof(Direction), typeof(RotateTransform))]
 	public class DirectionToRotateTransformConverter : IValueConverter

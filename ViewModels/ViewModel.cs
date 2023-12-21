@@ -1,5 +1,5 @@
-﻿using HACS.Core;
-using HACS.WPF.Converters;
+﻿using AeonHacs;
+using AeonHacs.Wpf.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	[TypeConverter(typeof(ViewModelConverter))]
 	public class ViewModel : BindableObject, INamedObject
@@ -50,7 +50,7 @@ namespace HACS.WPF.ViewModels
 			if (Collection.TryGetValue(key, out ViewModel existingViewModel))
 				return existingViewModel;
 
-			INamedObject model = Core.NamedObject.Find<INamedObject>(key);
+			INamedObject model = AeonHacs.NamedObject.Find<INamedObject>(key);
 
 			if (model == null)
 			{
@@ -59,10 +59,10 @@ namespace HACS.WPF.ViewModels
 				var modelTypeName = key.Substring(0, dot);
 				var modelName = key[(dot + 1)..];
 
-				var list = Core.NamedObject.FindAll(modelName);
+				var list = AeonHacs.NamedObject.FindAll(modelName);
 				var type =
-					Type.GetType("HACS.Components." + modelTypeName + ", HACS") ??
-					Type.GetType("HACS.Core." + modelTypeName + ", HACS");
+					Type.GetType("AeonHacs.Components." + modelTypeName + ", HACS") ??
+					Type.GetType("AeonHacs." + modelTypeName + ", HACS");
 				if (type != null)
 					model = 
 						list.FirstOrDefault(x => x.GetType() == type) ??
@@ -102,7 +102,7 @@ namespace HACS.WPF.ViewModels
 			if (model.Name.IsBlank())
 				return null;
 
-			var list = Core.NamedObject.FindAll(model.Name);
+			var list = AeonHacs.NamedObject.FindAll(model.Name);
 
 			if (list.Count == 0) return null;
 			if (list.Count == 1 && list[0] == model)

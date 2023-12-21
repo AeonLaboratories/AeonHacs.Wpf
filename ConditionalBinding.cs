@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
 	public class ConditionalBinding : Binding
 	{

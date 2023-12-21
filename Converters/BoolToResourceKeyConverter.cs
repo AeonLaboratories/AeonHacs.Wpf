@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	[ValueConversion(typeof(bool), typeof(string))]
 	public class BoolToResourceKeyConverter : IValueConverter

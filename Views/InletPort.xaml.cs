@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for IP.xaml
@@ -14,11 +14,11 @@ namespace HACS.WPF.Views
 		#region PortType
 
 		public static readonly DependencyProperty PortTypeProperty = DependencyProperty.Register(
-			nameof(PortType), typeof(HACS.Core.InletPortType), typeof(InletPort));
+			nameof(PortType), typeof(AeonHacs.InletPortType), typeof(InletPort));
 
-		public HACS.Core.InletPortType PortType
+		public AeonHacs.InletPortType PortType
 		{
-			get => (HACS.Core.InletPortType)GetValue(PortTypeProperty);
+			get => (AeonHacs.InletPortType)GetValue(PortTypeProperty);
 			set => SetValue(PortTypeProperty, value);
 		}
 
@@ -69,7 +69,7 @@ namespace HACS.WPF.Views
             set => SetValue(GasSupplyVisibilityProperty, value);
         }
 
-        [ValueConversion(typeof(Core.InletPortType), typeof(Visibility))]
+        [ValueConversion(typeof(AeonHacs.InletPortType), typeof(Visibility))]
         class SelectedVisibilityConverter : IValueConverter
         {
             public static SelectedVisibilityConverter Default = new SelectedVisibilityConverter();
@@ -96,7 +96,7 @@ namespace HACS.WPF.Views
 		{
 			base.CreateBindings();
 
-			SetBinding(PortTypeProperty, new Binding("Component.PortType") { Source = this, FallbackValue = HACS.Core.InletPortType.Combustion, TargetNullValue = HACS.Core.InletPortType.Combustion });
+			SetBinding(PortTypeProperty, new Binding("Component.PortType") { Source = this, FallbackValue = AeonHacs.InletPortType.Combustion, TargetNullValue = AeonHacs.InletPortType.Combustion });
 		}
 
         protected override void OnMouseDoubleClick(MouseButtonEventArgs e)

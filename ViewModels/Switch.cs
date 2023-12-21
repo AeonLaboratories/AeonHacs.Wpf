@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Collections.Generic;
-using HACS.Core;
+using AeonHacs;
 using System;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Switch : OnOff
 	{
@@ -16,8 +16,8 @@ namespace HACS.WPF.ViewModels
 			protected set => base.Component = value;
 		}
 
-		public Core.SwitchState State { get => Component.State; set => Component.State = value; }
-		public Core.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
+		public AeonHacs.SwitchState State { get => Component.State; set => Component.State = value; }
+		public AeonHacs.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
 		protected string TurnOnCaption { get; set; } = "Turn on";
 		protected string TurnOffCaption { get; set; } = "Turn off";
 		public override List<Context> Context()

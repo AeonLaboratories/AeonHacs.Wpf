@@ -1,5 +1,5 @@
-﻿using HACS.Components;
-using HACS.Core;
+﻿using AeonHacs.Components;
+using AeonHacs;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for SampleEditor.xaml
@@ -45,7 +45,7 @@ namespace HACS.WPF.Views
 			InitializeComponent();
 			InletPortComboBox.ItemsSource = NamedObject.FindAll<IInletPort>();
 			InletPortComboBox.DisplayMemberPath = "Name";
-			PortTypeComboBox.ItemsSource = Enum.GetValues(typeof(HACS.Core.InletPortType));
+			PortTypeComboBox.ItemsSource = Enum.GetValues(typeof(AeonHacs.InletPortType));
 			MassUnitsComboBox.ItemsSource = Enum.GetValues(typeof(MassUnits));
 			ProcessComboBox.ItemsSource = NamedObject.CachedList<ProcessSequence>();
 			ProcessComboBox.DisplayMemberPath = "Name";
@@ -111,7 +111,7 @@ namespace HACS.WPF.Views
 				}
 
 				if (ip.State == LinePort.States.Loaded &&
-					NamedObject.FirstOrDefault<CEGS>() is CEGS cegs &&
+					NamedObject.FirstOrDefault<Cegs>() is Cegs cegs &&
 					(cegs.InletPorts?.Contains(ip) ?? false))
 				{
 					if (!cegs.Busy)
@@ -187,7 +187,7 @@ namespace HACS.WPF.Views
 			v.Filter = (item) =>
 			{
 				return item is ProcessSequence ps && 
-					PortTypeComboBox.SelectedItem is HACS.Core.InletPortType portType &&
+					PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType &&
 					ps.PortType == portType;
 			};
 
@@ -197,8 +197,8 @@ namespace HACS.WPF.Views
             
 			// TODO: Should this functionality be completely removed or should 'independentFurnaces' be a
 			//           system property that can be set in the settings file.
-            var isCombustion = PortTypeComboBox.SelectedItem is HACS.Core.InletPortType portType && 
-				portType == HACS.Core.InletPortType.Combustion;
+            var isCombustion = PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType && 
+				portType == AeonHacs.InletPortType.Combustion;
 			var independentFurnaces = false;
 			NotifyRaiseCheckBox.Visibility = isCombustion && independentFurnaces ? Visibility.Visible : Visibility.Collapsed;
 		}

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Thermocouple : Thermometer
 	{
@@ -10,6 +10,6 @@ namespace HACS.WPF.ViewModels
 			get => base.Component as Components.IThermocouple;
 			protected set => base.Component = value;
 		}
-		public Core.ThermocoupleType Type { get => Component.Type; set => Component.Type = value; }
+		public AeonHacs.ThermocoupleType Type { get => Component.Type; set => Component.Type = value; }
 	}
 }

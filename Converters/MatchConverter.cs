@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	/// <summary>
 	/// If the given value matches the specified parameter, return the first of two output options; 

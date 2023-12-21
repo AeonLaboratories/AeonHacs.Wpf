@@ -1,12 +1,12 @@
-﻿using HACS.WPF.Behaviors;
-using HACS.WPF.Data;
+﻿using AeonHacs.Wpf.Behaviors;
+using AeonHacs.Wpf.Data;
 using Microsoft.Xaml.Behaviors;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for TemperatureWithSetpoint.xaml

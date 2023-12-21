@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfControls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     // TODO this is just a SolidColorBrush Color Setting; support Brushes, in general?
     public partial class BrushSetting : DockPanel

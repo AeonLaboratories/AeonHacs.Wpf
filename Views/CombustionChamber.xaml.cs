@@ -1,4 +1,4 @@
-﻿using HACS.WPF.Converters;
+﻿using AeonHacs.Wpf.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	/// <summary>
 	/// Interaction logic for CombustionChamber.xaml

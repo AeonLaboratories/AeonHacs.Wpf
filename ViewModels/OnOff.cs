@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class OnOff : HacsDevice
 	{
@@ -9,7 +9,7 @@ namespace HACS.WPF.ViewModels
 			get => base.Component as Components.IOnOff;
 			protected set => base.Component = value;
 		}
-		public Core.OnOffState OnOffState => Component.OnOffState;
+		public AeonHacs.OnOffState OnOffState => Component.OnOffState;
 		public bool IsOn => Component.IsOn;
 		public bool IsOff => Component.IsOff;
 		public long MillisecondsOn => Component.MillisecondsOn;

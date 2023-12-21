@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System;
 using System.Collections.Generic;
-using Utilities;
+using AeonHacs.Utilities;
 using System.ComponentModel.DataAnnotations;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class ProcessManager : HacsBase
 	{

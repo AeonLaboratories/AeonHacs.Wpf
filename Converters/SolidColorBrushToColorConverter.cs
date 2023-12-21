@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
     public class SolidColorBrushToColorConverter : IValueConverter
     {

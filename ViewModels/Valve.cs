@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Valve : HacsDevice
 	{
@@ -14,7 +14,7 @@ namespace HACS.WPF.ViewModels
 			get => base.Component as Components.IValve;
 			protected set => base.Component = value;
 		}
-		public Core.ValveState ValveState => Component.ValveState;
+		public AeonHacs.ValveState ValveState => Component.ValveState;
 		public virtual int Position => Component.Position;
 		public virtual bool IsOpened => Component.IsOpened;
 		public virtual bool IsClosed => Component.IsClosed;
@@ -37,16 +37,16 @@ namespace HACS.WPF.ViewModels
 			{
 				switch (ValveState)
 				{
-					case Core.ValveState.Closed:
+					case AeonHacs.ValveState.Closed:
 						Component?.OpenWait();
 						break;
-					case Core.ValveState.Opening:
-					case Core.ValveState.Closing:
+					case AeonHacs.ValveState.Opening:
+					case AeonHacs.ValveState.Closing:
 						Component?.Stop();
 						break;
 					default:
-					case Core.ValveState.Opened:
-					case Core.ValveState.Unknown:
+					case AeonHacs.ValveState.Opened:
+					case AeonHacs.ValveState.Unknown:
 						Component?.CloseWait();
 						break;
 				}

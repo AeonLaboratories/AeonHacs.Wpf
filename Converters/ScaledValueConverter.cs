@@ -1,9 +1,9 @@
-﻿using HACS.Components;
+﻿using AeonHacs.Components;
 using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	[ValueConversion(typeof(double), typeof(double))]
 	public class ScaledValueConverter : IValueConverter

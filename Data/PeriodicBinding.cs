@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Threading;
 
-namespace HACS.WPF.Data
+namespace AeonHacs.Wpf.Data
 {
 	/// <summary>
 	/// A one-way Source to Target Binding that explicitly updates on an periodic basis.

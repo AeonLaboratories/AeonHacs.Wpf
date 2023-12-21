@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class ManagedDevice : HacsDevice
 	{

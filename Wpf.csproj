@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Title>Aeon Laboratories WPF Elements</Title>
+		<Description>User Interface Modules for HacsComponent classes</Description>
+		<Company>Aeon Laboratories</Company>
+		<Authors>Jim Wilson, Tyler Wilson</Authors>
+        <Copyright>$(Company), 2022</Copyright>		
+		<AssemblyName>AeonHacs.Wpf</AssemblyName>
+		<RepositoryUrl>https://github.com/AeonLaboratories/AeonHacs.WPF</RepositoryUrl>
+		<VersionPrefix>3.1.0</VersionPrefix>
+		<VersionSuffix></VersionSuffix>
+		<Version>$(VersionPrefix)$(VersionSuffix)</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		
+		<UseWPF>true</UseWPF>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<Deterministic>true</Deterministic>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<DocumentationFile>$(OutputPath)</DocumentationFile>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageId>$(AssemblyName)</PackageId>
+		<PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AeonHacs.Core" Version="3.1.0" />
+		<PackageReference Include="WPFControls.ColorPicker" Version="1.0.0" />
+		<PackageReference Include="WpfControls.Core" Version="1.0.0" />
+		<PackageReference Include="WpfControls.Viewport" Version="1.0.0" />
+		<PackageReference Include="WpfControls.NumericUpdown" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update=".gitignore">
+			<Visible>False</Visible>
+		</None>
+		<None Update=".gitattributes">
+			<Visible>False</Visible>
+		</None>
+	</ItemGroup>
+</Project>

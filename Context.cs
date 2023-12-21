@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Threading;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
 	public class Context
 	{

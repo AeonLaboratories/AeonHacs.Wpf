@@ -1,9 +1,9 @@
-﻿using HACS.WPF.Views;
+﻿using AeonHacs.Wpf.Views;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
     public static class HacsViewProperties
 	{

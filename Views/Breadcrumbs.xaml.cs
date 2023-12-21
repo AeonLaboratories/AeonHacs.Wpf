@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for Breadcrumbs.xaml

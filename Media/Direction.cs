@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HACS.WPF.Media
+namespace AeonHacs.Wpf.Media
 {
 	public enum Direction { Left, Up, Right, Down }
 }

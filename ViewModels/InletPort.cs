@@ -1,11 +1,11 @@
-﻿using HACS.Components;
-using HACS.WPF.Views;
+﻿using AeonHacs.Components;
+using AeonHacs.Wpf.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class InletPort : LinePort
 	{
@@ -16,7 +16,7 @@ namespace HACS.WPF.ViewModels
 			protected set => base.Component = value;
 		}
 
-		public HACS.Core.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
+		public AeonHacs.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
 
 		public ViewModel QuartzFurnace
 		{	
@@ -41,7 +41,7 @@ namespace HACS.WPF.ViewModels
 		protected string SampleCaption { get; set; } = "Edit Sample";
 		protected override void StartContext()
 		{
-			ContextStart.Add(new WPF.Context(SampleCaption, dispatch:false));
+			ContextStart.Add(new Wpf.Context(SampleCaption, dispatch:false));
 			base.StartContext();
 		}
 

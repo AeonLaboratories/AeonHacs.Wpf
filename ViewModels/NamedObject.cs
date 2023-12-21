@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class NamedObject : ViewModel
 	{
 		[Browsable(false)]
-		public new Core.INamedObject Component
+		public new AeonHacs.INamedObject Component
 		{
-			get => base.Component as Core.INamedObject;
+			get => base.Component as AeonHacs.INamedObject;
 			protected set => base.Component = value;
 		}
     }

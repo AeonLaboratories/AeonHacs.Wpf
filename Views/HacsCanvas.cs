@@ -1,11 +1,11 @@
-﻿using HACS.WPF.Converters;
+﻿using AeonHacs.Wpf.Converters;
 using System.Windows.Automation;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using HACS.WPF.ViewModels;
+using AeonHacs.Wpf.ViewModels;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public class HacsCanvas : System.Windows.Controls.Canvas
     {

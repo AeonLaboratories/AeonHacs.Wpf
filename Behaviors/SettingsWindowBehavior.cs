@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace HACS.WPF.Behaviors
+namespace AeonHacs.Wpf.Behaviors
 {
 	public class SettingsWindowBehavior : Behavior<Window>
 	{
@@ -16,7 +16,7 @@ namespace HACS.WPF.Behaviors
 			if (AssociatedObject != null)
 			{
 				base.OnAttached();
-				AssociatedObject.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/HACS.WPF;component/Resources/Settings.ico"));
+				AssociatedObject.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/AeonHacs.Wpf;component/Resources/Settings.ico"));
 				AssociatedObject.Deactivated += AssociatedObject_Deactivated;
 				//TODO temporary? Find some way to position window relative to element?
 				//AssociatedObject.WindowStartupLocation = WindowStartupLocation.CenterScreen;

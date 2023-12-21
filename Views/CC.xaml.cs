@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	/// <summary>
 	/// Interaction logic for CC.xaml

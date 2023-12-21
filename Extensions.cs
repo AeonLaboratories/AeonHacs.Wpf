@@ -10,7 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
 	/// <summary>
 	/// Class that provides the Watermark attached property

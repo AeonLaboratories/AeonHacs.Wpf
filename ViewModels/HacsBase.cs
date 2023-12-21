@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class HacsBase : HacsComponent
 	{
 		[Browsable(false)]
-		public new Core.IHacsBase Component
+		public new AeonHacs.IHacsBase Component
 		{
-			get => base.Component as Core.IHacsBase;
+			get => base.Component as AeonHacs.IHacsBase;
 			protected set => base.Component = value;
 		}		
 	}

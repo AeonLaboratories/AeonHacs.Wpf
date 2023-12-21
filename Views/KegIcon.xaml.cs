@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public partial class KegIcon : Canvas
     {

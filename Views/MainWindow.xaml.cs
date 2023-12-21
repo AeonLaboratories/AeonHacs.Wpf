@@ -1,4 +1,4 @@
-﻿using HACS.WPF.Behaviors;
+﻿using AeonHacs.Wpf.Behaviors;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Windows.Automation;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,7 +33,7 @@ namespace HACS.WPF.Views
         public bool IsClosed { get; protected set; }
 
         public ControlPanel ControlPanel { get; protected set; }
-        protected Core.HacsBase Hacs => ControlPanel?.Bridge?.GetHacs();
+        protected AeonHacs.HacsBase Hacs => ControlPanel?.Bridge?.GetHacs();
 
         Window sampleManager;
         Window processSequenceEditor;
@@ -67,9 +67,9 @@ namespace HACS.WPF.Views
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (Core.Hacs.Stopped)
+            if (AeonHacs.Hacs.Stopped)
                 base.OnClosing(e);
-            else if (!Core.Hacs.Stopping)
+            else if (!AeonHacs.Hacs.Stopping)
             {
                 e.Cancel = true;
                 Task.Run(() => ControlPanel.UIClosing(this, e)).ContinueWith(t => Dispatcher.Invoke(Close));

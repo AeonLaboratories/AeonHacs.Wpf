@@ -1,9 +1,9 @@
-﻿using HACS.Core;
+﻿using AeonHacs;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public partial class Preferences : Window
     {

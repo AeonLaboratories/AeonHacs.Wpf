@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class HacsComponent : ViewModel
 	{
 		[Browsable(false)]
-		public new Core.IHacsComponent Component
+		public new AeonHacs.IHacsComponent Component
 		{
-			get => base.Component as Core.IHacsComponent;
+			get => base.Component as AeonHacs.IHacsComponent;
 			protected set => base.Component = value;
 		}
 		public bool Connected => Component.Connected;

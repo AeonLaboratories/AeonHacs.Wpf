@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class AnalogInput : ManagedDevice
 	{
@@ -9,7 +9,7 @@ namespace HACS.WPF.ViewModels
 			get => base.Component as Components.IAnalogInput;
 			protected set => base.Component = value;
 		}
-		Core.AnalogInputMode AnalogInputMode { get => Component.AnalogInputMode; set => Component.AnalogInputMode = value; }
+		AeonHacs.AnalogInputMode AnalogInputMode { get => Component.AnalogInputMode; set => Component.AnalogInputMode = value; }
 		public double MaximumVoltage { get => Component.MaximumVoltage; set => Component.MaximumVoltage = value; }
 		public double MinimumVoltage { get => Component.MinimumVoltage; set => Component.MinimumVoltage = value; }
 		public bool OverRange => Component.OverRange;

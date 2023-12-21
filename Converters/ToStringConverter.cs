@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
     [ValueConversion(typeof(object), typeof(string))]
     public class ToStringConverter : IValueConverter

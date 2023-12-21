@@ -1,11 +1,11 @@
-﻿using HACS.Core;
+﻿using AeonHacs;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	public abstract class ControlPanel : ContentControl
 	{

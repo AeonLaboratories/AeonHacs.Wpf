@@ -1,11 +1,11 @@
-﻿<local:View x:Class="HACS.WPF.Views.InletPort"
+﻿<local:View x:Class="AeonHacs.Wpf.Views.InletPort"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:core="clr-namespace:HACS.Core;assembly=AeonHacs.Hacs"
-	xmlns:local="clr-namespace:HACS.WPF.Views"
-	xmlns:c="clr-namespace:HACS.WPF.Converters"
+    xmlns:core="clr-namespace:AeonHacs;assembly=AeonHacs.Core"
+	xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
+	xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
 	mc:Ignorable="d">
 
     <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:InletPort}}}">

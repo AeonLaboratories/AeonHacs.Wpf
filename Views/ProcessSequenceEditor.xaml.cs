@@ -1,4 +1,4 @@
-﻿using HACS.Components;
+﻿using AeonHacs.Components;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +13,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for ProcessSequenceEditor.xaml
@@ -60,7 +60,7 @@ namespace HACS.WPF.Views
 
         protected virtual void LoadSources()
 		{
-			SourceComboBox.ItemsSource = Enum.GetValues(typeof(HACS.Core.InletPortType));
+			SourceComboBox.ItemsSource = Enum.GetValues(typeof(AeonHacs.InletPortType));
 
 			var selectedSourceBinding = new Binding($"{nameof(Selector.SelectedItem)}.{nameof(ProcessSequence.PortType)}") { Source = ProcessComboBox, UpdateSourceTrigger = UpdateSourceTrigger.Explicit };
 			SourceComboBox.SetBinding(Selector.SelectedItemProperty, selectedSourceBinding);

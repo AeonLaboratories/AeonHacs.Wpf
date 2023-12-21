@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System;
 using System.Collections.Generic;
-using HACS.Components;
+using AeonHacs.Components;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class CpwValve : CpwActuator
 	{
@@ -16,7 +16,7 @@ namespace HACS.WPF.ViewModels
 			protected set => base.Component = value;
 		}
 
-		public Core.ValveState ValveState => Component.ValveState;
+		public AeonHacs.ValveState ValveState => Component.ValveState;
 		public virtual int Position => Component.Position;
 		public virtual bool IsOpened => Component.IsOpened;
 		public virtual bool IsClosed => Component.IsClosed;
@@ -24,7 +24,7 @@ namespace HACS.WPF.ViewModels
 		public int CenterValue => Component.CenterValue;
 		public int ClosedValue => Component.ClosedValue;
 		public bool OpenIsPositive => Component.OpenIsPositive;
-		public Core.ValveState LastMotion => Component.LastMotion;
+		public AeonHacs.ValveState LastMotion => Component.LastMotion;
 		public virtual List<string> Operations => Component?.Operations;
 
 		//#region Integration
@@ -83,16 +83,16 @@ namespace HACS.WPF.ViewModels
 			{
 				switch (ValveState)
 				{
-					case Core.ValveState.Closed:
+					case AeonHacs.ValveState.Closed:
 						Component?.DoOperation("Open");
 						break;
-					case Core.ValveState.Opening:
-					case Core.ValveState.Closing:
+					case AeonHacs.ValveState.Opening:
+					case AeonHacs.ValveState.Closing:
 						Component?.DoOperation("Stop");
 						break;
 					default:
-					case Core.ValveState.Opened:
-					case Core.ValveState.Unknown:
+					case AeonHacs.ValveState.Opened:
+					case AeonHacs.ValveState.Unknown:
 						Component?.DoOperation("Close");
 						break;
 				}

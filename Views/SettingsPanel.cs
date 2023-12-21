@@ -1,5 +1,5 @@
-﻿using HACS.WPF.Behaviors;
-using HACS.WPF.Data;
+﻿using AeonHacs.Wpf.Behaviors;
+using AeonHacs.Wpf.Data;
 using Microsoft.Xaml.Behaviors;
 using Newtonsoft.Json;
 using System;
@@ -16,7 +16,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public class SettingsPanel : StackPanel
 	{
@@ -170,13 +170,13 @@ namespace HACS.WPF.Views
 						var dictionaryEnumerator = enumerator as IDictionaryEnumerator;
 						content = dictionaryEnumerator.Key.ToString();
 
-						if (dictionaryEnumerator.Value is Core.INamedObject namedObject)
+						if (dictionaryEnumerator.Value is AeonHacs.INamedObject namedObject)
 						{
 							content += $" ({namedObject?.Name})";
 							component = namedObject;
 						}
 					}
-					else if (item is Core.INamedObject namedObject)
+					else if (item is AeonHacs.INamedObject namedObject)
 					{
 						content = $"{namedObject?.Name}";
 						component = namedObject;
@@ -209,7 +209,7 @@ namespace HACS.WPF.Views
 
 			//TODO setting to remove or keep the Name properties?
 			//Currently remove them
-			if (propertyName == nameof(Core.INamedObject.Name))
+			if (propertyName == nameof(AeonHacs.INamedObject.Name))
 				return;
 
 			var value = property.GetValue(Source);
@@ -281,10 +281,10 @@ namespace HACS.WPF.Views
 					if (value is INotifyPropertyChanged model)
 					{
 						var button = new Button();
-						if (model is Core.INamedObject)
+						if (model is AeonHacs.INamedObject)
 						{
 							var contentBinding = 
-								new Binding($"{valueBinding.Path.Path}.{nameof(Core.INamedObject.Name)}")
+								new Binding($"{valueBinding.Path.Path}.{nameof(AeonHacs.INamedObject.Name)}")
 								{ 
 									Source = this, 
 									Converter = Converters.PlainContentConverter.Default,

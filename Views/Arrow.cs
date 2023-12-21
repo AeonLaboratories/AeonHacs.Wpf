@@ -1,8 +1,8 @@
-﻿using HACS.WPF.Media;
+﻿using AeonHacs.Wpf.Media;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public class Arrow : Control
 	{

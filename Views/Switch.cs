@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Data;
 using System.Windows;
-using HACS.Components;
-using HACS.WPF.Converters;
+using AeonHacs.Components;
+using AeonHacs.Wpf.Converters;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     public class Switch : View
 	{

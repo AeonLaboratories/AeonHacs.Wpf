@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class SolenoidValve : ManagedSwitch
 	{
@@ -14,13 +14,13 @@ namespace HACS.WPF.ViewModels
 			get => base.Component as Components.ISolenoidValve;
 			protected set => base.Component = value;
 		}
-		public Core.ValveState PoweredState { get => Component.PoweredState; set => Component.PoweredState = value; }
+		public AeonHacs.ValveState PoweredState { get => Component.PoweredState; set => Component.PoweredState = value; }
 		public int MillisecondsToChangeState { get => Component.MillisecondsToChangeState; set => Component.MillisecondsToChangeState = value; }
 		public bool InMotion => Component.InMotion;
 
 		#region Valve
 
-		public Core.ValveState ValveState => Component.ValveState;
+		public AeonHacs.ValveState ValveState => Component.ValveState;
 		public virtual List<string> Operations => Component?.Operations;
 		public virtual bool Ready => Component.Ready;
 		public virtual bool Idle => Component.Idle;
@@ -42,16 +42,16 @@ namespace HACS.WPF.ViewModels
 			{
 				switch (ValveState)
 				{
-					case Core.ValveState.Closed:
+					case AeonHacs.ValveState.Closed:
 						Component?.DoOperation("Open");
 						break;
-					case Core.ValveState.Opening:
-					case Core.ValveState.Closing:
+					case AeonHacs.ValveState.Opening:
+					case AeonHacs.ValveState.Closing:
 						Component?.DoOperation("Stop");
 						break;
 					default:
-					case Core.ValveState.Opened:
-					case Core.ValveState.Unknown:
+					case AeonHacs.ValveState.Opened:
+					case AeonHacs.ValveState.Unknown:
 						Component?.DoOperation("Close");
 						break;
 				}

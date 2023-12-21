@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
 	public class CoilTrap : View
 	{

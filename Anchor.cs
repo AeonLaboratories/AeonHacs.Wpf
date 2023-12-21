@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using Alignment = System.Drawing.ContentAlignment;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
 	[MarkupExtensionReturnType(typeof(Thickness))]
 	public class Anchor : MarkupExtension

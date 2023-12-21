@@ -1,9 +1,9 @@
-﻿using HACS.Core;
+﻿using AeonHacs;
 using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	[ValueConversion(typeof(ValveState), typeof(string))]
 	public class ValveStateResourceKeyConverter : IValueConverter

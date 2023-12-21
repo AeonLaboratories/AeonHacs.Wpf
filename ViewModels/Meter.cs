@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Meter : HacsDevice
 	{
@@ -14,9 +14,9 @@ namespace HACS.WPF.ViewModels
 		public double Sensitivity { get => Component.Sensitivity; set => Component.Sensitivity = value; }
 		public double Resolution { get => Component.Resolution; set => Component.Resolution = value; }
 		public bool ResolutionIsProportional { get => Component.ResolutionIsProportional; set => Component.ResolutionIsProportional = value; }
-		public Core.DigitalFilter Filter { get => Component.Filter; set => Component.Filter = value; }
+		public AeonHacs.DigitalFilter Filter { get => Component.Filter; set => Component.Filter = value; }
 		public Utilities.OperationSet Conversion { get => Component.Conversion; set => Component.Conversion = value; }
-		public Core.RateOfChange RateOfChange { get => Component.RateOfChange; set => Component.RateOfChange = value; }
+		public AeonHacs.RateOfChange RateOfChange { get => Component.RateOfChange; set => Component.RateOfChange = value; }
 		public double Stable { get => Component.Stable; set => Component.Stable = value; }
 		public bool IsStable => Component.IsStable;
 		public double Falling { get => Component.Falling; set => Component.Falling = value; }

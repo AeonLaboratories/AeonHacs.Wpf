@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Oven : Thermometer
 	{
@@ -17,7 +17,7 @@ namespace HACS.WPF.ViewModels
 		public double TargetSetpoint { get => (Component as Components.IAuto).Config.Setpoint; set => Component.Setpoint = value; }
 
         #region Switch
-		public Core.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
+		public AeonHacs.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
 
 		protected string TurnOnCaption { get; set; } = "Turn on";
 		protected string TurnOffCaption { get; set; } = "Turn off";
@@ -37,7 +37,7 @@ namespace HACS.WPF.ViewModels
 		}
 
 		#region OnOff
-		public Core.OnOffState OnOffState => Component.OnOffState;
+		public AeonHacs.OnOffState OnOffState => Component.OnOffState;
 		public bool IsOn => Component.IsOn;
 		public long MillisecondsOn => Component.MillisecondsOn;
 		public long MillisecondsOff => Component.MillisecondsOff;

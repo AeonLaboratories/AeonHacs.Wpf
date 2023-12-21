@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 
-namespace HACS.WPF
+namespace AeonHacs.Wpf
 {
 	/// <summary>
 	/// Author: Andrew Smith

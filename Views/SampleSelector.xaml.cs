@@ -1,5 +1,5 @@
-﻿using HACS.Components;
-using HACS.Core;
+﻿using AeonHacs.Components;
+using AeonHacs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for RunSamplesSelector.xaml

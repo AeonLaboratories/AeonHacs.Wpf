@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class VTColdfinger : StateManager
 	{
@@ -53,9 +53,9 @@ namespace HACS.WPF.ViewModels
 
 		public bool IsOn => Component.IsOn;
 
-		public Core.OnOffState OnOffState => Component.OnOffState;
+		public AeonHacs.OnOffState OnOffState => Component.OnOffState;
 
-		public Core.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
+		public AeonHacs.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
 
 
 		protected string StandbyCaption { get; set; } = "Standby";

@@ -1,4 +1,4 @@
-﻿namespace HACS.WPF.Views
+﻿namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for Mks722BHighPressure.xaml

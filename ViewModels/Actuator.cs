@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-namespace HACS.WPF.ViewModels
+namespace AeonHacs.Wpf.ViewModels
 {
 	public class Actuator : ManagedDevice
 	{
@@ -24,7 +24,7 @@ namespace HACS.WPF.ViewModels
 		new public bool Stopped => Component.Stopped;
 		public bool ActionSucceeded => Component.ActionSucceeded;
 
-		public Core.ObservableItemsCollection<Components.ActuatorOperation> ActuatorOperations
+		public AeonHacs.ObservableItemsCollection<Components.ActuatorOperation> ActuatorOperations
 		{
 			get => Component.ActuatorOperations;
 			set => Component.ActuatorOperations = value;

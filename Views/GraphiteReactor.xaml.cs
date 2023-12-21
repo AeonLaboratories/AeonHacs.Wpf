@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using GRSize = HACS.Components.GraphiteReactor.Sizes;
+using GRSize = AeonHacs.Components.GraphiteReactor.Sizes;
 
-namespace HACS.WPF.Views
+namespace AeonHacs.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for GraphiteReactor.xaml

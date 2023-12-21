@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HACS.WPF.Converters
+namespace AeonHacs.Wpf.Converters
 {
 	[ValueConversion(typeof(string), typeof(Brush))]
 	public class ResourceKeyToBrushConverter : IValueConverter

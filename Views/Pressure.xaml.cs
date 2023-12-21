@@ -1,4 +1,4 @@
-﻿namespace HACS.WPF.Views
+﻿namespace AeonHacs.Wpf.Views
 {
 	public partial class Pressure : Gauge
     {
