@@ -6,10 +6,8 @@
 		<Authors>Jim Wilson, Tyler Wilson</Authors>
         <Copyright>$(Company), 2022</Copyright>		
 		<AssemblyName>AeonHacs.Wpf</AssemblyName>
-		<RepositoryUrl>https://github.com/AeonLaboratories/AeonHacs.WPF</RepositoryUrl>
-		<VersionPrefix>3.1.0</VersionPrefix>
-		<VersionSuffix></VersionSuffix>
-		<Version>$(VersionPrefix)$(VersionSuffix)</Version>
+		<RepositoryUrl>https://github.com/AeonLaboratories/AeonHacs.Wpf</RepositoryUrl>
+		<Version>3.1.1</Version>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<FileVersion>$(Version)</FileVersion>
 		
@@ -33,7 +31,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AeonHacs.Core" Version="3.1.0" />
+		<PackageReference Include="AeonHacs.Core" Version="3.1.1" />
 		<PackageReference Include="WPFControls.ColorPicker" Version="1.0.0" />
 		<PackageReference Include="WpfControls.Core" Version="1.0.0" />
 		<PackageReference Include="WpfControls.Viewport" Version="1.0.0" />
@@ -41,6 +39,12 @@
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Settings.ico" />
+		<Resource Include="Themes\Defaults.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Resource>
 	</ItemGroup>
 
 	<ItemGroup>
