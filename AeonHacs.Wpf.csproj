@@ -7,10 +7,11 @@
         <Copyright>$(Company), 2022</Copyright>		
 		<AssemblyName>AeonHacs.Wpf</AssemblyName>
 		<RepositoryUrl>https://github.com/AeonLaboratories/AeonHacs.Wpf</RepositoryUrl>
-		<Version>3.1.1</Version>
+		<Version>3.1.2</Version>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<FileVersion>$(Version)</FileVersion>
-		
+		<RootNamespace>AeonHacs.Wpf</RootNamespace>
+
 		<UseWPF>true</UseWPF>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
@@ -31,14 +32,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AeonHacs.Core" Version="3.1.1" />
-		<PackageReference Include="WPFControls.ColorPicker" Version="1.0.0" />
-		<PackageReference Include="WpfControls.Core" Version="1.0.0" />
-		<PackageReference Include="WpfControls.Viewport" Version="1.0.0" />
-		<PackageReference Include="WpfControls.NumericUpdown" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\WpfControls\WpfControls.ColorPicker\WpfControls.ColorPicker.csproj" />
+	  <ProjectReference Include="..\..\WpfControls\WpfControls.Core\WpfControls.Core.csproj" />
+	  <ProjectReference Include="..\..\WpfControls\WpfControls.NumericUpDown\WpfControls.NumericUpDown.csproj" />
+	  <ProjectReference Include="..\..\WpfControls\WpfControls.Viewport\WpfControls.Viewport.csproj" />
+	  <ProjectReference Include="..\AeonHacs.Core\AeonHacs.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="Resources\Settings.ico" />
