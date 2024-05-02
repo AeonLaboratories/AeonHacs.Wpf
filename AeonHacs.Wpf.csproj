@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<AssemblyVersion>3.1.2.0</AssemblyVersion>
+		<PackageVersion>$(AssemblyVersion)</PackageVersion>
 		<Title>Aeon Laboratories WPF Elements</Title>
 		<Description>User Interface Modules for HacsComponent classes</Description>
 		<Company>Aeon Laboratories</Company>
@@ -7,10 +9,8 @@
         <Copyright>$(Company), 2022</Copyright>		
 		<AssemblyName>AeonHacs.Wpf</AssemblyName>
 		<RepositoryUrl>https://github.com/AeonLaboratories/AeonHacs.Wpf</RepositoryUrl>
-		<Version>3.1.1</Version>
-		<AssemblyVersion>$(Version)</AssemblyVersion>
-		<FileVersion>$(Version)</FileVersion>
-		
+		<RootNamespace>AeonHacs.Wpf</RootNamespace>
+
 		<UseWPF>true</UseWPF>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
@@ -39,7 +39,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\WpfControls\WpfControls.ColorPicker\WpfControls.ColorPicker.csproj" />
 	  <ProjectReference Include="..\..\WpfControls\WpfControls.Core\WpfControls.Core.csproj" />
-	  <ProjectReference Include="..\..\WpfControls\WpfControls.NumericUpdown\WpfControls.NumericUpDown.csproj" />
+	  <ProjectReference Include="..\..\WpfControls\WpfControls.NumericUpDown\WpfControls.NumericUpDown.csproj" />
 	  <ProjectReference Include="..\..\WpfControls\WpfControls.Viewport\WpfControls.Viewport.csproj" />
 	  <ProjectReference Include="..\AeonHacs.Core\AeonHacs.Core.csproj" />
 	</ItemGroup>
