@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
@@ -65,13 +66,29 @@ namespace AeonHacs.Wpf.Views
 			fe.ToolTipClosing += (sender, e) => ToolTipUpdateDispatcher.Stop();
 			fe.MouseMove += (sender, e) =>
 			{
-				//TODO disect this magic
+				// This code makes the tooltip "follow" the mouse as it moves
+				// It fails when multiple monitors are connected with different dpi and the mouse is
+				// hoving over an element on the monitor the window is not considered to be located on.
+				// Ideally, the tooltip should only be attached to the window itself and its contents
+				// set similarly to how our help text is displayed.
 				var window = Window.GetWindow(fe);
-				var mouse = e.GetPosition(window);
-				var left = window.WindowState == WindowState.Maximized ? 3 : window.Left + 10;
-				left += SystemParameters.CursorWidth / 2;
-				var top = window.WindowState == WindowState.Maximized ? 3 : window.Top + 10;
-				top += SystemParameters.WindowCaptionHeight + SystemParameters.CursorWidth / 2;
+                var mouse = e.GetPosition(window);
+				var dpi = VisualTreeHelper.GetDpi(window);
+				// This seems to return the position of the client area of the window.
+				var windowPos = window.PointToScreen(new Point(0, 0));
+				// We need to scale the position by the dpi to get the number of pixels.
+				windowPos.X /= dpi.DpiScaleX;
+				windowPos.Y /= dpi.DpiScaleY;
+				// Window.Left and Window.Top are not updated when a window is maximised, or minimised and instead
+				// refer to the position in the "Normal" state, so we use the dpi scaled window position to calculate
+				// our "left" and "top"
+				var left = window.WindowState == WindowState.Maximized ? windowPos.X + 3 : window.Left + 10;
+				left += SystemParameters.CursorWidth * dpi.DpiScaleX / 2;
+				// We have to subtract something from windowPos.Y to compensate for the title bar.
+				// Instead of using the magic numbers we might be able to use some system parameter values
+				// which may or may not need to be scaled by dpi.
+				var top = window.WindowState == WindowState.Maximized ? windowPos.Y - 19 : window.Top + 10;
+				top += SystemParameters.WindowCaptionHeight + SystemParameters.CursorHeight * dpi.DpiScaleY / 2;
 				tt.HorizontalOffset = mouse.X + left;
 				tt.VerticalOffset = mouse.Y + top;
 			};

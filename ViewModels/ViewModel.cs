@@ -61,8 +61,8 @@ namespace AeonHacs.Wpf.ViewModels
 
 				var list = AeonHacs.NamedObject.FindAll(modelName);
 				var type =
-					Type.GetType("AeonHacs.Components." + modelTypeName + ", HACS") ??
-					Type.GetType("AeonHacs." + modelTypeName + ", HACS");
+					Type.GetType("AeonHacs.Components." + modelTypeName + ", AeonHacs.Core") ??
+					Type.GetType("AeonHacs." + modelTypeName + ", AeonHacs.Core");
 				if (type != null)
 					model = 
 						list.FirstOrDefault(x => x.GetType() == type) ??

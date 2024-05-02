@@ -27,55 +27,55 @@ namespace AeonHacs.Wpf.ViewModels
 		public AeonHacs.ValveState LastMotion => Component.LastMotion;
 		public virtual List<string> Operations => Component?.Operations;
 
-		//#region Integration
+		#region Integration
 
-		//static string CloseMore10Operation = "Close More 10";
-		//static string CloseMore50Operation = "Close More 50";
-		//static string CloseLess10Operation = "Close Less 10";
-		//static string CloseLess50Operation = "Close Less 50";
+		static string CloseMore10Operation = "Close More 10";
+		static string CloseMore50Operation = "Close More 50";
+		static string CloseLess10Operation = "Close Less 10";
+		static string CloseLess50Operation = "Close Less 50";
 
-		//static string OpenMore10Operation = "Open More 10";
-		//static string OpenMore50Operation = "Open More 50";
-		//static string OpenLess10Operation = "Open Less 10";
-		//static string OpenLess50Operation = "Open Less 50";
+		static string OpenMore10Operation = "Open More 10";
+		static string OpenMore50Operation = "Open More 50";
+		static string OpenLess10Operation = "Open Less 10";
+		static string OpenLess50Operation = "Open Less 50";
 
-		//protected override void StartContext()
-		//{
-		//	base.StartContext();
-		//	ContextStart.Add(new Context(CloseMore10Operation));
-		//	ContextStart.Add(new Context(CloseMore50Operation));
-		//	ContextStart.Add(new Context(CloseLess10Operation));
-		//	ContextStart.Add(new Context(CloseLess50Operation));
-		//	ContextStart.Add(new Context(OpenMore10Operation));
-		//	ContextStart.Add(new Context(OpenMore50Operation));
-		//	ContextStart.Add(new Context(OpenLess10Operation));
-		//	ContextStart.Add(new Context(OpenLess50Operation));
-		//}
+		protected override void StartContext()
+		{
+			base.StartContext();
+			ContextStart.Add(new Context(CloseMore10Operation));
+			ContextStart.Add(new Context(CloseMore50Operation));
+			ContextStart.Add(new Context(CloseLess10Operation));
+			ContextStart.Add(new Context(CloseLess50Operation));
+			ContextStart.Add(new Context(OpenMore10Operation));
+			ContextStart.Add(new Context(OpenMore50Operation));
+			ContextStart.Add(new Context(OpenLess10Operation));
+			ContextStart.Add(new Context(OpenLess50Operation));
+		}
 
-		//protected virtual bool Calibrate(string command)
-		//{
-		//	if (command == CloseMore10Operation)
-		//		Component.CloseABitMore();
-		//	else if (command == CloseMore50Operation)
-		//		Component.CloseMore();
-		//	else if (command == CloseLess10Operation)
-		//		Component.CloseABitLess();
-		//	else if (command == CloseLess50Operation)
-		//		Component.CloseLess();
-		//	else if (command == OpenMore10Operation)
-		//		Component.OpenABitMore();
-		//	else if (command == OpenMore50Operation)
-		//		Component.OpenMore();
-		//	else if (command == OpenLess10Operation)
-		//		Component.OpenABitLess();
-		//	else if (command == OpenLess50Operation)
-		//		Component.OpenLess();
-		//	else
-		//		return false;
-		//	return true;
-		//}
+		protected virtual bool Calibrate(string command)
+		{
+			if (command == CloseMore10Operation)
+				Component.CloseABitMore();
+			else if (command == CloseMore50Operation)
+				Component.CloseMore();
+			else if (command == CloseLess10Operation)
+				Component.CloseABitLess();
+			else if (command == CloseLess50Operation)
+				Component.CloseLess();
+			else if (command == OpenMore10Operation)
+				Component.OpenABitMore();
+			else if (command == OpenMore50Operation)
+				Component.OpenMore();
+			else if (command == OpenLess10Operation)
+				Component.OpenABitLess();
+			else if (command == OpenLess50Operation)
+				Component.OpenLess();
+			else
+				return false;
+			return true;
+		}
 
-		//#endregion Integration
+		#endregion Integration
 
 		public override void Run(string command)
 		{
@@ -97,7 +97,7 @@ namespace AeonHacs.Wpf.ViewModels
 						break;
 				}
 			}
-			else //if (!Calibrate(command))
+			else if (!Calibrate(command))
 				base.Run(command);
 		}
 	}

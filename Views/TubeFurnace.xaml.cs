@@ -1,7 +1,7 @@
 ﻿namespace AeonHacs.Wpf.Views
 {
     /// <summary>
-    /// Interaction logic for TubeFurnace.xaml
+    /// Interaction logic for SerialTubeFurnace.xaml
     /// </summary>
     public partial class TubeFurnace : View
 	{
