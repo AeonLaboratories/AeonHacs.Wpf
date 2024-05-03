@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AeonHacs.Wpf.Controls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,14 @@ namespace AeonHacs.Wpf.Views
     /// </summary>
     public class FTC : View
     {
-        public static readonly DependencyProperty FillProperty = Shape.FillProperty.AddOwner(typeof(FTC));
+        public static readonly DependencyProperty OrientationProperty = LayoutProperties.OrientationProperty.AddOwner(typeof(FTC));
 
-        public Brush Fill { get => GetValue(FillProperty) as Brush; set => SetValue(FillProperty, value); }
+        public static readonly DependencyProperty FillLevelProperty = DependencyProperty.Register(
+            nameof(FillLevel), typeof(double), typeof(FTC), new FrameworkPropertyMetadata(0.0));
+        
+        public RelativeDirection Orientation { get => (RelativeDirection)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
+
+        public double FillLevel { get => (double)GetValue(FillLevelProperty); set => SetValue(FillLevelProperty, value); }
 
         static FTC()
         {

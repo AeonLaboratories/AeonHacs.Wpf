@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -92,7 +93,7 @@ namespace AeonHacs.Wpf.Views
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            var hit = e.Source as Visual;
+            var hit = e.OriginalSource as Visual;
 
             string helpText = "";
 

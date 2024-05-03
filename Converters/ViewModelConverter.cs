@@ -14,8 +14,8 @@ namespace AeonHacs.Wpf.Converters
 
 		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
 		{
-			if (!(value is string key))
-				return base.ConvertFrom(context, culture, value);
+			if (!(value is string key) || string.IsNullOrWhiteSpace(key))
+				return new ViewModel();
 
 			if (ViewModel.GetFromKey(key) is ViewModel vm)
 				return vm;

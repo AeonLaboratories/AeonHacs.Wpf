@@ -6,23 +6,14 @@ namespace AeonHacs.Wpf.Views
 {
     public class Valve : View
 	{
+		public static readonly DependencyProperty ValveStateProperty = DependencyProperty.Register(
+			nameof(ValveState), typeof(ValveState), typeof(Valve), new PropertyMetadata(ValveState.Unknown));
+
 		static Valve()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(Valve), new FrameworkPropertyMetadata(typeof(Valve)));
 		}
 
-		protected override void OnComponentTypeChanged()
-		{
-			base.OnComponentTypeChanged();
-			AttachBackgroundResource();
-		}
-
-		protected void AttachBackgroundResource()
-		{
-			var backgroundResourceKeyBinding = new Binding(nameof(ViewModels.Valve.ValveState)) { Source = Component };
-			backgroundResourceKeyBinding.Converter = ValveStateResourceKeyConverter.Default;
-			backgroundResourceKeyBinding.FallbackValue = "UnknownBrush";
-			SetBinding(HacsViewProperties.BackgroundResourceKeyProperty, backgroundResourceKeyBinding);
-		}
+		public ValveState ValveState { get => (ValveState)GetValue(ValveStateProperty); set => SetValue(ValveStateProperty, value); }
 	}
 }

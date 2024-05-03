@@ -2,32 +2,122 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:AeonHacs.Wpf"
+        xmlns:local="clr-namespace:AeonHacs.Wpf.Controls"
         xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+        xmlns:s="clr-namespace:AeonHacs.Wpf.Shapes"
         xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/AeonHacs.Wpf;component/Themes/Defaults.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
-	<Style TargetType="{x:Type v:View}">
-		<Setter Property="Background" Value="Transparent"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
+    <Style TargetType="{x:Type s:TubingBase}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+        <Setter Property="TubingSize" Value="1/4" />
+    </Style>
+
+    <Style TargetType="{x:Type s:FittingBase}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+        <Setter Property="FittingSize" Value="1/4" />
+    </Style>
+
+    <Style TargetType="{x:Type s:UnionUT}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+        <Setter Property="Connection1" Value="1/4" />
+        <Setter Property="Connection2" Value="1/4" />
+    </Style>
+
+    <Style TargetType="{x:Type s:BreaksealTube}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource GlassBrush}" />
+        <Setter Property="Size" Value="ampoule" />
+    </Style>
+
+    <Style TargetType="{x:Type s:CultureTube}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource GlassBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Needle}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Vial}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Left" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="{DynamicResource GlassColor}" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Up" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="#88CCCCCC" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Right" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="1,0.5" EndPoint="0,0.5">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="#88CCCCCC" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Down" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="#88CCCCCC" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type s:CO2Cylinder}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Arrow}">
+        <Setter Property="Fill" Value="{DynamicResource EdgeBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type v:View}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HelpText" Value="{Binding Component.Name, RelativeSource={RelativeSource Self}, Converter={x:Static c:NameToHelpTextConverter.Instance}}" />
         <Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type v:View}">
-					<Border Background="{TemplateBinding Background}"
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:View}">
+                    <Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}"
-							CornerRadius="{Binding Path=(local:HacsViewProperties.Elliptical), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static c:EllipticalConverter.Default}}">
-						<ContentPresenter/>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Setter Property="VerticalAlignment" Value="Top"/>
-	</Style>
+							BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type v:Gauge}">
         <Setter Property="BorderBrush" Value="{DynamicResource EdgeBrush}"/>
@@ -40,8 +130,7 @@
                 <ControlTemplate TargetType="{x:Type v:View}">
                     <Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}"
-							CornerRadius="{Binding Path=(local:HacsViewProperties.Elliptical), RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static c:EllipticalConverter.Default}}">
+							BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter/>
                     </Border>
                 </ControlTemplate>
@@ -56,6 +145,12 @@
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="Height" Value="19"/>
 		<Setter Property="Width" Value="19"/>
+        <Setter Property="IsOn" Value="{Binding Component.IsOn, RelativeSource={RelativeSource Self}}" />
+        <Style.Triggers>
+            <Trigger Property="IsOn" Value="True">
+                <Setter Property="Background" Value="{DynamicResource OnBrush}" />
+            </Trigger>
+        </Style.Triggers>
 	</Style>
 
 	<Style TargetType="{x:Type v:Heater}" BasedOn="{StaticResource {x:Type v:View}}">
@@ -64,6 +159,28 @@
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="Height" Value="21"/>
 		<Setter Property="Width" Value="21"/>
+        <Setter Property="IsOn" Value="{Binding Component.IsOn, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:Heater}">
+                    <Border x:Name="shape" Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Elliptical" Value="True">
+                            <Setter TargetName="shape" Property="CornerRadius" Value="1e300" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsOn" Value="True">
+                <Setter Property="Background" Value="{DynamicResource HotBrush}" />
+            </Trigger>
+        </Style.Triggers>
 	</Style>
 
 	<Style TargetType="{x:Type v:Valve}" BasedOn="{StaticResource {x:Type v:View}}">
@@ -72,41 +189,22 @@
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="Height" Value="19"/>
 		<Setter Property="Width" Value="19"/>
-	</Style>
-
-
-    <Style TargetType="{x:Type v:UTUnion}">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type v:UTUnion}">
-					<StackPanel>
-						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="6"/>
-						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="5" Height="3" Margin="0,-1"/>
-						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="9" Height="4"/>
-						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="3" Margin="0,-1"/>
-						<Rectangle Style="{DynamicResource FittingShapeStyle}" Width="9" Height="7"/>
-					</StackPanel>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Style.Triggers>
-			<Trigger Property="Orientation" Value="Horizontal">
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="{x:Type v:UTUnion}">
-                            <StackPanel Orientation="Horizontal">
-                                <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="7" Height="9"/>
-                                <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="3" Height="7" Margin="-1,0"/>
-                                <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="4" Height="9"/>
-                                <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="3" Height="5" Margin="-1,0"/>
-                                <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="6" Height="7"/>
-                            </StackPanel>
-                        </ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-		</Style.Triggers>
-	</Style>
+        <Setter Property="ValveState" Value="{Binding Component.ValveState, RelativeSource={RelativeSource Self}}" />
+        <Style.Triggers>
+            <Trigger Property="ValveState" Value="Closed">
+                <Setter Property="Background" Value="{DynamicResource ClosedBrush}" />
+            </Trigger>
+            <Trigger Property="ValveState" Value="Closing">
+                <Setter Property="Background" Value="{DynamicResource ClosingBrush}" />
+            </Trigger>
+            <Trigger Property="ValveState" Value="Opening">
+                <Setter Property="Background" Value="{DynamicResource OpeningBrush}" />
+            </Trigger>
+            <Trigger Property="ValveState" Value="Opened">
+                <Setter Property="Background" Value="{DynamicResource OpenedBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style TargetType="{x:Type v:Restriction}">
         <Setter Property="Template">
@@ -218,79 +316,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type v:Arrow}">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type v:Arrow}">
-					<ControlTemplate.Resources>
-						<PathGeometry x:Key="LeftArrow" Figures="M0,3.5 L8.5,7 V6 L3.5,4 H17 V3 H3.5 L8.5,1 V0 Z"/>
-						<PathGeometry x:Key="UpArrow" Figures="M3.5,0 L7,8.5 H6 L4,3.5 V17 H3 V3.5 L1,8.5 H0 Z"/>
-						<PathGeometry x:Key="RightArrow" Figures="M17,3.5 L8.5,0 V1 L13.5,3 H0 V4 H13.5 L8.5,6 V7 Z"/>
-						<PathGeometry x:Key="DownArrow" Figures="M3.5,17 L0,8.5 H1 L3,13.5 V0 H4 V13.5 L6,8.5 H7 Z"/>
-					</ControlTemplate.Resources>
-					<Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-						<Path x:Name="PART_Arrow" Fill="{DynamicResource EdgeBrush}" Data="{StaticResource DownArrow}"/>
-					</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="Direction" Value="Left">
-							<Setter TargetName="PART_Arrow" Property="Data" Value="{StaticResource LeftArrow}"/>
-						</Trigger>
-						<Trigger Property="Direction" Value="Up">
-							<Setter TargetName="PART_Arrow" Property="Data" Value="{StaticResource UpArrow}"/>
-						</Trigger>
-						<Trigger Property="Direction" Value="Right">
-							<Setter TargetName="PART_Arrow" Property="Data" Value="{StaticResource RightArrow}"/>
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-    <Style TargetType="{x:Type v:CorrugatedTubing}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type v:CorrugatedTubing}">
-                    <Canvas>
-                        <Path Data="{TemplateBinding Data}" StrokeThickness="33" Stroke="Transparent" d:Stroke="#2200FFFF" />
-                        <Path Data="{TemplateBinding Data}" StrokeDashArray="0.1428" Stroke="Black" StrokeThickness="7" StrokeDashOffset="1" IsHitTestVisible="False"/>
-                        <Path Data="{TemplateBinding Data}" Stroke="Black" StrokeThickness="5" IsHitTestVisible="False"/>
-                        <Path Data="{TemplateBinding Data}" Stroke="DarkGray" StrokeThickness="3" IsHitTestVisible="False"/>
-                        <Path Data="{TemplateBinding Data}" StrokeDashArray="0.2" Stroke="{DynamicResource BodyBrush}" StrokeThickness="5" StrokeDashOffset="1" IsHitTestVisible="False"/>
-                    </Canvas>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type v:Fitting}">
-        <Setter Property="Fill" Value="{DynamicResource BodyBrush}"/>
-        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}"/>
-        <Setter Property="Thickness" Value="8"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type v:Fitting}">
-                    <Border Background="{TemplateBinding Background}"
-						BorderBrush="{TemplateBinding BorderBrush}"
-						BorderThickness="{TemplateBinding BorderThickness}">
-                        <Path Fill="{TemplateBinding Fill}"
-							  Stroke="{TemplateBinding Stroke}"
-							  StrokeThickness="{TemplateBinding StrokeThickness}">
-                            <Path.Data>
-                                <MultiBinding Converter="{x:Static c:WidenedGeometryConverter.Instance}">
-                                    <Binding Path="Data" RelativeSource="{RelativeSource AncestorType={x:Type v:Fitting}}"/>
-                                    <Binding Path="Thickness" RelativeSource="{RelativeSource AncestorType={x:Type v:Fitting}}"/>
-                                </MultiBinding>
-                            </Path.Data>
-                        </Path>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type v:Chamber}">
         <Setter Property="Fill" Value="{DynamicResource BodyBrush}"/>
         <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}"/>
@@ -316,21 +341,363 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type v:FTC}">
+    <Style TargetType="{x:Type v:FTC}" BasedOn="{StaticResource {x:Type v:View}}">
         <Setter Property="Background" Value="{DynamicResource FoamBrush}" />
-        <Setter Property="Fill" Value="#5555EE" />
+        <Setter Property="FillLevel" Value="{Binding Component.Temperature, RelativeSource={RelativeSource Self}, Converter={x:Static c:ScaledValueConverter.LiquidNitrogen}}" />
+        <Setter Property="Width" Value="21" />
+        <Setter Property="Height" Value="21" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type v:FTC}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0.5,0.2" EndPoint="0.5,1">
-                                <GradientStop x:Name="fill" Color="{Binding Background, Converter={x:Static c:SolidColorBrushToColorConverter.Instance}}" Offset="{Binding Component.Temperature, Converter={x:Static c:ScaledValueConverter.LiquidNitrogen}, FallbackValue=1}" />
-                                <GradientStop Color="{Binding Fill, Converter={x:Static c:SolidColorBrushToColorConverter.Instance}}" Offset="{Binding Offset, ElementName=fill, FallbackValue=1}" />
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <ContentPresenter />
+                        <Border x:Name="fill">
+                            <ContentPresenter />
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Left">
+                            <Setter TargetName="fill" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="1,0.5" EndPoint="0,0.5">
+                                        <GradientStop Color="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static c:DarkenConverter.Instance}, ConverterParameter=0.2}" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <GradientStop Color="Transparent" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Up">
+                            <Setter TargetName="fill" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                                        <GradientStop x:Name="liquid" Color="#339CFF" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <GradientStop x:Name="air" Color="Transparent" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Right">
+                            <Setter TargetName="fill" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="#339CFF" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <GradientStop Color="Transparent" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Down">
+                            <Setter TargetName="fill" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#339CFF" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <GradientStop Color="Transparent" Offset="{Binding FillLevel, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:Breakseal}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:Breakseal}">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <local:StackingPanel>
+                            <s:ConvolutedTubing x:Name="tube" TubingSize="3/8" />
+                            <s:UnionUT Connection1="3/8" Connection2="1/4" />
+                            <s:BreaksealTube x:Name="sample" Size="2,60" Stickout="17" />
+                        </local:StackingPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Up">
+                            <Setter TargetName="tube" Property="Data" Value="M0,0 v5 m0,0 v13 m0,0 v5" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Down">
+                            <Setter TargetName="tube" Property="Data" Value="M0,0 v5 m0,0 v13 m0,0 v5" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Left">
+                            <Setter TargetName="tube" Property="Data" Value="M0,0 h5 m0,0 h13 m0,0 h5" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Right">
+                            <Setter TargetName="tube" Property="Data" Value="M0,0 h5 m0,0 h13 m0,0 h5" />
+                        </Trigger>
+                        <Trigger Property="State" Value="Empty">
+                            <Setter TargetName="sample" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:Needle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:Needle}">
+                    <Grid>
+                        <local:StackingPanel IsHitTestVisible="False">
+                            <s:Needle Size="3/8"/>
+                        </local:StackingPanel>
+                        <local:StackingPanel Offset="11" IsHitTestVisible="False">
+                            <s:Vial x:Name="sample"/>
+                            <!-- Hack to make contents line up between port types. TODO fix -->
+                            <local:StackingPanel Offset="14"/>
+                        </local:StackingPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="State" Value="Empty">
+                            <Setter TargetName="sample" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:CombustionChamber}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:CombustionChamber}">
+                    <Grid>
+                        <local:StackingPanel>
+                            <s:CultureTube x:Name="sample" Size="combustion" IsHitTestVisible="False"/>
+                            <s:Short x:Name="flowthrough" TubingSize="3/8" Length="63" IsHitTestVisible="False" Visibility="Collapsed"/>
+                        </local:StackingPanel>
+                        <local:StackingPanel Offset="6" Spacing="2">
+                            <v:Heater x:Name="CCQ" Component="{TemplateBinding QuartzFurnace}" />
+                            <v:Heater x:Name="CCS" Component="{TemplateBinding SampleFurnace}" Visibility="{Binding Component, RelativeSource={RelativeSource Self}, Converter={x:Static c:NullToVisibilityConverter.Hidden}}" />
+                        </local:StackingPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Up">
+                            <Setter TargetName="CCS" Property="Height" Value="31" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Down">
+                            <Setter TargetName="CCS" Property="Height" Value="31" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Left">
+                            <Setter TargetName="CCS" Property="Width" Value="31" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Right">
+                            <Setter TargetName="CCS" Property="Width" Value="31" />
+                        </Trigger>
+                        <Trigger Property="State" Value="Empty">
+                            <Setter TargetName="sample" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="QuartzFurnace" Value="{x:Null}">
+                            <Setter TargetName="CCQ" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="SampleFurnace" Value="{x:Null}">
+                            <Setter TargetName="CCS" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsFlowThrough" Value="True">
+                            <Setter TargetName="sample" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="flowthrough" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:Port}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Valve" Value="{Binding Component.Valve, RelativeSource={RelativeSource Self}}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Left">
+                <Setter Property="Height" Value="21" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Up">
+                <Setter Property="Width" Value="21" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Right">
+                <Setter Property="Height" Value="21" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Down">
+                <Setter Property="Width" Value="21" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style TargetType="{x:Type v:InletPort}" BasedOn="{StaticResource {x:Type v:Port}}">
+        <Setter Property="PortType" Value="{Binding Component.PortType, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="QuartzFurnace" Value="{Binding Component.QuartzFurnace, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="SampleFurnace" Value="{Binding Component.SampleFurnace, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:InletPort}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <local:StackingPanel>
+                            <v:Valve Component="{TemplateBinding Valve}" d:ValveState="Closed" />
+                            <s:Stub IsHitTestVisible="False" />
+                            <s:Short TubingSize="1/4" Length="2" IsHitTestVisible="False" />
+                            <s:UnionUT Connection1="1/4" Connection2="3/8" IsHitTestVisible="False" />
+                            <local:StackingPanel x:Name="word">
+                                <v:CombustionChamber x:Name="combustion" Visibility="Collapsed" />
+                                <v:Needle x:Name="needle" Visibility="Collapsed" />
+                                <v:Breakseal x:Name="manual" Visibility="Collapsed" />
+                                <local:StackingPanel x:Name="contents" Offset="3">
+                                    <TextBlock Text="{Binding Contents}" TextTrimming="WordEllipsis" v:View.Component="{Binding Sample}"
+                                               LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
+                                </local:StackingPanel>
+                            </local:StackingPanel>
+                        </local:StackingPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="PortType" Value="Combustion">
+                            <Setter TargetName="combustion" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="PortType" Value="Needle">
+                            <Setter TargetName="needle" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="PortType" Value="Manual">
+                            <Setter TargetName="manual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="State" Value="Disabled">
+                            <Setter TargetName="word" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="PortType" Value="FlowThrough">
+                            <Setter TargetName="combustion" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="combustion" Property="IsFlowThrough" Value="True" />
+                            <Setter TargetName="contents" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:AuxiliaryPort}" BasedOn="{StaticResource {x:Type v:Port}}">
+        <Setter Property="PortType" Value="Needle" />
+        <Setter Property="Coldfinger" Value="{Binding Component.Coldfinger, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:AuxiliaryPort}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Grid>
+                            <local:StackingPanel Offset="51">
+                                <v:FTC Component="{TemplateBinding Coldfinger}" />
+                                <local:StackingPanel x:Name="contents" Offset="3">
+                                    <TextBlock Text="{Binding Contents}" TextTrimming="WordEllipsis" v:View.Component="{Binding Sample}"
+                                           LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
+                                </local:StackingPanel>
+                            </local:StackingPanel>
+                            <local:StackingPanel>
+                                <v:Valve Component="{TemplateBinding Valve}" d:ValveState="Closed" />
+                                <s:Stub x:Name="stub" FittingSize="1/4" IsHitTestVisible="False" />
+                                <s:CultureTube x:Name="ampoule" Size="ampoule" Visibility="Collapsed" IsHitTestVisible="False" />
+                                <Grid x:Name="needle" Visibility="Collapsed" IsHitTestVisible="False">
+                                    <local:StackingPanel>
+                                        <s:Needle Size="1/4" />
+                                    </local:StackingPanel>
+                                    <local:StackingPanel Offset="10">
+                                        <s:Vial />
+                                    </local:StackingPanel>
+                                </Grid>
+                            </local:StackingPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="PortType" Value="Ampoule">
+                            <Setter TargetName="ampoule" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="stub" Property="FittingSize" Value="1/4" />
+                        </Trigger>
+                        <Trigger Property="PortType" Value="Needle">
+                            <Setter TargetName="needle" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="stub" Property="FittingSize" Value="3/8" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:GasSupply}" BasedOn="{StaticResource {x:Type v:Port}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:GasSupply}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <local:StackingPanel>
+                            <v:Valve Component="{TemplateBinding Valve}" d:ValveState="Closed" />
+                            <local:StackingPanel Visibility="{Binding FlowValve, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static c:NullToVisibilityConverter.Collapsed}}">
+                                <s:Connection IsHitTestVisible="False"/>
+                                <v:Valve Component="{TemplateBinding FlowValve}" d:ValveState="Closed">
+                                    <v:Restriction x:Name="restriction"/>
+                                </v:Valve>
+                            </local:StackingPanel>
+                            <s:Break IsHitTestVisible="False" />
+                            <s:Arrow IsHitTestVisible="False" />
+                            <local:StackingPanel Offset="3" IsHitTestVisible="False">
+                                <TextBlock Text="{TemplateBinding GasName, Converter={x:Static c:ChemicalFormulaConverter.Default}}"
+                                           LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
+                            </local:StackingPanel>
+                        </local:StackingPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Left">
+                            <Setter TargetName="restriction" Property="Orientation" Value="Horizontal" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:GraphiteReactor}" BasedOn="{StaticResource {x:Type v:Port}}">
+        <Setter Property="Coldfinger" Value="{Binding Component.Coldfinger, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Heater" Value="{Binding Component.Heater, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="v:GraphiteReactor">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Grid>
+                            <local:StackingPanel Offset="51">
+                                <v:FTC Component="{TemplateBinding Coldfinger}" />
+                                <local:StackingPanel x:Name="contents" Offset="3">
+                                    <TextBlock Text="{Binding Contents}" TextTrimming="WordEllipsis" v:View.Component="{Binding Sample}"
+                                           LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
+                                </local:StackingPanel>
+                            </local:StackingPanel>
+                            <local:StackingPanel>
+                                <v:Valve Component="{TemplateBinding Valve}" d:ValveState="Opened"/>
+                                <s:Stub Length="30" IsHitTestVisible="False" />
+                                <s:CultureTube Size="6mm" IsHitTestVisible="False" />
+                            </local:StackingPanel>
+                            <local:StackingPanel Offset="25">
+                                <v:Heater Elliptical="True" Component="{TemplateBinding Heater}" />
+                            </local:StackingPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:CO2Chamber}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:CO2Chamber}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <local:StackingPanel IsHitTestVisible="False">
+                            <s:Stub />
+                            <s:CO2Cylinder />
+                        </local:StackingPanel>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
