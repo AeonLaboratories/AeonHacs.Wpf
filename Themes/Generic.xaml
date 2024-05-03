@@ -724,4 +724,186 @@
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
+
+    <Style TargetType="{x:Type local:NumericUpDown}">
+        <Setter Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:NumericUpDown}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="1">
+                        <Grid Grid.IsSharedSizeScope="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="Dummy" Text="#" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                            <TextBox x:Name="PART_Text" Grid.Row="0" Grid.Column="0" Margin="-1,-1,1,1" VerticalAlignment="Stretch"
+									 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+									 Background="{x:Null}" BorderThickness="0" 
+									 Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat=0.##, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Grid Grid.Row="0" Grid.Column="1" MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="1"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="1"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <RepeatButton x:Name="PART_DecreaseButton" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="1">
+                                    <Path x:Name="MinusGlyph" Data="M 0,0 7,0 7,1 0,1 Z" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Width="{Binding ActualWidth, ElementName=Dummy}" SnapsToDevicePixels="True"/>
+                                </RepeatButton>
+                                <RepeatButton x:Name="PART_IncreaseButton" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" BorderThickness="1">
+                                    <Path x:Name="PlusGlyph" Data="M 3,0 v3 h-3 v1 h3 v3 h1 v-3 h3 v-1 h-3 v-3 Z" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Width="{Binding ActualWidth, ElementName=Dummy}" SnapsToDevicePixels="True"/>
+                                </RepeatButton>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:ValueSlider}">
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ValueSlider}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Canvas x:Name="PART_Bounds" ClipToBounds="True">
+                            <Canvas x:Name="PART_Slider" Canvas.Left="{Binding SliderPosition.X, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding ActualHeight, ElementName=PART_Bounds}">
+                                <Path Canvas.Top="0" Data="M -4,-1 L 0,3 L 4,-1" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+                                <Path Canvas.Bottom="-1" Data="M -4,1 L 0,-3 L 4,1" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+                            </Canvas>
+                        </Canvas>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="PART_Bounds" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:ColorSlider}">
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="LargeChange" Value="5"/>
+        <Setter Property="Minimum" Value="0"/>
+        <Setter Property="Maximum" Value="255"/>
+        <Setter Property="SmallChange" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ValueSlider}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border x:Name="Transparent" Background="{x:Static SpecialBrushes.TransparentPattern}">
+                            <Canvas x:Name="PART_Bounds" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" ClipToBounds="True">
+                                <Canvas x:Name="PART_Slider" Canvas.Left="{Binding SliderPosition.X, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding ActualHeight, ElementName=PART_Bounds}">
+                                    <Path Canvas.Top="0" Data="M -4,-1 L 0,3 L 4,-1" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+                                    <Path Canvas.Bottom="-1" Data="M -4,1 L 0,-3 L 4,1" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+                                </Canvas>
+                            </Canvas>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="PART_Bounds" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <CoerceColorConverter x:Key="A255" A="255"/>
+    <Style TargetType="{x:Type local:ColorDisplay}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorDisplay}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border Background="{x:Static SpecialBrushes.TransparentPattern}">
+                            <Border Grid.Column="0">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" Offset="0.5"/>
+                                        <GradientStop Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource A255}}" Offset="0.5"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:SLCanvas}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SLCanvas}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="PART_Bounds" Background="Black" ClipToBounds="True">
+                            <Border>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="White" Offset="0"/>
+                                        <GradientStop x:Name="PART_HueGradientStop" Color="Red" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="Transparent" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.OpacityMask>
+                            </Border>
+                            <Canvas>
+                                <Ellipse Width="10" Height="10" Canvas.Right="0" Margin="-5"
+										 Canvas.Left="{Binding SelectorPosition.X, RelativeSource={RelativeSource TemplatedParent}}"
+										 Canvas.Top="{Binding SelectorPosition.Y, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                                            <GradientStop Color="Transparent" Offset="0.4"/>
+                                            <GradientStop Color="White" Offset="0.4"/>
+                                            <GradientStop Color="White" Offset="0.6"/>
+                                            <GradientStop Color="Black" Offset="0.6"/>
+                                            <GradientStop Color="Black" Offset="0.8"/>
+                                            <GradientStop Color="White" Offset="0.8"/>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </Canvas>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

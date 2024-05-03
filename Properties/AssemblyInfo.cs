@@ -7,5 +7,6 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemas.aeonhacs.com/wpf", "AeonHacs.Wpf.Controls")]
 [assembly: XmlnsDefinition("http://schemas.aeonhacs.com/wpf", "AeonHacs.Wpf.Converters")]
 [assembly: XmlnsDefinition("http://schemas.aeonhacs.com/wpf", "AeonHacs.Wpf.Data")]
+[assembly: XmlnsDefinition("http://schemas.aeonhacs.com/wpf", "AeonHacs.Wpf.Media")]
 [assembly: XmlnsDefinition("http://schemas.aeonhacs.com/wpf", "AeonHacs.Wpf.Shapes")]
 [assembly: XmlnsDefinition("http://schemas.aeonhacs.com/wpf", "AeonHacs.Wpf.Views")]

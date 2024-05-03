@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Media;
-using WpfControls.Media;
 
 namespace AeonHacs.Wpf.Media;
 public static class ColorExtensions

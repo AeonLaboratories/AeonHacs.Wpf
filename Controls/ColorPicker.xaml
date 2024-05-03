@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="AeonHacs.Wpf.Controls.ColorPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:AeonHacs.Wpf.Controls"
+             mc:Ignorable="d"
+			 x:Name="Picker">
+	<UserControl.Resources>
+		<CoerceColorConverter x:Key="A255" A="255"/>
+		<CoerceColorConverter x:Key="R0" A="255" R="0"/>
+		<CoerceColorConverter x:Key="R255" A="255" R="255"/>
+		<CoerceColorConverter x:Key="G0" A="255" G="0"/>
+		<CoerceColorConverter x:Key="G255" A="255" G="255"/>
+		<CoerceColorConverter x:Key="B0" A="255" B="0"/>
+		<CoerceColorConverter x:Key="B255" A="255" B="255"/>
+	</UserControl.Resources>
+	<Grid Grid.IsSharedSizeScope="True">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" MinHeight="100"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" MinWidth="100"/>
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition SharedSizeGroup="Row"/>
+			</Grid.ColumnDefinitions>
+			<local:SLCanvas x:Name="SLSlider" Grid.Row="0" Grid.Column="0" MinWidth="100" MinHeight="100" SelectedColor="{Binding Color, ElementName=Picker, Converter={StaticResource A255}, Mode=TwoWay}"
+					  BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1"/>
+			<local:ColorSlider x:Name="HSlider" Orientation="Vertical" Background="{x:Static SpecialBrushes.HueGradient}" Grid.Row="0" Grid.Column="2" MinWidth="20" Value="{Binding Hue, ElementName=SLSlider}" Maximum="359"
+					  BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1"/>
+		</Grid>
+		<StackPanel Grid.Row="1">
+			<Grid Margin="0,5,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" SharedSizeGroup="Row"/>
+				</Grid.RowDefinitions>
+				<local:ColorDisplay x:Name="Display" Grid.Column="0" MinHeight="20" Color="{Binding Color, ElementName=Picker}"
+							BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1"/>
+				<TextBox x:Name="HexTemplate" Grid.Column="2" Text="#DDDDDDDD" Visibility="Hidden"/>
+				<TextBox x:Name="ColorHex" Grid.Column="2" TextChanged="ColorHexChanged"
+						 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxWidth="{Binding ActualWidth, ElementName=HexTemplate}" LostFocus="ColorHex_LostFocus"/>
+			</Grid>
+
+			<Grid Margin="0,5,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="*" MinWidth="102"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" SharedSizeGroup="Row"/>
+				</Grid.RowDefinitions>
+				<Label Content="R:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Padding="0"/>
+				<local:ColorSlider x:Name="RSlider" Grid.Column="2" Value="{Binding R, ElementName=Picker}"
+							BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1">
+					<local:ColorSlider.Background>
+						<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource R0}}" Offset="0"/>
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource R255}}" Offset="1"/>
+						</LinearGradientBrush>
+					</local:ColorSlider.Background>
+				</local:ColorSlider>
+				<NumericUpDown Grid.Column="4" Maximum="255" Value="255" Visibility="Hidden"/>
+				<NumericUpDown Grid.Column="4"
+										Minimum="{Binding Minimum, ElementName=RSlider}" Maximum="{Binding Maximum, ElementName=RSlider}"
+										SmallChange="{Binding SmallChange, ElementName=RSlider}" LargeChange="{Binding LargeChange, ElementName=RSlider}"
+										Value="{Binding R, ElementName=Picker}"/>
+			</Grid>
+			<Grid Margin="0,5,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="*" MinWidth="102"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" SharedSizeGroup="Row"/>
+				</Grid.RowDefinitions>
+				<Label Content="G:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Padding="0"/>
+				<local:ColorSlider x:Name="GSlider" Grid.Column="2" Value="{Binding G, ElementName=Picker}"
+							BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1">
+					<local:ColorSlider.Background>
+						<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource G0}}" Offset="0"/>
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource G255}}" Offset="1"/>
+						</LinearGradientBrush>
+					</local:ColorSlider.Background>
+				</local:ColorSlider>
+				<NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=GSlider}" Maximum="{Binding Maximum, ElementName=GSlider}"
+										SmallChange="{Binding SmallChange, ElementName=GSlider}" LargeChange="{Binding LargeChange, ElementName=GSlider}"
+										Value="{Binding G, ElementName=Picker}"/>
+			</Grid>
+			<Grid Margin="0,5,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="*" MinWidth="102"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" SharedSizeGroup="Row"/>
+				</Grid.RowDefinitions>
+				<Label Content="B:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Padding="0"/>
+				<local:ColorSlider x:Name="BSlider" Grid.Column="2" Value="{Binding B, ElementName=Picker}"
+							BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1">
+					<local:ColorSlider.Background>
+						<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource B0}}" Offset="0"/>
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource B255}}" Offset="1"/>
+						</LinearGradientBrush>
+					</local:ColorSlider.Background>
+				</local:ColorSlider>
+				<NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=BSlider}" Maximum="{Binding Maximum, ElementName=BSlider}"
+										SmallChange="{Binding SmallChange, ElementName=BSlider}" LargeChange="{Binding LargeChange, ElementName=BSlider}"
+										Value="{Binding B, ElementName=Picker}"/>
+			</Grid>
+			<Grid Margin="0,5,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="*" MinWidth="102"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" SharedSizeGroup="Row"/>
+				</Grid.RowDefinitions>
+				<Label Content="A:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Padding="0"/>
+				<local:ColorSlider x:Name="ASlider" Grid.Column="2" Value="{Binding A, ElementName=Picker}"
+							BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1">
+					<local:ColorSlider.Background>
+						<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+							<GradientStop Color="Transparent" Offset="0"/>
+							<GradientStop Color="{Binding Color, ElementName=Picker, Converter={StaticResource A255}}" Offset="1"/>
+						</LinearGradientBrush>
+					</local:ColorSlider.Background>
+				</local:ColorSlider>
+				<NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=ASlider}" Maximum="{Binding Maximum, ElementName=ASlider}"
+										SmallChange="{Binding SmallChange, ElementName=ASlider}" LargeChange="{Binding LargeChange, ElementName=ASlider}"
+										Value="{Binding A, ElementName=Picker}"/>
+			</Grid>
+		</StackPanel>
+	</Grid>
+</UserControl>
