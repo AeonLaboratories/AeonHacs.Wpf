@@ -10,26 +10,21 @@ namespace AeonHacs.Wpf.Views
 {
     public class Heater : View
 	{
-		[Category("Appearance")]
-		public bool Elliptical { get => (bool)GetValue(HacsViewProperties.EllipticalProperty); set => SetValue(HacsViewProperties.EllipticalProperty, value); }
+		public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
+			nameof(IsOn), typeof(bool), typeof(Heater), new FrameworkPropertyMetadata(false));
 
-		static Heater()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(Heater), new FrameworkPropertyMetadata(typeof(Heater)));
-		}
+        public static readonly DependencyProperty EllipticalProperty = DependencyProperty.Register(
+            nameof(Elliptical), typeof(bool), typeof(Heater), new FrameworkPropertyMetadata(false));
 
-		protected override void OnComponentTypeChanged()
-		{
-			base.OnComponentTypeChanged();
-			AttachBackgroundResource();
-		}
+        static Heater()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Heater), new FrameworkPropertyMetadata(typeof(Heater)));
+        }
 
-		protected void AttachBackgroundResource()
-		{
-			var backgroundResourceKeyBinding = new Binding(nameof(ViewModels.Heater.IsOn)) { Source = Component };
-			backgroundResourceKeyBinding.Converter = BoolToResourceKeyConverter.Heater;
-			backgroundResourceKeyBinding.FallbackValue = "NeutralBrush";
-			SetBinding(HacsViewProperties.BackgroundResourceKeyProperty, backgroundResourceKeyBinding);
-		}
+        [Category("Appearance")]
+        public bool IsOn { get => (bool)GetValue(IsOnProperty); set => SetValue(IsOnProperty, value); }
+
+        [Category("Appearance")]
+		public bool Elliptical { get => (bool)GetValue(EllipticalProperty); set => SetValue(EllipticalProperty, value); }
 	}
 }

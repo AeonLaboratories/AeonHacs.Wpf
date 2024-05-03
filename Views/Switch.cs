@@ -10,23 +10,14 @@ namespace AeonHacs.Wpf.Views
 {
     public class Switch : View
 	{
+		public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
+			nameof(IsOn), typeof(bool), typeof(Switch), new FrameworkPropertyMetadata(false));
+
 		static Switch()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(Switch), new FrameworkPropertyMetadata(typeof(Switch)));
 		}
 
-		protected override void OnComponentTypeChanged()
-		{
-			base.OnComponentTypeChanged();
-			AttachBackgroundResource();
-		}
-
-		protected void AttachBackgroundResource()
-		{
-			var backgroundResourceKeyBinding = new Binding(nameof(ViewModels.Switch.IsOn)) { Source = Component };
-			backgroundResourceKeyBinding.Converter = BoolToResourceKeyConverter.Default;
-			backgroundResourceKeyBinding.FallbackValue = "OffBrush";
-			SetBinding(HacsViewProperties.BackgroundResourceKeyProperty, backgroundResourceKeyBinding);
-		}
+		public bool IsOn { get => (bool)GetValue(IsOnProperty); set => SetValue(IsOnProperty, value); }
 	}
 }

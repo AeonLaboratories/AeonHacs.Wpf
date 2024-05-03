@@ -8,7 +8,7 @@ namespace AeonHacs.Wpf.Converters
 	[ValueConversion(typeof(double), typeof(double))]
 	public class ScaledValueConverter : IValueConverter
 	{
-		public static ScaledValueConverter LiquidNitrogen = new ScaledValueConverter(-195.8, 20.0);
+		public static ScaledValueConverter LiquidNitrogen = new ScaledValueConverter(20.0, -195.8);
 
 		public double MinInput { get; }
 		public double MaxInput { get; }
