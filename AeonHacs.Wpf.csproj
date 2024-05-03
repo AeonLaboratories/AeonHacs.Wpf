@@ -31,9 +31,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="WPFControls.ColorPicker" Version="1.0.0" />
-		<PackageReference Include="WpfControls.Core" Version="1.0.0" />
-		<PackageReference Include="WpfControls.NumericUpdown" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Drawing.Common" Version="8.0.0" />

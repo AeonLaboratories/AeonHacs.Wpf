@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:AeonHacs.Wpf.Controls"
         xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+        xmlns:m="clr-namespace:AeonHacs.Wpf.Media"
         xmlns:s="clr-namespace:AeonHacs.Wpf.Shapes"
         xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -816,7 +817,7 @@
                 <ControlTemplate TargetType="{x:Type local:ValueSlider}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Border x:Name="Transparent" Background="{x:Static SpecialBrushes.TransparentPattern}">
+                        <Border x:Name="Transparent" Background="{x:Static m:SpecialBrushes.TransparentPattern}">
                             <Canvas x:Name="PART_Bounds" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" ClipToBounds="True">
                                 <Canvas x:Name="PART_Slider" Canvas.Left="{Binding SliderPosition.X, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding ActualHeight, ElementName=PART_Bounds}">
                                     <Path Canvas.Top="0" Data="M -4,-1 L 0,3 L 4,-1" Fill="{TemplateBinding Foreground}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
@@ -839,14 +840,14 @@
         </Setter>
     </Style>
 
-    <CoerceColorConverter x:Key="A255" A="255"/>
+    <c:CoerceColorConverter x:Key="A255" A="255"/>
     <Style TargetType="{x:Type local:ColorDisplay}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ColorDisplay}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Border Background="{x:Static SpecialBrushes.TransparentPattern}">
+                        <Border Background="{x:Static m:SpecialBrushes.TransparentPattern}">
                             <Border Grid.Column="0">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">

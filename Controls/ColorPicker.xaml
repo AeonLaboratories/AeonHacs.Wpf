@@ -4,16 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:local="clr-namespace:AeonHacs.Wpf.Controls"
+             xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+             xmlns:m="clr-namespace:AeonHacs.Wpf.Media"
              mc:Ignorable="d"
 			 x:Name="Picker">
 	<UserControl.Resources>
-		<CoerceColorConverter x:Key="A255" A="255"/>
-		<CoerceColorConverter x:Key="R0" A="255" R="0"/>
-		<CoerceColorConverter x:Key="R255" A="255" R="255"/>
-		<CoerceColorConverter x:Key="G0" A="255" G="0"/>
-		<CoerceColorConverter x:Key="G255" A="255" G="255"/>
-		<CoerceColorConverter x:Key="B0" A="255" B="0"/>
-		<CoerceColorConverter x:Key="B255" A="255" B="255"/>
+		<c:CoerceColorConverter x:Key="A255" A="255"/>
+		<c:CoerceColorConverter x:Key="R0" A="255" R="0"/>
+		<c:CoerceColorConverter x:Key="R255" A="255" R="255"/>
+		<c:CoerceColorConverter x:Key="G0" A="255" G="0"/>
+		<c:CoerceColorConverter x:Key="G255" A="255" G="255"/>
+		<c:CoerceColorConverter x:Key="B0" A="255" B="0"/>
+		<c:CoerceColorConverter x:Key="B255" A="255" B="255"/>
 	</UserControl.Resources>
 	<Grid Grid.IsSharedSizeScope="True">
 		<Grid.RowDefinitions>
@@ -31,7 +33,7 @@
 			</Grid.ColumnDefinitions>
 			<local:SLCanvas x:Name="SLSlider" Grid.Row="0" Grid.Column="0" MinWidth="100" MinHeight="100" SelectedColor="{Binding Color, ElementName=Picker, Converter={StaticResource A255}, Mode=TwoWay}"
 					  BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1"/>
-			<local:ColorSlider x:Name="HSlider" Orientation="Vertical" Background="{x:Static SpecialBrushes.HueGradient}" Grid.Row="0" Grid.Column="2" MinWidth="20" Value="{Binding Hue, ElementName=SLSlider}" Maximum="359"
+			<local:ColorSlider x:Name="HSlider" Orientation="Vertical" Background="{x:Static m:SpecialBrushes.HueGradient}" Grid.Row="0" Grid.Column="2" MinWidth="20" Value="{Binding Hue, ElementName=SLSlider}" Maximum="359"
 					  BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1"/>
 		</Grid>
 		<StackPanel Grid.Row="1">
@@ -72,8 +74,8 @@
 						</LinearGradientBrush>
 					</local:ColorSlider.Background>
 				</local:ColorSlider>
-				<NumericUpDown Grid.Column="4" Maximum="255" Value="255" Visibility="Hidden"/>
-				<NumericUpDown Grid.Column="4"
+				<local:NumericUpDown Grid.Column="4" Maximum="255" Value="255" Visibility="Hidden"/>
+				<local:NumericUpDown Grid.Column="4"
 										Minimum="{Binding Minimum, ElementName=RSlider}" Maximum="{Binding Maximum, ElementName=RSlider}"
 										SmallChange="{Binding SmallChange, ElementName=RSlider}" LargeChange="{Binding LargeChange, ElementName=RSlider}"
 										Value="{Binding R, ElementName=Picker}"/>
@@ -99,7 +101,7 @@
 						</LinearGradientBrush>
 					</local:ColorSlider.Background>
 				</local:ColorSlider>
-				<NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=GSlider}" Maximum="{Binding Maximum, ElementName=GSlider}"
+				<local:NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=GSlider}" Maximum="{Binding Maximum, ElementName=GSlider}"
 										SmallChange="{Binding SmallChange, ElementName=GSlider}" LargeChange="{Binding LargeChange, ElementName=GSlider}"
 										Value="{Binding G, ElementName=Picker}"/>
 			</Grid>
@@ -124,7 +126,7 @@
 						</LinearGradientBrush>
 					</local:ColorSlider.Background>
 				</local:ColorSlider>
-				<NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=BSlider}" Maximum="{Binding Maximum, ElementName=BSlider}"
+				<local:NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=BSlider}" Maximum="{Binding Maximum, ElementName=BSlider}"
 										SmallChange="{Binding SmallChange, ElementName=BSlider}" LargeChange="{Binding LargeChange, ElementName=BSlider}"
 										Value="{Binding B, ElementName=Picker}"/>
 			</Grid>
@@ -149,7 +151,7 @@
 						</LinearGradientBrush>
 					</local:ColorSlider.Background>
 				</local:ColorSlider>
-				<NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=ASlider}" Maximum="{Binding Maximum, ElementName=ASlider}"
+				<local:NumericUpDown Grid.Column="4" Minimum="{Binding Minimum, ElementName=ASlider}" Maximum="{Binding Maximum, ElementName=ASlider}"
 										SmallChange="{Binding SmallChange, ElementName=ASlider}" LargeChange="{Binding LargeChange, ElementName=ASlider}"
 										Value="{Binding A, ElementName=Picker}"/>
 			</Grid>
