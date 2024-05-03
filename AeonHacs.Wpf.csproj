@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<AssemblyVersion>3.2.2.0</AssemblyVersion>
+		<AssemblyVersion>3.2.2.1</AssemblyVersion>
 		<PackageVersion>$(AssemblyVersion)</PackageVersion>
 		<Title>Aeon Laboratories WPF Elements</Title>
 		<Description>User Interface Modules for HacsComponent classes</Description>
@@ -33,7 +33,6 @@
 	<ItemGroup>
 		<PackageReference Include="WPFControls.ColorPicker" Version="1.0.0" />
 		<PackageReference Include="WpfControls.Core" Version="1.0.0" />
-		<PackageReference Include="WpfControls.Viewport" Version="1.0.0" />
 		<PackageReference Include="WpfControls.NumericUpdown" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

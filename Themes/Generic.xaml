@@ -468,7 +468,7 @@
                     <Grid>
                         <local:StackingPanel>
                             <s:CultureTube x:Name="sample" Size="combustion" IsHitTestVisible="False"/>
-                            <s:Short x:Name="flowthrough" TubingSize="3/8" Length="63" IsHitTestVisible="False" Visibility="Collapsed"/>
+                            <s:Short x:Name="flowthrough" TubingSize="3/8" Length="63" IsHitTestVisible="False" Visibility="Collapsed" Fill="{DynamicResource GlassBrush}"/>
                         </local:StackingPanel>
                         <local:StackingPanel Offset="6" Spacing="2">
                             <v:Heater x:Name="CCQ" Component="{TemplateBinding QuartzFurnace}" />
