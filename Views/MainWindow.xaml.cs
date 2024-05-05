@@ -26,6 +26,11 @@ namespace AeonHacs.Wpf.Views
             public const uint ES_SYSTEM_REQUIRED = 0x00000001;
         }
 
+        public static readonly DependencyProperty HelpTextProperty = AutomationProperties.HelpTextProperty.AddOwner(
+                       typeof(MainWindow), new FrameworkPropertyMetadata(""));
+
+        public string HelpText { get => (string)GetValue(HelpTextProperty); set => SetValue(HelpTextProperty, value); }
+
         public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(
             nameof(Scale), typeof(double), typeof(MainWindow));
 
@@ -93,22 +98,28 @@ namespace AeonHacs.Wpf.Views
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            var hit = e.OriginalSource as Visual;
-
-            string helpText = "";
-
-            while (hit != null)
-            {
-                if (AutomationProperties.GetHelpText(hit) is string text && !string.IsNullOrWhiteSpace(text))
+            VisualTreeHelper.HitTest(
+                this,
+                d =>
                 {
-                    helpText = text;
-                    break;
-                }
-                else
-                    hit = VisualTreeHelper.GetParent(hit) as Visual;
-            }
-
-            HelpText.Text = helpText;
+                    if (d != this && AutomationProperties.GetHelpText(d) is string helpText && !string.IsNullOrWhiteSpace(helpText))
+                    {
+                        HelpText = helpText;
+                        return HitTestFilterBehavior.Stop;
+                    }
+                    return HitTestFilterBehavior.Continue;
+                },
+                r =>
+                {
+                    if (r.VisualHit is FrameworkElement fe && fe.TemplatedParent == this)
+                    {
+                        HelpText = "";
+                        return HitTestResultBehavior.Stop;
+                    }
+                    return HitTestResultBehavior.Continue;
+                },
+                new PointHitTestParameters(e.GetPosition(this))
+            );
 
             base.OnPreviewMouseMove(e);
         }
@@ -240,7 +251,5 @@ namespace AeonHacs.Wpf.Views
             ShowSettings();
         private void Preferences_Click(object sender, RoutedEventArgs e) =>
             ShowPreferencesWindow();
-
-
     }
 }
