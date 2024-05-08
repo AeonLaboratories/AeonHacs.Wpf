@@ -98,22 +98,48 @@ namespace AeonHacs.Wpf.Views
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
+            //VisualTreeHelper.HitTest(
+            //    this,
+            //    d =>
+            //    {
+            //        if (d != this && AutomationProperties.GetHelpText(d) is string helpText && !string.IsNullOrWhiteSpace(helpText))
+            //        {
+            //            HelpText = helpText;
+            //            return HitTestFilterBehavior.Stop;
+            //        }
+            //        return HitTestFilterBehavior.Continue;
+            //    },
+            //    r =>
+            //    {
+            //        if (r.VisualHit is FrameworkElement fe && fe.TemplatedParent == this)
+            //        {
+            //            HelpText = "";
+            //            return HitTestResultBehavior.Stop;
+            //        }
+            //        return HitTestResultBehavior.Continue;
+            //    },
+            //    new PointHitTestParameters(e.GetPosition(this))
+            //);
             VisualTreeHelper.HitTest(
                 this,
-                d =>
-                {
-                    if (d != this && AutomationProperties.GetHelpText(d) is string helpText && !string.IsNullOrWhiteSpace(helpText))
-                    {
-                        HelpText = helpText;
-                        return HitTestFilterBehavior.Stop;
-                    }
-                    return HitTestFilterBehavior.Continue;
-                },
+                null,
                 r =>
                 {
-                    if (r.VisualHit is FrameworkElement fe && fe.TemplatedParent == this)
+                    if (r.VisualHit is not UIElement visual || visual.IsHitTestVisible == false)
+                        return HitTestResultBehavior.Continue;
+                    if (visual is FrameworkElement fe && fe.TemplatedParent == this)
                     {
                         HelpText = "";
+                        return HitTestResultBehavior.Stop;
+                    }
+                    if (AutomationProperties.GetHelpText(visual) is string helpText && !string.IsNullOrWhiteSpace(helpText))
+                    {
+                        HelpText = helpText;
+                        return HitTestResultBehavior.Stop;
+                    }
+                    if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && AutomationProperties.GetHelpText(d2) is string helpText2 && !string.IsNullOrWhiteSpace(helpText2))
+                    {
+                        HelpText = helpText2;
                         return HitTestResultBehavior.Stop;
                     }
                     return HitTestResultBehavior.Continue;

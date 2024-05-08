@@ -1,4 +1,5 @@
 ﻿using AeonHacs.Wpf.Converters;
+using AeonHacs.Wpf.ViewModels;
 using AeonHacs.Wpf.Views;
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -45,9 +46,12 @@ public class ComponentToolTipBehavior : Behavior<Window>
 
     protected virtual void UpdateToolTipPosition()
     {
-        var mousePos = Mouse.GetPosition(AssociatedObject);
-        toolTip.HorizontalOffset = mousePos.X + SystemParameters.CursorWidth / 2;
-        toolTip.VerticalOffset = mousePos.Y + SystemParameters.CursorHeight / 2 + 5;
+        if (toolTip.IsOpen)
+        {
+            var mousePos = Mouse.GetPosition(AssociatedObject);
+            toolTip.HorizontalOffset = mousePos.X + SystemParameters.CursorWidth / 2;
+            toolTip.VerticalOffset = mousePos.Y + SystemParameters.CursorHeight / 2 + 5;
+        }
     }
 
     protected virtual void ShowToolTip()
@@ -70,24 +74,27 @@ public class ComponentToolTipBehavior : Behavior<Window>
 
     private void AssociatedObject_PreviewMouseMove(object sender, MouseEventArgs e)
     {
-        // Get hovered component.
-        VisualTreeHelper.HitTest(
-            AssociatedObject,
-            d =>
-            {
-                if (d is UIElement e && View.GetComponent(e) is IHacsComponent c)
-                {
-                    View.SetComponent(toolTip, c);
-                    ShowToolTip();
-                    return HitTestFilterBehavior.Stop;
-                }
-                return HitTestFilterBehavior.Continue;
-            },
+        VisualTreeHelper.HitTest(AssociatedObject,
+            null,
             r =>
             {
-                if (r.VisualHit is FrameworkElement fe && fe.TemplatedParent == AssociatedObject)
+                if (r.VisualHit is not UIElement visual || visual.IsHitTestVisible == false)
+                    return HitTestResultBehavior.Continue;
+                if (visual is FrameworkElement fe && fe.TemplatedParent == AssociatedObject)
                 {
                     HideToolTip();
+                    return HitTestResultBehavior.Stop;
+                }
+                if (View.GetComponent(visual) is ViewModel vm)
+                {
+                    View.SetComponent(toolTip, vm);
+                    ShowToolTip();
+                    return HitTestResultBehavior.Stop;
+                }
+                if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && View.GetComponent(d2) is ViewModel vm2)
+                {
+                    View.SetComponent(toolTip, vm2);
+                    ShowToolTip();
                     return HitTestResultBehavior.Stop;
                 }
                 return HitTestResultBehavior.Continue;
@@ -98,8 +105,7 @@ public class ComponentToolTipBehavior : Behavior<Window>
 
     private void AssociatedObject_MouseMove(object sender, MouseEventArgs e)
     {
-        if (toolTip.IsOpen)
-            UpdateToolTipPosition();
+        UpdateToolTipPosition();
     }
 
     private void AssociatedObject_MouseLeave(object sender, MouseEventArgs e)

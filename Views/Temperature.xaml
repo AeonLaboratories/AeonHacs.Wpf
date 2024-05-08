@@ -6,26 +6,22 @@
     xmlns:wpf="clr-namespace:AeonHacs.Wpf"
     xmlns:converters="clr-namespace:AeonHacs.Wpf.Converters"
     xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
-    xmlns:components="clr-namespace:AeonHacs.Components;assembly=AeonHacs.Hacs"
     mc:Ignorable="d"
-    x:Name="Field"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Background="{DynamicResource OffBrush}"
+    d:Background="{DynamicResource WarmBrush}"
     >
 
     <Grid>
+        <Label Content="{Binding DefaultContentString}" Padding="{Binding Padding}" Visibility="Hidden" />
         <Label        
-            Content="{Binding Component.Temperature, ElementName=Field}"
-            ContentStringFormat="{Binding ContentStringFormat, ElementName=Field}"
-            wpf:HacsViewProperties.BackgroundResourceKey="{Binding Component.Temperature, ElementName=Field, FallbackValue=0, Converter={x:Static converters:TemperatureToBrushResourceKeyConverter.Default}}"
-            Padding="{Binding Padding, ElementName=Field}"
-            VerticalContentAlignment="{Binding VerticalContentAlignment, ElementName=Field}"
-            HorizontalContentAlignment="{Binding HorizontalContentAlignment, ElementName=Field}"
-            />
-        <Label Content="{Binding DefaultContentString, ElementName=Field}"
-            Background="{DynamicResource WarmBrush}"
-			Padding="{Binding Padding, ElementName=Field}"
-            VerticalContentAlignment="{Binding VerticalContentAlignment, ElementName=Field}"
-            HorizontalContentAlignment="{Binding HorizontalContentAlignment, ElementName=Field}"
-			Visibility="{Binding Source={x:Static wpf:DesignTimeProperties.IsDesignTime}, Converter={x:Static converters:BoolToVisibilityConverter.Hidden}}"
+            Content="{Binding Component.Temperature}"
+            d:Content="{Binding DefaultContentString}"
+            ContentStringFormat="{Binding ContentStringFormat}"
+            wpf:HacsViewProperties.BackgroundResourceKey="{Binding Component.Temperature, FallbackValue=0, Converter={x:Static converters:TemperatureToBrushResourceKeyConverter.Default}}"
+            Padding="{Binding Padding}"
+            VerticalContentAlignment="{Binding VerticalContentAlignment}"
+            HorizontalContentAlignment="{Binding HorizontalContentAlignment}"
             />
     </Grid>
 </local:Gauge>

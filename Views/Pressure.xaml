@@ -7,12 +7,11 @@
     xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
     xmlns:wpf="clr-namespace:AeonHacs.Wpf"
     mc:Ignorable="d"
-    x:Name="Field"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Background="{DynamicResource NeutralBrush}"
     d:Background="{DynamicResource HighVacuumBrush}">
     <Grid>
-        <Label Content="1000" Padding="{Binding Padding}" Visibility="Hidden" />
+        <Label Content="{Binding DefaultContentString}" Padding="{Binding Padding}" Visibility="Hidden" />
         <Label
             Content="{Binding Component.Value}"
             d:Content="{Binding DefaultContentString}"

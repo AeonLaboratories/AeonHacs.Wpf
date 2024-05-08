@@ -184,11 +184,11 @@ namespace AeonHacs.Wpf.Views
 		public static readonly DependencyProperty ComponentProperty = DependencyProperty.RegisterAttached(
 			nameof(Component), typeof(INotifyPropertyChanged), typeof(View), new PropertyMetadata(null, ComponentChanged));
 
-		public static void SetComponent(UIElement element, INotifyPropertyChanged component) =>
+		public static void SetComponent(DependencyObject element, INotifyPropertyChanged component) =>
 			element.SetValue(ComponentProperty, component);
 
 		[TypeConverter(typeof(ViewModelConverter))]
-		public static INotifyPropertyChanged GetComponent(UIElement element) =>
+		public static INotifyPropertyChanged GetComponent(DependencyObject element) =>
 			(INotifyPropertyChanged)element.GetValue(ComponentProperty);
 
 		static void ComponentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
