@@ -56,6 +56,8 @@ namespace AeonHacs.Wpf.Views
                 MessageBox.Show("Call to SetThreadExecutionState failed unexpectedly.",
                     Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            Loaded += (_, _) => SizeToContent = SizeToContent.Manual;
         }
 
         public virtual void LoadControlPanel(ControlPanel controlPanel)
@@ -98,28 +100,6 @@ namespace AeonHacs.Wpf.Views
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            //VisualTreeHelper.HitTest(
-            //    this,
-            //    d =>
-            //    {
-            //        if (d != this && AutomationProperties.GetHelpText(d) is string helpText && !string.IsNullOrWhiteSpace(helpText))
-            //        {
-            //            HelpText = helpText;
-            //            return HitTestFilterBehavior.Stop;
-            //        }
-            //        return HitTestFilterBehavior.Continue;
-            //    },
-            //    r =>
-            //    {
-            //        if (r.VisualHit is FrameworkElement fe && fe.TemplatedParent == this)
-            //        {
-            //            HelpText = "";
-            //            return HitTestResultBehavior.Stop;
-            //        }
-            //        return HitTestResultBehavior.Continue;
-            //    },
-            //    new PointHitTestParameters(e.GetPosition(this))
-            //);
             VisualTreeHelper.HitTest(
                 this,
                 null,
