@@ -25,74 +25,9 @@ namespace AeonHacs.Wpf.Views
 		static View()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(View), new FrameworkPropertyMetadata(typeof(View)));
-			
-			ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
-			ToolTipService.InitialShowDelayProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(100));
-
-            ToolTipUpdateDispatcher = new DispatcherTimer(DispatcherPriority.Render)
-            {
-                Interval = TimeSpan.FromMilliseconds(250)
-            };
-            ToolTipUpdateDispatcher.Tick += (sender, e) =>
-			{
-				if (ToolTipUpdateDispatcher.Tag is BindingExpression be)
-					be.UpdateTarget();
-			};
 		}
 
 		#region Visual
-
-		public static DispatcherTimer ToolTipUpdateDispatcher { get; protected set; }
-
-		protected static void SetupToolTip(FrameworkElement fe)
-		{
-			var tt = new ToolTip() { Placement = PlacementMode.Absolute };
-			fe.ToolTip = tt;
-			tt.SetBinding(ContentProperty, new Binding()
-			{
-				Source = fe,
-				Path = new PropertyPath(ComponentProperty),
-				Converter = ToStringConverter.Default,
-				FallbackValue = "<None>",
-				TargetNullValue = "<None>"
-			});
-			fe.ToolTipOpening += (sender, e) =>
-			{
-				var be = BindingOperations.GetBindingExpression(tt, ContentProperty);
-				be?.UpdateTarget();
-				ToolTipUpdateDispatcher.Tag = be;
-				ToolTipUpdateDispatcher.Start();
-			};
-			fe.ToolTipClosing += (sender, e) => ToolTipUpdateDispatcher.Stop();
-			fe.MouseMove += (sender, e) =>
-			{
-				// This code makes the tooltip "follow" the mouse as it moves
-				// It fails when multiple monitors are connected with different dpi and the mouse is
-				// hoving over an element on the monitor the window is not considered to be located on.
-				// Ideally, the tooltip should only be attached to the window itself and its contents
-				// set similarly to how our help text is displayed.
-				var window = Window.GetWindow(fe);
-                var mouse = e.GetPosition(window);
-				var dpi = VisualTreeHelper.GetDpi(window);
-				// This seems to return the position of the client area of the window.
-				var windowPos = window.PointToScreen(new Point(0, 0));
-				// We need to scale the position by the dpi to get the number of pixels.
-				windowPos.X /= dpi.DpiScaleX;
-				windowPos.Y /= dpi.DpiScaleY;
-				// Window.Left and Window.Top are not updated when a window is maximised, or minimised and instead
-				// refer to the position in the "Normal" state, so we use the dpi scaled window position to calculate
-				// our "left" and "top"
-				var left = window.WindowState == WindowState.Maximized ? windowPos.X + 3 : window.Left + 10;
-				left += SystemParameters.CursorWidth * dpi.DpiScaleX / 2;
-				// We have to subtract something from windowPos.Y to compensate for the title bar.
-				// Instead of using the magic numbers we might be able to use some system parameter values
-				// which may or may not need to be scaled by dpi.
-				var top = window.WindowState == WindowState.Maximized ? windowPos.Y - 19 : window.Top + 10;
-				top += SystemParameters.WindowCaptionHeight + SystemParameters.CursorHeight * dpi.DpiScaleY / 2;
-				tt.HorizontalOffset = mouse.X + left;
-				tt.VerticalOffset = mouse.Y + top;
-			};
-		}
 
 		protected virtual void CreateBindings() { }
 
@@ -249,11 +184,11 @@ namespace AeonHacs.Wpf.Views
 		public static readonly DependencyProperty ComponentProperty = DependencyProperty.RegisterAttached(
 			nameof(Component), typeof(INotifyPropertyChanged), typeof(View), new PropertyMetadata(null, ComponentChanged));
 
-		public static void SetComponent(UIElement element, INotifyPropertyChanged component) =>
+		public static void SetComponent(DependencyObject element, INotifyPropertyChanged component) =>
 			element.SetValue(ComponentProperty, component);
 
 		[TypeConverter(typeof(ViewModelConverter))]
-		public static INotifyPropertyChanged GetComponent(UIElement element) =>
+		public static INotifyPropertyChanged GetComponent(DependencyObject element) =>
 			(INotifyPropertyChanged)element.GetValue(ComponentProperty);
 
 		static void ComponentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -269,34 +204,24 @@ namespace AeonHacs.Wpf.Views
 				if (sender is FrameworkElement element)
 				{
 					CreateContextMenu(element);
-					ToolTipService.SetIsEnabled(element, false);
 				}
 			}
 
 			if (oldComponent == null && newComponent != null)
 			{
-				// The ToolTip is disabled/enabled on context menu opening/closing
-				// because successive right clicks would cause it to show up, often
-				// covering part of the context menu.
-
 				fe.ContextMenu = new ContextMenu();
 				fe.ContextMenu.Closed += (sender, e) =>
 				{
 					fe.ContextMenu.Items.Clear();
-					ToolTipService.SetIsEnabled(fe, true);
 				};
 
-				fe.ContextMenu.Opened += (sender, e) => ToolTipService.SetIsEnabled(fe, false);
 				fe.ContextMenuOpening += Open;
-				fe.ContextMenuClosing += (sender, e) => ToolTipService.SetIsEnabled(sender as FrameworkElement, true);
 			}
 			else if (oldComponent != null && newComponent == null)
 			{
 				fe.ContextMenuOpening -= Open;
 				fe.ContextMenu = null;
 			}
-
-			SetupToolTip(fe);
 
 			if (d is View view)
 				view.OnComponentChanged(e);

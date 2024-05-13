@@ -26,6 +26,11 @@ namespace AeonHacs.Wpf.Views
             public const uint ES_SYSTEM_REQUIRED = 0x00000001;
         }
 
+        public static readonly DependencyProperty HelpTextProperty = AutomationProperties.HelpTextProperty.AddOwner(
+                       typeof(MainWindow), new FrameworkPropertyMetadata(""));
+
+        public string HelpText { get => (string)GetValue(HelpTextProperty); set => SetValue(HelpTextProperty, value); }
+
         public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(
             nameof(Scale), typeof(double), typeof(MainWindow));
 
@@ -51,6 +56,8 @@ namespace AeonHacs.Wpf.Views
                 MessageBox.Show("Call to SetThreadExecutionState failed unexpectedly.",
                     Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            Loaded += (_, _) => SizeToContent = SizeToContent.Manual;
         }
 
         public virtual void LoadControlPanel(ControlPanel controlPanel)
@@ -93,22 +100,32 @@ namespace AeonHacs.Wpf.Views
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            var hit = e.OriginalSource as Visual;
-
-            string helpText = "";
-
-            while (hit != null)
-            {
-                if (AutomationProperties.GetHelpText(hit) is string text && !string.IsNullOrWhiteSpace(text))
+            VisualTreeHelper.HitTest(
+                this,
+                null,
+                r =>
                 {
-                    helpText = text;
-                    break;
-                }
-                else
-                    hit = VisualTreeHelper.GetParent(hit) as Visual;
-            }
-
-            HelpText.Text = helpText;
+                    if (r.VisualHit is not UIElement visual || visual.IsHitTestVisible == false)
+                        return HitTestResultBehavior.Continue;
+                    if (visual is FrameworkElement fe && fe.TemplatedParent == this)
+                    {
+                        HelpText = "";
+                        return HitTestResultBehavior.Stop;
+                    }
+                    if (AutomationProperties.GetHelpText(visual) is string helpText && !string.IsNullOrWhiteSpace(helpText))
+                    {
+                        HelpText = helpText;
+                        return HitTestResultBehavior.Stop;
+                    }
+                    if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && AutomationProperties.GetHelpText(d2) is string helpText2 && !string.IsNullOrWhiteSpace(helpText2))
+                    {
+                        HelpText = helpText2;
+                        return HitTestResultBehavior.Stop;
+                    }
+                    return HitTestResultBehavior.Continue;
+                },
+                new PointHitTestParameters(e.GetPosition(this))
+            );
 
             base.OnPreviewMouseMove(e);
         }
@@ -240,7 +257,5 @@ namespace AeonHacs.Wpf.Views
             ShowSettings();
         private void Preferences_Click(object sender, RoutedEventArgs e) =>
             ShowPreferencesWindow();
-
-
     }
 }

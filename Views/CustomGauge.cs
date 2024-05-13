@@ -16,13 +16,16 @@ using System.Windows.Shapes;
 
 namespace AeonHacs.Wpf.Views;
 
-public class CustomGauge : View
+public class CustomGauge : Gauge
 {
     public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register(
-        nameof(DisplayMemberPath), typeof(string), typeof(CustomGauge), new FrameworkPropertyMetadata("Value", DisplayMemberPathChanged));
+        nameof(DisplayMemberPath), typeof(string), typeof(CustomGauge), new FrameworkPropertyMetadata("", DisplayMemberPathChanged));
 
     private static void DisplayMemberPathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
+        if (string.IsNullOrWhiteSpace((string)e.NewValue))
+            return;
+
         if (d is FrameworkElement fe)
             fe.SetBinding(ContentProperty, new Binding($"Component.{e.NewValue}") { Source = d });
     }
