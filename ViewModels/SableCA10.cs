@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace AeonHacs.Wpf.ViewModels;
 public class SableCA10 : ViewModel
 {
     private Components.SableCA10 analyzer => Component as Components.SableCA10;
 
-    public double CO2Ppm => analyzer?.CO2Ppm ?? double.NaN;
+    public double CO2Ppm => analyzer?.CO2Ppm.Value ?? double.NaN;
 
     protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
