@@ -42,14 +42,14 @@ namespace AeonHacs.Wpf.ViewModels
 		protected override void StartContext()
 		{
 			base.StartContext();
-			ContextStart.Add(new Context(CloseMore10Operation));
-			ContextStart.Add(new Context(CloseMore50Operation));
-			ContextStart.Add(new Context(CloseLess10Operation));
-			ContextStart.Add(new Context(CloseLess50Operation));
-			ContextStart.Add(new Context(OpenMore10Operation));
-			ContextStart.Add(new Context(OpenMore50Operation));
-			ContextStart.Add(new Context(OpenLess10Operation));
-			ContextStart.Add(new Context(OpenLess50Operation));
+			//ContextStart.Add(new Context(CloseMore10Operation));
+			//ContextStart.Add(new Context(CloseMore50Operation));
+			//ContextStart.Add(new Context(CloseLess10Operation));
+			//ContextStart.Add(new Context(CloseLess50Operation));
+			//ContextStart.Add(new Context(OpenMore10Operation));
+			//ContextStart.Add(new Context(OpenMore50Operation));
+			//ContextStart.Add(new Context(OpenLess10Operation));
+			//ContextStart.Add(new Context(OpenLess50Operation));
 		}
 
 		protected virtual bool Calibrate(string command)

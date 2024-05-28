@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AeonHacs.Components;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace AeonHacs.Wpf.ViewModels
@@ -117,7 +118,7 @@ namespace AeonHacs.Wpf.ViewModels
             else if (command == FreezeCaption)
                 Component?.Freeze();
             else if (command == EmptyAndFreezeCaption)
-                Component?.EmptyAndFreeze();
+                Component?.EmptyAndFreeze(AeonHacs.NamedObject.FirstOrDefault<Cegs>()?.GetParameter("CleanPressure") ?? 5e-4);
             else if (command == ThawCaption)
                 Component?.Thaw();
             else if (command == IsolateFromVacuumCaption)

@@ -166,7 +166,7 @@ namespace AeonHacs.Wpf.Views
 				displayItem.Content = new GroupBox()
 				{
 					Header = headerTextBox,
-					Content = new SettingsPanel() { UpdateSourceTrigger = UpdateSourceTrigger.Explicit, Source = step }
+					Content = new SettingsPanel(true) { UpdateSourceTrigger = UpdateSourceTrigger.Explicit, Source = step }
 				};
 			}
 			else
@@ -202,11 +202,11 @@ namespace AeonHacs.Wpf.Views
 					if (gb.Content is SettingsPanel sp)
 					{
 						sp.UpdateSource();
-						if (sp.Source is ProcessSequenceStep step)
-							newSteps.Add(step);
+						if (sp.Source is ProcessSequenceStep embeddedStep)
+							newSteps.Add(embeddedStep);
 					}
 				}
-				else if (item.Content is ProcessSequenceStep step)
+				if (item.Content is ProcessSequenceStep step)
 					newSteps.Add(step);
 			}
 			(ProcessComboBox.SelectedItem as ProcessSequence).Steps = newSteps;

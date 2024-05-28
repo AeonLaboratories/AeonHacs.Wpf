@@ -29,11 +29,11 @@ namespace AeonHacs.Wpf.ViewModels
 		}
 		public override void Run(string command = "")
 		{
-			if (command == TurnOnCaption)
+			if (command == TurnOnCaption || command.IsBlank() && !Component.IsOn)
 				Component?.TurnOn();
-			else if (command == TurnOffCaption)
+			else if (command == TurnOffCaption || command.IsBlank() && Component.IsOn)
 				Component?.TurnOff();
-			base.Run(command);
+            base.Run(command);
 		}
 
 		#region OnOff

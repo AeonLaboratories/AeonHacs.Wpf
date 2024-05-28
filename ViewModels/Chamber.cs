@@ -20,7 +20,7 @@ namespace AeonHacs.Wpf.ViewModels
 		public ViewModel Coldfinger => GetFromModel(Component?.Coldfinger);
 		public ViewModel VTColdfinger => GetFromModel(Component?.VTColdfinger);
 
-		public bool Dirty { get => Component.Dirty; set => Component.Dirty = value; }
+		//public bool Dirty { get => Component.Dirty; set => Component.Dirty = value; }
 
 	}
 }
