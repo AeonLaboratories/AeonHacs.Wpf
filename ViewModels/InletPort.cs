@@ -19,11 +19,19 @@ namespace AeonHacs.Wpf.ViewModels
 		public AeonHacs.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
 
 		public ViewModel QuartzFurnace
-		{	
+		{
 			get => GetFromModel(Component?.QuartzFurnace);
 			set { }
 		}
-		public ViewModel SampleFurnace => GetFromModel(Component?.SampleFurnace);
+		public ViewModel SampleFurnace
+		{
+			get 
+			{
+				if (Component?.SampleFurnace is ITubeFurnace)
+					return null;	// omit CC furnace if it's depicted elsewhere
+                return GetFromModel(Component?.SampleFurnace);
+            }
+		}
 
 		public List<ViewModel> PathToFirstTrap
 		{

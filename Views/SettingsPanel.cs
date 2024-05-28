@@ -46,6 +46,15 @@ namespace AeonHacs.Wpf.Views
 
 		protected Stack<object> Sources { get; set; } = new Stack<object>();
 
+		/// <summary>
+		/// Shows or hides properties called 'Name'
+		/// </summary>
+		public bool HideNames { get; set; } = true;
+
+		public bool ExpandAll { get; set; } = false;
+
+		public SettingsPanel() { }
+		public SettingsPanel(bool expandAll) { ExpandAll = expandAll; }
 		protected virtual void SourceChanged(object oldSource, object newSource)
 		{
 			bool refresh = false;
@@ -122,7 +131,7 @@ namespace AeonHacs.Wpf.Views
 			else
 			{
 				var properties = GetPropertiesToShow(Source.GetType());
-				properties.ForEach(property => Populate(property));
+				properties.ForEach(Populate);
 			}
 		}
 
@@ -207,9 +216,7 @@ namespace AeonHacs.Wpf.Views
 				(property.GetCustomAttribute(typeof(JsonPropertyAttribute)) as JsonPropertyAttribute)?.PropertyName ?? propertyName;
 			var valueType = property.PropertyType;
 
-			//TODO setting to remove or keep the Name properties?
-			//Currently remove them
-			if (propertyName == nameof(AeonHacs.INamedObject.Name))
+			if (HideNames && propertyName == nameof(AeonHacs.INamedObject.Name))
 				return;
 
 			var value = property.GetValue(Source);
@@ -278,7 +285,7 @@ namespace AeonHacs.Wpf.Views
 				}
 				else
 				{
-					if (value is INotifyPropertyChanged model)
+					if (value is INotifyPropertyChanged model && !ExpandAll)
 					{
 						var button = new Button();
 						if (model is AeonHacs.INamedObject)
@@ -303,7 +310,7 @@ namespace AeonHacs.Wpf.Views
 					}
 					else
 					{
-						valueControl = new SettingsPanel() { Source = value };
+						valueControl = new SettingsPanel(ExpandAll) { Source = value };
 						dependencyProperty = SourceProperty;
 					}
 				}
