@@ -23,14 +23,14 @@ namespace AeonHacs.Wpf.Views
 
         public static readonly DependencyProperty FillLevelProperty = DependencyProperty.Register(
             nameof(FillLevel), typeof(double), typeof(FTC), new FrameworkPropertyMetadata(0.0));
-        
-        public RelativeDirection Orientation { get => (RelativeDirection)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
-
-        public double FillLevel { get => (double)GetValue(FillLevelProperty); set => SetValue(FillLevelProperty, value); }
 
         static FTC()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FTC), new FrameworkPropertyMetadata(typeof(FTC)));
         }
+
+        public RelativeDirection Orientation { get => (RelativeDirection)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
+
+        public double FillLevel { get => (double)GetValue(FillLevelProperty); set => SetValue(FillLevelProperty, value); }
     }
 }
