@@ -345,8 +345,6 @@
     <Style TargetType="{x:Type v:FTC}" BasedOn="{StaticResource {x:Type v:View}}">
         <Setter Property="Background" Value="{DynamicResource FoamBrush}" />
         <Setter Property="FillLevel" Value="{Binding Component.Temperature, RelativeSource={RelativeSource Self}, Converter={x:Static c:ScaledValueConverter.LiquidNitrogen}}" />
-        <Setter Property="Width" Value="21" />
-        <Setter Property="Height" Value="21" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type v:FTC}">
@@ -354,7 +352,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                         <Border x:Name="fill">
-                            <ContentPresenter />
+                            <ContentPresenter MinWidth="21" MinHeight="21"/>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>

@@ -56,6 +56,8 @@ namespace AeonHacs.Wpf.Views
                 MessageBox.Show("Call to SetThreadExecutionState failed unexpectedly.",
                     Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            Loaded += (_, _) => SizeToContent = SizeToContent.Manual;
         }
 
         public virtual void LoadControlPanel(ControlPanel controlPanel)
