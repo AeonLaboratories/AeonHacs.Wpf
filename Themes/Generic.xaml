@@ -12,7 +12,7 @@
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/AeonHacs.Wpf;component/Themes/Defaults.xaml" />
-	</ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type s:TubingBase}">
         <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
@@ -120,26 +120,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type v:Gauge}">
-        <Setter Property="BorderBrush" Value="{DynamicResource EdgeBrush}"/>
-        <Setter Property="BorderThickness" Value="0.5"/>
-		<Setter Property="ContentStringFormat" Value="0.###############"/>
-		<Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="3,0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type v:View}">
-                    <Border Background="{TemplateBinding Background}"
-							BorderBrush="{TemplateBinding BorderBrush}"
-							BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-    </Style>
-    
     <Style TargetType="{x:Type v:Switch}" BasedOn="{StaticResource {x:Type v:View}}">
 		<Setter Property="Background" Value="{DynamicResource OffBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource EdgeBrush}"/>
@@ -703,30 +683,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type v:CustomGauge}">
-        <Setter Property="Background" Value="{DynamicResource GaugeBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource EdgeBrush}"/>
-        <Setter Property="BorderThickness" Value="0.5"/>
-        <Setter Property="ContentStringFormat" Value="0.###############"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="3,0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type v:CustomGauge}">
-                    <Grid>
-                        <Label Content="{TemplateBinding DefaultContentString}" Padding="{TemplateBinding Padding}" Visibility="Hidden" />
-                        <Border Background="{TemplateBinding Background}"
-							    BorderBrush="{TemplateBinding BorderBrush}"
-							    BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Center"/>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
 
     <Style TargetType="{x:Type local:NumericUpDown}">
