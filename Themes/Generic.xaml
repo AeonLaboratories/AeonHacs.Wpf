@@ -544,7 +544,7 @@
                                 <v:CombustionChamber x:Name="combustion" Visibility="Collapsed" />
                                 <v:Needle x:Name="needle" Visibility="Collapsed" />
                                 <v:Breakseal x:Name="manual" Visibility="Collapsed" />
-                                <Border x:Name="ftgap" Width="21" Height="3" Visibility="Visible" />
+                                <Border x:Name="ftgap" Width="21" Height="3" Visibility="Collapsed" />
                                     <local:StackingPanel x:Name="contents" Offset="3">
                                     <TextBlock Text="{Binding Sample.LabId}" TextTrimming="WordEllipsis" v:View.Component="{Binding Sample}"
                                                LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
@@ -568,7 +568,7 @@
                         <Trigger Property="PortType" Value="FlowThrough">
                             <Setter TargetName="combustion" Property="Visibility" Value="Visible" />
                             <Setter TargetName="combustion" Property="IsFlowThrough" Value="True" />
-                            <!--<Setter TargetName="ftgap" Property="Visibility" Value="Visible" />-->
+                            <Setter TargetName="ftgap" Property="Visibility" Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
