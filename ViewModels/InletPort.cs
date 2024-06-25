@@ -33,12 +33,6 @@ namespace AeonHacs.Wpf.ViewModels
             }
 		}
 
-		public List<ViewModel> PathToFirstTrap
-		{
-			get => Component?.PathToFirstTrap?.ConvertAll(x => GetFromModel(x));
-			set { if (Component != null) Component.PathToFirstTrap = value?.ConvertAll(x => x.Component as Components.IValve); }
-		}
-
 		public bool NotifySampleFurnaceNeeded { get => Component.NotifySampleFurnaceNeeded; set => Component.NotifySampleFurnaceNeeded = value; }
 		public int WarmTemperature { get => Component.WarmTemperature; set => Component.WarmTemperature = value; }
 
