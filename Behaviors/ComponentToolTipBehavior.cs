@@ -3,6 +3,7 @@ using AeonHacs.Wpf.ViewModels;
 using AeonHacs.Wpf.Views;
 using Microsoft.Xaml.Behaviors;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -85,15 +86,15 @@ public class ComponentToolTipBehavior : Behavior<Window>
                     HideToolTip();
                     return HitTestResultBehavior.Stop;
                 }
-                if (View.GetComponent(visual) is ViewModel vm)
+                if (View.GetComponent(visual) is INotifyPropertyChanged component)
                 {
-                    View.SetComponent(toolTip, vm);
+                    View.SetComponent(toolTip, component);
                     ShowToolTip();
                     return HitTestResultBehavior.Stop;
                 }
-                if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && View.GetComponent(d2) is ViewModel vm2)
+                if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && View.GetComponent(d2) is INotifyPropertyChanged component2)
                 {
-                    View.SetComponent(toolTip, vm2);
+                    View.SetComponent(toolTip, component2);
                     ShowToolTip();
                     return HitTestResultBehavior.Stop;
                 }
