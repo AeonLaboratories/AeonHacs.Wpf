@@ -16,24 +16,24 @@
     <i:Interaction.Behaviors>
         <b:ComponentToolTipBehavior />
     </i:Interaction.Behaviors>
-	<c:Viewport>
-		<DockPanel LastChildFill="True">
+    <c:Viewport>
+        <DockPanel LastChildFill="True">
 
-			<Menu DockPanel.Dock="Top">
-				<MenuItem Header="Edit">
-					<MenuItem Header="Samples" Click="Samples_Click"/>
-					<MenuItem Header="Process Sequences" Click="ProcessSequences_Click"/>
-					<MenuItem Header="Settings" Click="Settings_Click"/>
-					<MenuItem Header="Preferences" Click="Preferences_Click"/>
-				</MenuItem>
-			</Menu>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Samples" Click="Samples_Click"/>
+                    <MenuItem Header="Process Sequences" Click="ProcessSequences_Click"/>
+                    <MenuItem Header="Settings" Click="Settings_Click"/>
+                    <MenuItem Header="Preferences" Click="Preferences_Click"/>
+                </MenuItem>
+            </Menu>
 
-			<StatusBar DockPanel.Dock="Bottom" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1,0,0">
-				<TextBlock Text="{Binding HelpText, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
-			</StatusBar>
+            <StatusBar DockPanel.Dock="Bottom" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1,0,0">
+                <TextBlock Text="{Binding HelpText, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
+            </StatusBar>
 
-			<Decorator x:Name="MainContent"/>
+            <Decorator x:Name="MainContent"/>
 
-		</DockPanel>
-	</c:Viewport>
+        </DockPanel>
+    </c:Viewport>
 </Window>

@@ -7,21 +7,21 @@ using System.Windows.Data;
 
 namespace AeonHacs.Wpf.Converters
 {
-	public class EllipticalConverter : IValueConverter
-	{
-		public static EllipticalConverter Default = new EllipticalConverter();
+    public class EllipticalConverter : IValueConverter
+    {
+        public static EllipticalConverter Default = new EllipticalConverter();
 
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if ((bool)value)
-				return new CornerRadius(double.MaxValue);
-			else
-				return new CornerRadius(0);
-		}
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((bool)value)
+                return new CornerRadius(double.MaxValue);
+            else
+                return new CornerRadius(0);
+        }
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

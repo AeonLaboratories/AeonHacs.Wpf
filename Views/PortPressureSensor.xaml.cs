@@ -13,14 +13,14 @@ using System.Windows.Shapes;
 
 namespace AeonHacs.Wpf.Views
 {
-	/// <summary>
-	/// Interaction logic for PortPressureSensor.xaml
-	/// </summary>
-	public partial class PortPressureSensor : View
-	{
-		public PortPressureSensor()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interaction logic for PortPressureSensor.xaml
+    /// </summary>
+    public partial class PortPressureSensor : View
+    {
+        public PortPressureSensor()
+        {
+            InitializeComponent();
+        }
+    }
 }

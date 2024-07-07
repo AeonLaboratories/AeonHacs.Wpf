@@ -21,137 +21,137 @@
             </DockPanel>
         </DockPanel>
         <!-- TODO use SettingsPanel here? -->
-		<StackPanel Grid.IsSharedSizeScope="True" Margin="10,10,10,0" DockPanel.Dock="Top">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
-				<TextBlock Text="Lab ID:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-				<TextBox x:Name="LabIDTextBox" Margin="5,0,0,0" Text="{Binding Sample.LabId, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center"/>
-			</Grid>
+        <StackPanel Grid.IsSharedSizeScope="True" Margin="10,10,10,0" DockPanel.Dock="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Lab ID:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox x:Name="LabIDTextBox" Margin="5,0,0,0" Text="{Binding Sample.LabId, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center"/>
+            </Grid>
 
-			<Grid Margin="0,5,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
-				<TextBlock Text="Mass:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-				<TextBox x:Name="MassTextBox" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-				<ComboBox x:Name="MassUnitsComboBox" Grid.Column="2" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Center" SelectedItem="{Binding MassUnits, RelativeSource={StaticResource SampleEditor}}" SelectionChanged="MassUnitsComboBox_SelectionChanged"/>
-			</Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Mass:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox x:Name="MassTextBox" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <ComboBox x:Name="MassUnitsComboBox" Grid.Column="2" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Center" SelectedItem="{Binding MassUnits, RelativeSource={StaticResource SampleEditor}}" SelectionChanged="MassUnitsComboBox_SelectionChanged"/>
+            </Grid>
 
-			<Grid Margin="0,5,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
-				<TextBlock Text="InletPort:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-				<ComboBox x:Name="InletPortComboBox" 
-						  Grid.Column="1" Grid.Row="0" 
-						  SelectedItem="{Binding Sample.InletPort, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" 
-						  Margin="5,0,0,0" VerticalContentAlignment="Center" 
-						  SelectionChanged="InletPortComboBox_SelectionChanged"/>
-			</Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="InletPort:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <ComboBox x:Name="InletPortComboBox" 
+                          Grid.Column="1" Grid.Row="0" 
+                          SelectedItem="{Binding Sample.InletPort, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" 
+                          Margin="5,0,0,0" VerticalContentAlignment="Center" 
+                          SelectionChanged="InletPortComboBox_SelectionChanged"/>
+            </Grid>
 
-			<Grid Margin="0,5,0,0">
-				<Grid.Style>
-					<Style TargetType="{x:Type Grid}">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding SelectedValue, ElementName=InletPortComboBox}" Value="{x:Null}">
-								<Setter Property="Visibility" Value="Collapsed"/>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Grid.Style>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
+            <Grid Margin="0,5,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedValue, ElementName=InletPortComboBox}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
 
-				<TextBlock Text="Port Type:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-				<ComboBox x:Name="PortTypeComboBox" 
-						  Grid.Column="1" Grid.Row="0" 
-						  SelectedItem="{Binding Sample.InletPort.PortType, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" 
-						  Margin="5,0,0,0" VerticalContentAlignment="Center" 
-						  SelectionChanged="PortTypeComboBox_SelectionChanged"/>
-				<CheckBox x:Name="NotifyRaiseCheckBox" Grid.Column="2" Grid.Row="1" IsChecked="{Binding Sample.InletPort.NotifySampleFurnaceNeeded, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Content="Notify to raise sample furnace" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-			</Grid>
+                <TextBlock Text="Port Type:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <ComboBox x:Name="PortTypeComboBox" 
+                          Grid.Column="1" Grid.Row="0" 
+                          SelectedItem="{Binding Sample.InletPort.PortType, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" 
+                          Margin="5,0,0,0" VerticalContentAlignment="Center" 
+                          SelectionChanged="PortTypeComboBox_SelectionChanged"/>
+                <CheckBox x:Name="NotifyRaiseCheckBox" Grid.Column="2" Grid.Row="1" IsChecked="{Binding Sample.InletPort.NotifySampleFurnaceNeeded, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Content="Notify to raise sample furnace" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
 
-			<Grid Margin="0,5,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
-				<TextBlock Text="Process:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"/>
-				<ComboBox x:Name="ProcessComboBox" Text="{Binding Sample.Process, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" Margin="5,0,0,0" Grid.ColumnSpan="2"/>
-			</Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Process:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <ComboBox x:Name="ProcessComboBox" Text="{Binding Sample.Process, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" Margin="5,0,0,0" Grid.ColumnSpan="2"/>
+            </Grid>
 
-			<Grid Margin="0,5,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-				</Grid.ColumnDefinitions>
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition SharedSizeGroup="Standard"/>
-					</Grid.RowDefinitions>
-					<TextBlock Text="Graphite IDs:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-				</Grid>
-				<TextBox x:Name="AliquotsTextBox" Text="{Binding Sample.AliquotIds, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit, Converter={x:Static converters:StringListToStringConverter.Default}}" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" MaxLines="3" VerticalContentAlignment="Center" AcceptsReturn="True" TextChanged="AliquotsTextBox_TextChanged"/>
-			</Grid>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition SharedSizeGroup="Standard"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Graphite IDs:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </Grid>
+                <TextBox x:Name="AliquotsTextBox" Text="{Binding Sample.AliquotIds, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit, Converter={x:Static converters:StringListToStringConverter.Default}}" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" MaxLines="3" VerticalContentAlignment="Center" AcceptsReturn="True" TextChanged="AliquotsTextBox_TextChanged"/>
+            </Grid>
 
-			<Grid x:Name="d13CRow" Margin="0,5,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
-				<CheckBox x:Name="Taked13CCheckBox" IsChecked="{Binding Sample.Take_d13C, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Content=":Take d13C" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0,0,-20,0">
-					<CheckBox.Resources>
-						<Style TargetType="{x:Type Path}">
-							<Setter Property="FlowDirection" Value="LeftToRight"/>
-						</Style>
-					</CheckBox.Resources>
-				</CheckBox>
-			</Grid>
+            <Grid x:Name="d13CRow" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
+                <CheckBox x:Name="Taked13CCheckBox" IsChecked="{Binding Sample.Take_d13C, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Content=":Take d13C" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0,0,-20,0">
+                    <CheckBox.Resources>
+                        <Style TargetType="{x:Type Path}">
+                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                        </Style>
+                    </CheckBox.Resources>
+                </CheckBox>
+            </Grid>
 
-			<Grid Margin="0,5,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition SharedSizeGroup="Label"/>
-					<ColumnDefinition/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition SharedSizeGroup="Standard"/>
-				</Grid.RowDefinitions>
-				<CheckBox x:Name="SulfurSuspectedCheckBox" IsChecked="{Binding Sample.SulfurSuspected, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Content=":Sulfur suspected" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0,0,-20,0">
-					<CheckBox.Resources>
-						<Style TargetType="{x:Type Path}">
-							<Setter Property="FlowDirection" Value="LeftToRight"/>
-						</Style>
-					</CheckBox.Resources>
-				</CheckBox>
-			</Grid>
-		</StackPanel>
-	</DockPanel>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Label"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition SharedSizeGroup="Standard"/>
+                </Grid.RowDefinitions>
+                <CheckBox x:Name="SulfurSuspectedCheckBox" IsChecked="{Binding Sample.SulfurSuspected, RelativeSource={StaticResource SampleEditor}, UpdateSourceTrigger=Explicit}" Content=":Sulfur suspected" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0,0,-20,0">
+                    <CheckBox.Resources>
+                        <Style TargetType="{x:Type Path}">
+                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                        </Style>
+                    </CheckBox.Resources>
+                </CheckBox>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
 </UserControl>

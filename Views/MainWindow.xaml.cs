@@ -235,7 +235,7 @@ namespace AeonHacs.Wpf.Views
                 w.Title = Title + " Preferences";
                 w.SizeToContent = SizeToContent.WidthAndHeight;
                 //w.ContentRendered += (sender, e) =>
-                //	w.ClearValue(SizeToContentProperty);
+                //    w.ClearValue(SizeToContentProperty);
                 w.Closed += (sender, e) => preferences = null;
                 w.Show();
             }

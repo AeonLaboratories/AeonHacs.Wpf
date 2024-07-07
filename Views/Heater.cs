@@ -9,9 +9,9 @@ using System.Windows.Data;
 namespace AeonHacs.Wpf.Views
 {
     public class Heater : View
-	{
-		public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
-			nameof(IsOn), typeof(bool), typeof(Heater), new FrameworkPropertyMetadata(false));
+    {
+        public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
+            nameof(IsOn), typeof(bool), typeof(Heater), new FrameworkPropertyMetadata(false));
 
         public static readonly DependencyProperty EllipticalProperty = DependencyProperty.Register(
             nameof(Elliptical), typeof(bool), typeof(Heater), new FrameworkPropertyMetadata(false));
@@ -25,6 +25,6 @@ namespace AeonHacs.Wpf.Views
         public bool IsOn { get => (bool)GetValue(IsOnProperty); set => SetValue(IsOnProperty, value); }
 
         [Category("Appearance")]
-		public bool Elliptical { get => (bool)GetValue(EllipticalProperty); set => SetValue(EllipticalProperty, value); }
-	}
+        public bool Elliptical { get => (bool)GetValue(EllipticalProperty); set => SetValue(EllipticalProperty, value); }
+    }
 }

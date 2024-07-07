@@ -4,10 +4,10 @@
     /// Interaction logic for SerialTubeFurnace.xaml
     /// </summary>
     public partial class TubeFurnace : View
-	{
-		public TubeFurnace()
-		{
-			InitializeComponent();
-		}
-	}
+    {
+        public TubeFurnace()
+        {
+            InitializeComponent();
+        }
+    }
 }

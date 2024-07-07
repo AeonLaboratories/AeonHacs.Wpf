@@ -2,7 +2,7 @@
 namespace AeonHacs.Wpf.ViewModels
 {
     public class Aliquot : ViewModel
-	{
+    {
         [Browsable(false)]
         public new Components.IAliquot Component
         {

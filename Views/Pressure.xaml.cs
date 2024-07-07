@@ -1,10 +1,10 @@
 ﻿namespace AeonHacs.Wpf.Views
 {
-	public partial class Pressure : Gauge
+    public partial class Pressure : Gauge
     {
-		public Pressure()
-		{
-			InitializeComponent();
-		}
-	}
+        public Pressure()
+        {
+            InitializeComponent();
+        }
+    }
 }

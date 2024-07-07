@@ -8,7 +8,7 @@ namespace AeonHacs.Wpf.Views
     public partial class Temperature : Gauge
     {
 
-		public Temperature()
+        public Temperature()
         {
             InitializeComponent();
         }

@@ -8,20 +8,20 @@ using System.Windows.Media;
 
 namespace AeonHacs.Wpf.Converters
 {
-	[ValueConversion(typeof(Transform), typeof(Transform))]
-	public class TransformInverseConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if (value is Transform transform)
-				return transform.Inverse;
-			return Transform.Identity;
-		}
+    [ValueConversion(typeof(Transform), typeof(Transform))]
+    public class TransformInverseConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Transform transform)
+                return transform.Inverse;
+            return Transform.Identity;
+        }
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			//TODO should this be the same as above?
-			return DependencyProperty.UnsetValue;
-		}
-	}
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            //TODO should this be the same as above?
+            return DependencyProperty.UnsetValue;
+        }
+    }
 }

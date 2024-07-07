@@ -10,34 +10,34 @@ using System.Windows.Markup;
 namespace AeonHacs.Wpf.Behaviors
 {
     public class ToggleLinkedControlBehavior : Behavior<View>
-	{
-		[ConstructorArgument("linkedControls")]
-		protected List<UIElement> LinkedControls { get; }
+    {
+        [ConstructorArgument("linkedControls")]
+        protected List<UIElement> LinkedControls { get; }
 
-		public ToggleLinkedControlBehavior(params UIElement[] linkedControls) =>
-			LinkedControls = linkedControls.ToList();
+        public ToggleLinkedControlBehavior(params UIElement[] linkedControls) =>
+            LinkedControls = linkedControls.ToList();
 
-		protected override void OnAttached()
-		{
-			if (AssociatedObject != null)
-			{
-				base.OnAttached();
-				AssociatedObject.Click += AssociatedObject_Click; ;
-			}
-		}
+        protected override void OnAttached()
+        {
+            if (AssociatedObject != null)
+            {
+                base.OnAttached();
+                AssociatedObject.Click += AssociatedObject_Click; ;
+            }
+        }
 
-		private void AssociatedObject_Click(object sender, RoutedEventArgs e)
-		{
-			if (LinkedControls != null)
-			{
-				LinkedControls.ForEach(control =>
-				{
-					if (control.Visibility == Visibility.Visible)
-						control.Visibility = Visibility.Collapsed;
-					else
-						control.Visibility = Visibility.Visible;
-				});
-			}
-		}
-	}
+        private void AssociatedObject_Click(object sender, RoutedEventArgs e)
+        {
+            if (LinkedControls != null)
+            {
+                LinkedControls.ForEach(control =>
+                {
+                    if (control.Visibility == Visibility.Visible)
+                        control.Visibility = Visibility.Collapsed;
+                    else
+                        control.Visibility = Visibility.Visible;
+                });
+            }
+        }
+    }
 }

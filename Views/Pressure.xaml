@@ -17,7 +17,7 @@
             d:Content="{Binding DefaultContentString}"
             ContentStringFormat="{Binding ContentStringFormat}"
             wpf:HacsViewProperties.BackgroundResourceKey="{Binding Component.Pressure, FallbackValue=0, Converter={x:Static c:PressureToBrushResourceKeyConverter.Default}}"
-			Padding="{Binding Padding}"
+            Padding="{Binding Padding}"
             VerticalContentAlignment="{Binding VerticalContentAlignment}"
             HorizontalContentAlignment="{Binding HorizontalContentAlignment}"
             />

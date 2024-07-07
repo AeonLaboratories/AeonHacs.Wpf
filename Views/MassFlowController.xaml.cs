@@ -4,10 +4,10 @@
     /// Interaction logic for MassFlowController.xaml
     /// </summary>
     public partial class MassFlowController : View
-	{
-		public MassFlowController()
-		{
-			InitializeComponent();
-		}
-	}
+    {
+        public MassFlowController()
+        {
+            InitializeComponent();
+        }
+    }
 }

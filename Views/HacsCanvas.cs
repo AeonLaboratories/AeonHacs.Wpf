@@ -33,8 +33,8 @@ namespace AeonHacs.Wpf.Views
         }
 
         public HacsCanvas()
-		{
+        {
 
-		}
+        }
     }
 }

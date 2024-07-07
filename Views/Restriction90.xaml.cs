@@ -13,14 +13,14 @@ using System.Windows.Shapes;
 
 namespace AeonHacs.Wpf.Views
 {
-	/// <summary>
-	/// Interaction logic for Restriction.xaml
-	/// </summary>
-	public partial class Restriction90 : View
-	{
-		public Restriction90()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interaction logic for Restriction.xaml
+    /// </summary>
+    public partial class Restriction90 : View
+    {
+        public Restriction90()
+        {
+            InitializeComponent();
+        }
+    }
 }

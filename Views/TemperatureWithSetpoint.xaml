@@ -22,10 +22,10 @@
             />
         <Label Content="{Binding DefaultContentString, ElementName=Field}"
             Background="{DynamicResource WarmBrush}"
-			Padding="{Binding Padding, ElementName=Field}"
+            Padding="{Binding Padding, ElementName=Field}"
             VerticalContentAlignment="{Binding VerticalContentAlignment, ElementName=Field}"
             HorizontalContentAlignment="{Binding HorizontalContentAlignment, ElementName=Field}"
-			Visibility="{Binding Source={x:Static wpf:DesignTimeProperties.IsDesignTime}, Converter={x:Static converters:BoolToVisibilityConverter.Hidden}}"/>
+            Visibility="{Binding Source={x:Static wpf:DesignTimeProperties.IsDesignTime}, Converter={x:Static converters:BoolToVisibilityConverter.Hidden}}"/>
 
     </Grid>
 </local:Gauge>

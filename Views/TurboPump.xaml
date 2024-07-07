@@ -8,14 +8,14 @@
     d:DesignHeight="43" d:DesignWidth="25"
     Width="25" Height="43"
     >
-	<Border Height="24" Width="23" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1" Background="#FF8D8D8D" Canvas.Left="1" Canvas.Top="3"/>
-	<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 1 1 0" Height="4" Width="25"/>
-	<Path Data="m 0.5,0 v2.5 c 0,2 4,3 4,6 v2 h16 v-2 c 0,-3 4,-4 4,-6 v-2.5" Style="{DynamicResource FittingShapeStyle}" Canvas.Top="26"/>
-	<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="1" Width="25" Canvas.Top="5"/>
-	<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="1" Width="25" Canvas.Top="7"/>
-	<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="14" Width="25" Canvas.Top="9"/>
-	<Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="1" Width="25" Canvas.Top="24"/>
-	<Border Height="7" Width="25" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1" Background="{DynamicResource BodyBrush}" Canvas.Top="36"/>
-	<Border Background="{DynamicResource EdgeBrush}" Height="1" Width="25" Canvas.Top="19"/>
-	<Border Background="{DynamicResource EdgeBrush}" Height="1" Width="25" Canvas.Top="39"/>
+    <Border Height="24" Width="23" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1" Background="#FF8D8D8D" Canvas.Left="1" Canvas.Top="3"/>
+    <Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 1 1 0" Height="4" Width="25"/>
+    <Path Data="m 0.5,0 v2.5 c 0,2 4,3 4,6 v2 h16 v-2 c 0,-3 4,-4 4,-6 v-2.5" Style="{DynamicResource FittingShapeStyle}" Canvas.Top="26"/>
+    <Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="1" Width="25" Canvas.Top="5"/>
+    <Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="1" Width="25" Canvas.Top="7"/>
+    <Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="14" Width="25" Canvas.Top="9"/>
+    <Border Background="{DynamicResource BodyBrush}" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1 0" Height="1" Width="25" Canvas.Top="24"/>
+    <Border Height="7" Width="25" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1" Background="{DynamicResource BodyBrush}" Canvas.Top="36"/>
+    <Border Background="{DynamicResource EdgeBrush}" Height="1" Width="25" Canvas.Top="19"/>
+    <Border Background="{DynamicResource EdgeBrush}" Height="1" Width="25" Canvas.Top="39"/>
 </local:HacsCanvas>

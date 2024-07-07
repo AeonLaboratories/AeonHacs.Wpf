@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			 xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
-			 xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
+             xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
+             xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
              mc:Ignorable="d"
-		DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Canvas Height="85" Width="101">
-		<Border Background="#8F381A" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,1,1,0" Width="59" Height="6" DockPanel.Dock="Top" Canvas.Left="21"/>
+        <Border Background="#8F381A" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,1,1,0" Width="59" Height="6" DockPanel.Dock="Top" Canvas.Left="21"/>
         <Border Background="#BDA883" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1" Height="49" Canvas.Left="21" Canvas.Top="6">
             <Grid>
                 <Border Width="16" Height="3" Background="LightGray" BorderThickness="0,0.5" Margin="0,0,0,20">

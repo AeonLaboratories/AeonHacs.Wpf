@@ -1,6 +1,6 @@
 ﻿namespace AeonHacs.Wpf.ViewModels
 {
-	public class TubeFurnace : Oven { }
+    public class TubeFurnace : Oven { }
     public class SerialTubeFurnace : TubeFurnace { }
     public class TcpTubeFurnace : TubeFurnace { }
     public class MtiFurnace : TubeFurnace { }

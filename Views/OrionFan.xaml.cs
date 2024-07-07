@@ -13,14 +13,14 @@ using System.Windows.Shapes;
 
 namespace AeonHacs.Wpf.Views
 {
-	/// <summary>
-	/// Interaction logic for OrionFan.xaml
-	/// </summary>
-	public partial class OrionFan : UserControl
-	{
-		public OrionFan()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interaction logic for OrionFan.xaml
+    /// </summary>
+    public partial class OrionFan : UserControl
+    {
+        public OrionFan()
+        {
+            InitializeComponent();
+        }
+    }
 }

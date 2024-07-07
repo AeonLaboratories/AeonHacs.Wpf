@@ -6,41 +6,41 @@ using System.Windows.Data;
 
 namespace AeonHacs.Wpf.Converters
 {
-	/// <summary>
-	/// If the given value matches the specified parameter, return the first of two output options; 
-	/// otherwise, return the second.
-	/// </summary>
+    /// <summary>
+    /// If the given value matches the specified parameter, return the first of two output options; 
+    /// otherwise, return the second.
+    /// </summary>
     public class MatchConverter : IValueConverter
-	{
-		public static MatchConverter Default = new MatchConverter()
-		{
-			MatchValue = true,
-			MismatchValue = false
-		};
-		public static MatchConverter VisibleCollapsed = new MatchConverter()
-		{
-			MatchValue = Visibility.Visible,
-			MismatchValue = Visibility.Collapsed
-		};
-		public static MatchConverter VisibleHidden = new MatchConverter()
+    {
+        public static MatchConverter Default = new MatchConverter()
         {
-			MatchValue = Visibility.Visible,
-			MismatchValue = Visibility.Hidden
+            MatchValue = true,
+            MismatchValue = false
+        };
+        public static MatchConverter VisibleCollapsed = new MatchConverter()
+        {
+            MatchValue = Visibility.Visible,
+            MismatchValue = Visibility.Collapsed
+        };
+        public static MatchConverter VisibleHidden = new MatchConverter()
+        {
+            MatchValue = Visibility.Visible,
+            MismatchValue = Visibility.Hidden
         };
 
-		protected object MatchValue { get; set; }
+        protected object MatchValue { get; set; }
 
-		protected object MismatchValue { get; set; }
+        protected object MismatchValue { get; set; }
 
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			var match = value?.Equals(parameter) ?? parameter == null;
-			return match ? MatchValue : MismatchValue;
-		}
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var match = value?.Equals(parameter) ?? parameter == null;
+            return match ? MatchValue : MismatchValue;
+        }
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
