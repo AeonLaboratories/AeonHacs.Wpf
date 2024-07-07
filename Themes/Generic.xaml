@@ -674,7 +674,7 @@
                                 </local:StackingPanel>
                             </local:StackingPanel>
                             <local:StackingPanel>
-                                <v:Valve Component="{TemplateBinding Valve}" d:ValveState="Opened"/>
+                                <v:Valve Component="{TemplateBinding Valve}" d:ValveState="Closed"/>
                                 <s:Stub Length="30" IsHitTestVisible="False" />
                                 <s:CultureTube Size="6mm" IsHitTestVisible="False" />
                             </local:StackingPanel>
