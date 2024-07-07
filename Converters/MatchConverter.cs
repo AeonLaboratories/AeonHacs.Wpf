@@ -7,7 +7,7 @@ using System.Windows.Data;
 namespace AeonHacs.Wpf.Converters
 {
     /// <summary>
-    /// If the given value matches the specified parameter, return the first of two output options; 
+    /// If the given value matches the specified parameter, return the first of two output options;
     /// otherwise, return the second.
     /// </summary>
     public class MatchConverter : IValueConverter

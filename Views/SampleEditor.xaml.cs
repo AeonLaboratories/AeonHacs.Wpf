@@ -186,7 +186,7 @@ namespace AeonHacs.Wpf.Views
             CollectionView v = (CollectionView)CollectionViewSource.GetDefaultView(ProcessComboBox.ItemsSource);
             v.Filter = (item) =>
             {
-                return item is ProcessSequence ps && 
+                return item is ProcessSequence ps &&
                     PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType &&
                     ps.PortType == portType;
             };
@@ -194,10 +194,10 @@ namespace AeonHacs.Wpf.Views
             ProcessComboBox.SelectedValue = Sample.Process;
             if (ProcessComboBox.SelectedIndex == -1 && ProcessComboBox.Items.Count > 0)
                 ProcessComboBox.SelectedValue = ProcessComboBox.Items[0];
-            
+
             // TODO: Should this functionality be completely removed or should 'independentFurnaces' be a
             //           system property that can be set in the settings file.
-            var isCombustion = PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType && 
+            var isCombustion = PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType &&
                 portType == AeonHacs.InletPortType.Combustion;
             var independentFurnaces = false;
             NotifyRaiseCheckBox.Visibility = isCombustion && independentFurnaces ? Visibility.Visible : Visibility.Collapsed;

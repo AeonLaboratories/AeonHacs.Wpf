@@ -180,7 +180,7 @@ public class SLCanvas : Control
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
     {
         base.OnRenderSizeChanged(sizeInfo);
-        
+
         // Just update the selector position. No need to update color.
         UpdateSource = null;
         SelectorPosition = SelectorPositionFromColor();

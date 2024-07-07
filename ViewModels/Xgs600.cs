@@ -10,7 +10,7 @@ namespace AeonHacs.Wpf.ViewModels
             protected set => base.Component = value;
         }
 
-        // TODO 
+        // TODO
         //public List<Meter> Gauges
         //{
         //    get
@@ -18,7 +18,7 @@ namespace AeonHacs.Wpf.ViewModels
         //        Component.Gauges.ToList<Meter>(x => );
         //    }
         //    set
-        //    { 
+        //    {
         //        gauges = value;
         //        var list = new List<Components.IMeter>();
         //        Component.Gauges = list;

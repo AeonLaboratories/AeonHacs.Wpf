@@ -25,7 +25,7 @@ namespace AeonHacs.Wpf.ViewModels
         }
         public ViewModel SampleFurnace
         {
-            get 
+            get
             {
                 if (Component?.SampleFurnace is ITubeFurnace)
                     return null;    // omit CC furnace if it's depicted elsewhere

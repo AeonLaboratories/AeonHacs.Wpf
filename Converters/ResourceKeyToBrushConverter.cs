@@ -16,7 +16,7 @@ namespace AeonHacs.Wpf.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is string key ? 
+            return value is string key ?
                 (Brush)Application.Current.Resources[key] :
                 DefaultBrush;
         }

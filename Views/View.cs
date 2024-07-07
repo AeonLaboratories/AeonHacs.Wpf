@@ -79,7 +79,7 @@ namespace AeonHacs.Wpf.Views
                 window.Content = dp;
                 window.MaxHeight = 0.7 * SystemParameters.PrimaryScreenHeight;
                 window.MaxWidth = 0.25 * SystemParameters.PrimaryScreenWidth;
-                
+
                 var nameBinding = new Binding($"{nameof(SettingsPanel.Source)}.Name") { Source = panel, FallbackValue = "Properties" };
                 window.SetBinding(Window.TitleProperty, nameBinding);
                 window.ContentRendered += (sender, e) =>
@@ -168,7 +168,7 @@ namespace AeonHacs.Wpf.Views
                 }
                 contextMenu.Items.Add(new Separator() { Height = 1, Margin = new Thickness(0), Padding = new Thickness(0) });
             }
-            
+
             var propertiesMenuItem = new MenuItem() { Header = "Properties" };
             propertiesMenuItem.Click += (sender, e) => ShowProperties(sender as MenuItem, component);
             contextMenu.Items.Add(propertiesMenuItem);
@@ -195,7 +195,7 @@ namespace AeonHacs.Wpf.Views
         {
             if (!(d is FrameworkElement fe))
                 return;
-            
+
             var oldComponent = e.OldValue as INotifyPropertyChanged;
             var newComponent = e.NewValue as INotifyPropertyChanged;
 

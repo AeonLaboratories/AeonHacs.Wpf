@@ -9,6 +9,6 @@ namespace AeonHacs.Wpf.ViewModels
         {
             get => base.Component as AeonHacs.IHacsBase;
             protected set => base.Component = value;
-        }        
+        }
     }
 }

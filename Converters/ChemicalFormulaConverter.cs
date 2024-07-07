@@ -42,7 +42,7 @@ public class ChemicalFormulaConverter : IValueConverter
     {
         if (value is not string formula)
             return DependencyProperty.UnsetValue;
-        
+
         StringBuilder sb = new StringBuilder(formula);
 
         for (int i = 0; i < sb.Length; i++)

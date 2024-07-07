@@ -16,7 +16,7 @@ namespace AeonHacs.Wpf.Views
         #region TargetSetpoint
 
         public static readonly DependencyProperty TargetSetpointProperty = DependencyProperty.Register(
-            "TargetSetpoint", typeof(double?), typeof(OvenTemperature), 
+            "TargetSetpoint", typeof(double?), typeof(OvenTemperature),
             new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true });
 
         Binding targetSetpointBinding = new Binding($"{nameof(Component)}.{nameof(ViewModels.Oven.TargetSetpoint)}");

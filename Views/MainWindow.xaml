@@ -9,7 +9,7 @@
         xmlns:b="clr-namespace:AeonHacs.Wpf.Behaviors"
         mc:Ignorable="d"
         d:DesignHeight="450" d:DesignWidth="800"
-        Title="MainWindow" 
+        Title="MainWindow"
         Icon="{DynamicResource KegIcon}"
         Background="{DynamicResource ApplicationBackgroundBrush}"
         SizeToContent="WidthAndHeight">

@@ -25,7 +25,7 @@ public class BreaksealTube : Shape
     }
 
     public RelativeDirection Orientation { get => (RelativeDirection)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
-    
+
     [TypeConverter(typeof(CultureTubeSizeConverter))]
     public Size Size { get => (Size)GetValue(SizeProperty); set => SetValue(SizeProperty, value); }
 

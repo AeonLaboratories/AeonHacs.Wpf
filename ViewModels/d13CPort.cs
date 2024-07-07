@@ -2,7 +2,7 @@
 
 namespace AeonHacs.Wpf.ViewModels
 {
-    public class d13CPort : LinePort 
+    public class d13CPort : LinePort
     {
         [Browsable(false)]
         public new Components.Id13CPort Component

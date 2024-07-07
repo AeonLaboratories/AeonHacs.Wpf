@@ -157,7 +157,7 @@ namespace AeonHacs.Wpf.Views
                 w.SizeToContent = SizeToContent.WidthAndHeight;
                 sm.SampleList.SizeChanged += (sender, e) =>
                     w.SizeToContent = SizeToContent.WidthAndHeight;
-                w.Closed += (sender, e) => 
+                w.Closed += (sender, e) =>
                     sampleManager = null;
                 w.ResizeMode = ResizeMode.NoResize;
                 w.Show();

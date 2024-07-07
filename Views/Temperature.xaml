@@ -1,8 +1,8 @@
 ﻿<local:Gauge x:Class="AeonHacs.Wpf.Views.Temperature"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:wpf="clr-namespace:AeonHacs.Wpf"
     xmlns:converters="clr-namespace:AeonHacs.Wpf.Converters"
     xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
@@ -14,7 +14,7 @@
 
     <Grid>
         <Label Content="{Binding DefaultContentString}" Padding="{Binding Padding}" Visibility="Hidden" />
-        <Label        
+        <Label
             Content="{Binding Component.Temperature}"
             d:Content="{Binding DefaultContentString}"
             ContentStringFormat="{Binding ContentStringFormat}"

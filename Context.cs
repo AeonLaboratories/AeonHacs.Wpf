@@ -15,7 +15,7 @@ namespace AeonHacs.Wpf
         public Binding Binding { get; }
 
         public DisplayStyle Style { get; }
-        
+
         public bool Dispatch { get; }
 
         public Context(string label, Binding binding = null, DisplayStyle style = DisplayStyle.Default, bool dispatch = true)

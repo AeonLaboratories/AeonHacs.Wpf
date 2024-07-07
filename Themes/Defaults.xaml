@@ -32,7 +32,7 @@
     <Color x:Key="GlassColor">#C0E6E6E6</Color>
     <Color x:Key="FoamColor">#7FC1FF</Color>      <!-- for XPE foam parts -->
 
-    
+
     <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="{DynamicResource ApplicationBackgroundColor}"/>
 
     <SolidColorBrush x:Key="EdgeBrush" Color="{DynamicResource EdgeColor}"/>

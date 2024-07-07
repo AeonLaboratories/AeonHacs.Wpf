@@ -37,7 +37,7 @@ public class ViewModel : BindableObject, INamedObject
     ///        a NamedObject's Name prepended with its type and a dot
     ///            e.g., "Section.VTT"
     ///    In the first case, the existing ViewModel is returned;
-    ///    otherwise, a new ViewModel of the type corresponding to the given 
+    ///    otherwise, a new ViewModel of the type corresponding to the given
     ///    NamedObject's type is created and returned.
     ///    If anything goes wrong (e.g., the key is invalid or the NamedObject
     ///    doesn't exist), null is returned.
@@ -65,7 +65,7 @@ public class ViewModel : BindableObject, INamedObject
                 Type.GetType("AeonHacs.Components." + modelTypeName + ", AeonHacs.Core") ??
                 Type.GetType("AeonHacs." + modelTypeName + ", AeonHacs.Core");
             if (type != null)
-                model = 
+                model =
                     list.FirstOrDefault(x => x.GetType() == type) ??
                     list.FirstOrDefault(x => type.IsAssignableFrom(x.GetType()));
         }
@@ -84,7 +84,7 @@ public class ViewModel : BindableObject, INamedObject
         if (model is ViewModel viewModel) return viewModel;
 
         // Every unnamed model produces a new unnamed ViewModel,
-        // which doesn't get added to the collection, so it can't be 
+        // which doesn't get added to the collection, so it can't be
         // found by name, but it can still be accessed via its owner.
         if (!(model is INamedObject namedObject) || namedObject.Name.IsBlank())
             return NewViewModel(model);
@@ -113,10 +113,10 @@ public class ViewModel : BindableObject, INamedObject
     }
 
     /// <summary>
-    /// Returns the ViewModel type that corresponds to the 
+    /// Returns the ViewModel type that corresponds to the
     /// specified model. Presently, that means the Name property
-    /// of the ViewModel's type matches the model's type Name (which 
-    /// requires the two types to be defined in different 
+    /// of the ViewModel's type matches the model's type Name (which
+    /// requires the two types to be defined in different
     /// namespaces).
     /// </summary>
     /// <param name="model"></param>
@@ -199,7 +199,7 @@ public class ViewModel : BindableObject, INamedObject
         }
     }
     string key;
-    
+
     protected virtual void ComponentChanged() { }
 
     /// <summary>

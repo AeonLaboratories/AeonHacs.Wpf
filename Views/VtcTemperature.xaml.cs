@@ -16,7 +16,7 @@ namespace AeonHacs.Wpf.Views
         #region TargetSetpoint
 
         public static readonly DependencyProperty TargetSetpointProperty = DependencyProperty.Register(
-            "TargetSetpoint", typeof(double?), typeof(VtcTemperature), 
+            "TargetSetpoint", typeof(double?), typeof(VtcTemperature),
             new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true });
 
         Binding targetSetpointBinding = new Binding($"{nameof(Component)}.{nameof(ViewModels.VTColdfinger.Heater)}.{nameof(ViewModels.Heater.TargetSetpoint)}");

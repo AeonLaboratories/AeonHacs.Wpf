@@ -91,7 +91,7 @@ namespace AeonHacs.Wpf.Views
         protected virtual void Refresh()
         {
             ResetLayout();
-            if (Source == null) 
+            if (Source == null)
                 return;
             PopulateView();
         }
@@ -136,7 +136,7 @@ namespace AeonHacs.Wpf.Views
         }
 
         protected virtual void PopulateFrom(ICollection collection)
-        {            
+        {
             // generate a TextBox or Button for each item in the collection
             var enumerator = collection.GetEnumerator();
             enumerator.Reset();
@@ -266,7 +266,7 @@ namespace AeonHacs.Wpf.Views
                 {
                     valueControl = new TextBox() { Padding = new Thickness(3, 1, 3, 1), IsEnabled = editable };
                     valueBinding.UpdateSourceTrigger = UpdateSourceTrigger;
-                    
+
                     if (valueType == typeof(int))
                     {
                         valueBinding.ValidationRules.Add(NumericValidationRule.Int);
@@ -290,12 +290,12 @@ namespace AeonHacs.Wpf.Views
                         var button = new Button();
                         if (model is AeonHacs.INamedObject)
                         {
-                            var contentBinding = 
+                            var contentBinding =
                                 new Binding($"{valueBinding.Path.Path}.{nameof(AeonHacs.INamedObject.Name)}")
-                                { 
-                                    Source = this, 
+                                {
+                                    Source = this,
                                     Converter = Converters.PlainContentConverter.Default,
-                                    FallbackValue = displayName, 
+                                    FallbackValue = displayName,
                                     TargetNullValue = displayName
                                 };
                             button.SetBinding(ContentControl.ContentProperty, contentBinding);

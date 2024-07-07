@@ -57,11 +57,11 @@ public class ValueSlider : SnapRange
     protected virtual void UpdateValueFromMousePosition(MouseEventArgs e)
     {
         double value = Math.Clamp(e.GetPosition(Bounds).X, 0, Bounds.ActualWidth);
-        
+
         value /= Bounds.ActualWidth;
         value *= Maximum - Minimum;
         value += Minimum;
-        
+
         Value = value;
     }
 

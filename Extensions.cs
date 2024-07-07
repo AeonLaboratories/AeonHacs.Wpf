@@ -114,7 +114,7 @@ namespace AeonHacs.Wpf
             }
 
             /// <summary>
-            /// When overridden in a derived class, positions child elements and determines a size for a <see cref="FrameworkElement"/> derived class. 
+            /// When overridden in a derived class, positions child elements and determines a size for a <see cref="FrameworkElement"/> derived class.
             /// </summary>
             /// <param name="finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
             /// <returns>The actual size used.</returns>
@@ -191,11 +191,11 @@ namespace AeonHacs.Wpf
             {
                 ItemsControl i = (ItemsControl)d;
 
-                // for Items property  
+                // for Items property
                 i.ItemContainerGenerator.ItemsChanged += ItemsChanged;
                 itemsControls.Add(i.ItemContainerGenerator, i);
 
-                // for ItemsSource property  
+                // for ItemsSource property
                 DependencyPropertyDescriptor prop = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, i.GetType());
                 prop.AddValueChanged(i, ItemsSourceChanged);
             }

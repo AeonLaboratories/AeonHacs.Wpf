@@ -139,7 +139,7 @@
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
-    
+
     <Style TargetType="{x:Type v:Switch}" BasedOn="{StaticResource {x:Type v:View}}">
         <Setter Property="Background" Value="{DynamicResource OffBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource EdgeBrush}"/>
@@ -238,7 +238,7 @@
                         <Canvas Width="31" Height="40">
                             <!--<Path Data="m2.5,0 v41.5 a 4,4 0 0 0 4,4 l22,-2.5 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l16,-1.6 a 4,4 0 0 0 4,-4 V0" Stroke="{DynamicResource EdgeBrush}" StrokeThickness="5" StrokeLineJoin="Round"/>-->
                             <Path Data="m2.5,0 v33.5 a 4,4 0 0 0 4,4 l22,-2.5 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l20,-2 l-20,-2 l16,-1.6 a 4,4 0 0 0 4,-4 V0" Stroke="{DynamicResource EdgeBrush}" StrokeThickness="5" StrokeLineJoin="Round"/>
-                            
+
                             <Canvas Canvas.Left="7" Canvas.Top="13.5">
                                 <!--<Line Canvas.Top="26" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
                                 <Line Canvas.Top="22" X1="1.5" Y1="1.5" X2="21.5" Y2="3.5" Stroke="Gray" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>-->
@@ -524,7 +524,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style TargetType="{x:Type v:InletPort}" BasedOn="{StaticResource {x:Type v:Port}}">
         <Setter Property="PortType" Value="{Binding Component.PortType, RelativeSource={RelativeSource Self}}" />
         <Setter Property="QuartzFurnace" Value="{Binding Component.QuartzFurnace, RelativeSource={RelativeSource Self}}" />
@@ -752,7 +752,7 @@
                             <TextBlock x:Name="Dummy" Text="#" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
                             <TextBox x:Name="PART_Text" Grid.Row="0" Grid.Column="0" Margin="-1,-1,1,1" VerticalAlignment="Stretch"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                     Background="{x:Null}" BorderThickness="0" 
+                                     Background="{x:Null}" BorderThickness="0"
                                      Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat=0.##, UpdateSourceTrigger=PropertyChanged}"/>
                             <Grid Grid.Row="0" Grid.Column="1" MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
                                 <Grid.RowDefinitions>

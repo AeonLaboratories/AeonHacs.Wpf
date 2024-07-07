@@ -11,7 +11,7 @@ namespace AeonHacs.Wpf.ViewModels
             protected set => base.Component = value;
         }
         public ViewModel PidSetup => GetFromModel(Component?.PidSetup);
-        
+
         public int MillisecondsUpdate { get => Component.MillisecondsUpdate; set => Component.MillisecondsUpdate = value; }
         public double ControlOutputLimit { get => Component.ControlOutputLimit; set => Component.ControlOutputLimit = value; }
         public double ReferencePoint { get => Component.ReferencePoint; set => Component.ReferencePoint = value; }

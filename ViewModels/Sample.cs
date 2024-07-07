@@ -30,6 +30,6 @@ namespace AeonHacs.Wpf.ViewModels
         public int AliquotsCount { get => Component.AliquotsCount; set => Component.AliquotsCount = value; }
         public List<string> AliquotIds { get => Component.AliquotIds; set => Component.AliquotIds = value; }
         public List<Components.IAliquot> Aliquots { get => Component.Aliquots; set => Component.Aliquots = value; }
-        
+
     }
 }
