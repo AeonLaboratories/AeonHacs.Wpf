@@ -4,11 +4,17 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using AeonHacs.Wpf.ViewModels;
+using System.Windows.Media;
 
 namespace AeonHacs.Wpf.Views
 {
     public class HacsCanvas : System.Windows.Controls.Canvas
     {
+        static HacsCanvas()
+        {
+            BackgroundProperty.OverrideMetadata(typeof(HacsCanvas), new FrameworkPropertyMetadata(Brushes.Transparent));
+        }
+
         public virtual string HelpText
         {
             get => (string)GetValue(AutomationProperties.HelpTextProperty);
