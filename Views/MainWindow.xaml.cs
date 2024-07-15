@@ -216,6 +216,7 @@ namespace AeonHacs.Wpf.Views
                 };
                 w.Closed += (sender, e) => deviceSettings = null;
                 Interaction.GetBehaviors(w).Add(new SettingsWindowBehavior());
+                Interaction.GetBehaviors(w).Add(new ComponentToolTipBehavior());
                 w.Show();
             }
             else
