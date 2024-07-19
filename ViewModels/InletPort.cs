@@ -9,6 +9,8 @@ namespace AeonHacs.Wpf.ViewModels
 {
     public class InletPort : LinePort
     {
+        public InletPort() { RunHasDefault = true; }
+
         [Browsable(false)]
         public new Components.IInletPort Component
         {
@@ -49,20 +51,21 @@ namespace AeonHacs.Wpf.ViewModels
 
         public override void Run(string command = "")
         {
-            if (command == SampleCaption)
-            {
+            if (command == SampleCaption || command.IsBlank())
                 EditSample();
-            }
-            base.Run(command);
+            else
+                base.Run(command);
         }
 
         void EditSample()
         {
-            var w = new Window();
-            var se = new SampleEditor(Component);
-            w.Content = se;
-            w.SizeToContent = SizeToContent.WidthAndHeight;
-            w.Show();
+            Application.Current.Dispatcher.Invoke((Action)delegate {
+                var w = new Window();
+                var se = new SampleEditor(Component);
+                w.Content = se;
+                w.SizeToContent = SizeToContent.WidthAndHeight;
+                w.Show();
+            });
         }
     }
 }

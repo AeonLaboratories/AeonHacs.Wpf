@@ -5,6 +5,8 @@ namespace AeonHacs.Wpf.ViewModels
 {
     public class Oven : Thermometer
     {
+        public Oven() { RunHasDefault = true; }
+
         [Browsable(false)]
         public new Components.IOven Component
         {
