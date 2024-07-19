@@ -53,7 +53,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.TurnOn();
             else if (command == TurnOffCaption)
                 Component?.TurnOff();
-            base.Run(command);
+            else
+                base.Run(command);
         }
     }
 }

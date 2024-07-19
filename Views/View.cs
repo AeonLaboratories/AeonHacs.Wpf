@@ -298,7 +298,13 @@ namespace AeonHacs.Wpf.Views
         {
             PendingLeftClicks = e.ClickCount;
 
-            base.OnMouseLeftButtonDown(e);
+            if (e.ClickCount == 2 && Component is ViewModel vm && vm.RunHasDefault)
+            {
+                vm.Dispatch();
+                e.Handled = true;
+            }
+            else
+                base.OnMouseLeftButtonDown(e);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -330,19 +336,6 @@ namespace AeonHacs.Wpf.Views
             CreateBindings();
 
             ClickWaitTimer.Tick += ClickWaitTimer_Tick;
-        }
-
-        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && Component is ViewModel viewModel)
-            {
-                if (viewModel.RunHasDefault)
-                {
-                    viewModel.Dispatch();
-                    e.Handled = true;
-                }
-            }
-            base.OnMouseDoubleClick(e);
         }
     }
 }

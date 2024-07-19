@@ -87,7 +87,8 @@ namespace AeonHacs.Wpf.ViewModels
                 else
                     Component.Isolate();
             }
-            base.Run(command);
+            else
+                base.Run(command);
         }
     }
 }

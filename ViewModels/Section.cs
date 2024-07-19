@@ -125,7 +125,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.IsolateFromVacuum();
             else if (command == JoinToVacuumCaption)
                 Component?.JoinToVacuum();
-            base.Run(command);
+            else
+                base.Run(command);
         }
 
     }

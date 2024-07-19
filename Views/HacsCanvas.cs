@@ -33,7 +33,10 @@ namespace AeonHacs.Wpf.Views
             if (e.LeftButton == MouseButtonState.Pressed &&
                     e.ClickCount == 2 &&
                     Component is ViewModel vm)
+            {
                 vm.Run();
+                e.Handled = true;
+            }
             else
                 base.OnMouseDown(e);
         }

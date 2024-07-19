@@ -48,7 +48,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.StayActive();
             else if (command == ForceFillCaption)
                 Component?.ForceFill();
-            base.Run(command);
+            else
+                base.Run(command);
         }
 
     }

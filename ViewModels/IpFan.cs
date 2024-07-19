@@ -45,7 +45,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component.StayOff();
             else if (command == StandbyCaption)
                 Component?.Standby();
-            base.Run(command);
+            else
+                base.Run(command);
         }
     }
 }

@@ -35,7 +35,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.TurnOn();
             else if (command == TurnOffCaption || command.IsBlank() && Component.IsOn)
                 Component?.TurnOff();
-            base.Run(command);
+            else
+                base.Run(command);
         }
 
         #region OnOff

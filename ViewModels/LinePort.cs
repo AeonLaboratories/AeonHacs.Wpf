@@ -37,7 +37,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component.State = Components.LinePort.States.Disabled;
             else if (command == EmptyCaption)
                 Component.State = Components.LinePort.States.Empty;
-            base.Run(command);
+            else
+                base.Run(command);
         }
 
     }

@@ -34,9 +34,10 @@ namespace AeonHacs.Wpf.ViewModels
         {
             if (command == ResetTrackedFlowCaption)
                 Component?.ResetTrackedFlow();
-            if (command == ZeroNowCaption)
+            else if (command == ZeroNowCaption)
                 Component?.ZeroNow();
-            base.Run(command);
+            else
+                base.Run(command);
         }
 
 

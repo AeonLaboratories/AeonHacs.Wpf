@@ -40,7 +40,8 @@ namespace AeonHacs.Wpf.ViewModels
         {
             if (command == ZeroNowCaption)
                 Component?.ZeroNow();
-            base.Run(command);
+            else
+                base.Run(command);
         }
     }
 }

@@ -57,7 +57,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.Raise();
             else if (command == ThawCaption)
                 Component?.Thaw();
-            base.Run(command);
+            else
+                base.Run(command);
         }
     }
 }

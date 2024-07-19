@@ -64,7 +64,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.PreparationComplete();
             else if (command == EmptyCaption)
                 Component.Aliquot = null;
-            base.Run(command);
+            else
+                base.Run(command);
         }
     }
 }
