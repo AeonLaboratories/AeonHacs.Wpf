@@ -262,7 +262,7 @@ namespace AeonHacs.Wpf.Views
                     valueControl = new ComboBox() { ItemsSource = Enum.GetValues(valueType) };
                     dependencyProperty = Selector.SelectedItemProperty;
                 }
-                else if (valueType.IsEnum || valueType.IsPrimitive || valueType == typeof(string))
+                else if (valueType.IsEnum || valueType.IsPrimitive || valueType == typeof(string) || valueType == typeof(DateTime))
                 {
                     valueControl = new TextBox() { Padding = new Thickness(3, 1, 3, 1), IsEnabled = editable };
                     valueBinding.UpdateSourceTrigger = UpdateSourceTrigger;
@@ -279,6 +279,13 @@ namespace AeonHacs.Wpf.Views
                         Interaction.GetBehaviors(valueControl).Add(new TextBoxValidationBehavior());
                         valueBinding.NotifyOnValidationError = true;
                         valueBinding.StringFormat = "G10";
+                    }
+                    else if (valueType == typeof(DateTime))
+                    {
+                        valueBinding.ValidationRules.Add(DateTimeValidationRule.Shared);
+                        Interaction.GetBehaviors(valueControl).Add(new TextBoxValidationBehavior());
+                        valueBinding.NotifyOnValidationError = true;
+                        valueBinding.StringFormat = "dd/MM/yyyy HH:mm:ss";
                     }
 
                     dependencyProperty = TextBox.TextProperty;
