@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 
 namespace AeonHacs.Wpf.Shapes;
+
 public class Short : TubingBase
 {
     public static readonly DependencyProperty OrientationProperty = LayoutProperties.OrientationProperty.AddOwner(typeof(Short));

@@ -1,0 +1,139 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:control="clr-namespace:AeonHacs.Wpf.Controls"
+                    xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+                    xmlns:s="clr-namespace:AeonHacs.Wpf.Shapes">
+    
+    <Style TargetType="{x:Type s:TubingBase}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+        <Setter Property="TubingSize" Value="1/4" />
+    </Style>
+
+    <Style TargetType="{x:Type s:FittingBase}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+        <Setter Property="FittingSize" Value="1/4" />
+    </Style>
+
+    <Style TargetType="{x:Type s:BreaksealTube}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource GlassBrush}" />
+        <Setter Property="Size" Value="ampoule" />
+    </Style>
+
+    <Style TargetType="{x:Type s:CultureTube}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource GlassBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Needle}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Vial}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Left" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="{DynamicResource GlassColor}" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Up" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="#88CCCCCC" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Right" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="1,0.5" EndPoint="0,0.5">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="#88CCCCCC" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Down" >
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                            <GradientStop Color="WhiteSmoke" Offset="0.167" />
+                            <GradientStop Color="#88CCCCCC" Offset="0.167" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type s:CO2Cylinder}">
+        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource BodyBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Arrow}">
+        <Setter Property="Fill" Value="{DynamicResource EdgeBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type s:Adapter}">
+        <Setter Property="Connection1" Value="1/4" />
+        <Setter Property="Connection2" Value="3/8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type s:Adapter}">
+                    <control:StackingPanel>
+                        <s:Short TubingSize="{TemplateBinding Connection1, Converter={x:Static c:FittingToTubingSizeConverter.Instance}}" Length="1" />
+                        <s:Coupling Length="4">
+                            <s:Coupling.FittingSize>
+                                <MultiBinding Converter="{x:Static c:PickConverter.Max}">
+                                    <Binding Path="Connection1" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="Connection2" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </s:Coupling.FittingSize>
+                        </s:Coupling>
+                        <s:Short TubingSize="{TemplateBinding Connection2, Converter={x:Static c:FittingToTubingSizeConverter.Instance}}" Length="1" />
+                        <s:Coupling FittingSize="{TemplateBinding Connection2}" Length="{TemplateBinding Connection2}" />
+                    </control:StackingPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type s:Union}">
+        <Setter Property="Connection1" Value="1/4" />
+        <Setter Property="Connection2" Value="3/8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type s:Union}">
+                    <control:StackingPanel>
+                        <s:Coupling FittingSize="{TemplateBinding Connection1}" Length="{TemplateBinding Connection1}" />
+                        <s:Short TubingSize="{TemplateBinding Connection1, Converter={x:Static c:FittingToTubingSizeConverter.Instance}}" Length="1" />
+                        <s:Coupling Length="4">
+                            <s:Coupling.FittingSize>
+                                <MultiBinding Converter="{x:Static c:PickConverter.Max}">
+                                    <Binding Path="Connection1" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="Connection2" RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </s:Coupling.FittingSize>
+                        </s:Coupling>
+                        <s:Short TubingSize="{TemplateBinding Connection2, Converter={x:Static c:FittingToTubingSizeConverter.Instance}}" Length="1" />
+                        <s:Coupling FittingSize="{TemplateBinding Connection2}" Length="{TemplateBinding Connection2}" />
+                    </control:StackingPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

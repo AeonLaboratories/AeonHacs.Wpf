@@ -1,0 +1,84 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+                    xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
+                    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type v:Gauge}">
+        <Setter Property="Background" Value="{DynamicResource NeutralBrush}" />
+        <Setter Property="BorderBrush" Value="#7F7F7F" />
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="ContentStringFormat" Value="0.###############"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="3,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:Gauge}">
+                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding DefaultContentString}" Visibility="Hidden" />
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" d:Content="{TemplateBinding DefaultContentString}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="{x:Type v:TemperatureGauge}" BasedOn="{StaticResource {x:Type v:Gauge}}">
+        <Setter Property="TemperatureBin" Value="{Binding Component.Temperature, RelativeSource={RelativeSource Self}, Converter={x:Static c:TemperatureBinConverter.Default}}" />
+        <Setter Property="DisplayMemberPath" Value="Temperature" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding TemperatureBin, RelativeSource={RelativeSource Self}}" Value="Warm">
+                <Setter Property="Background" Value="{DynamicResource WarmBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TemperatureBin, RelativeSource={RelativeSource Self}}" Value="Hot">
+                <Setter Property="Background" Value="{DynamicResource HotBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TemperatureBin, RelativeSource={RelativeSource Self}}" Value="Cool">
+                <Setter Property="Background" Value="{DynamicResource CoolBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TemperatureBin, RelativeSource={RelativeSource Self}}" Value="Cold">
+                <Setter Property="Background" Value="{DynamicResource ColdBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TemperatureBin, RelativeSource={RelativeSource Self}}" Value="Error">
+                <Setter Property="Background" Value="{DynamicResource ErrorBrush}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type v:PressureGauge}" BasedOn="{StaticResource {x:Type v:Gauge}}">
+        <Setter Property="Background" Value="{DynamicResource GaugeBrush}" />
+        <Setter Property="PressureBin" Value="{Binding Component.Pressure, RelativeSource={RelativeSource Self}, Converter={x:Static c:PressureBinConverter.Default}}" />
+        <Setter Property="DisplayMemberPath" Value="Pressure" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding PressureBin, RelativeSource={RelativeSource Self}}" Value="Vacuum">
+                <Setter Property="Background" Value="{DynamicResource VacuumBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PressureBin, RelativeSource={RelativeSource Self}}" Value="HighVacuum">
+                <Setter Property="Background" Value="{DynamicResource HighVacuumBrush}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type v:StabilityGauge}" BasedOn="{StaticResource {x:Type v:Gauge}}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Component.IsStable, RelativeSource={RelativeSource Self}}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource HighVacuumBrush}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type v:FlowGauge}" BasedOn="{StaticResource {x:Type v:Gauge}}">
+        <Setter Property="Background" Value="{DynamicResource HighVacuumBrush}" />
+        <Setter Property="DisplayMemberPath" Value="FlowRate" />
+    </Style>
+    
+</ResourceDictionary>

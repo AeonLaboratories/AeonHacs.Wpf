@@ -1,0 +1,338 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+                    xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
+                    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type v:PressureSensor}">
+        <Style.Resources>
+            <ControlTemplate x:Key="Port" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="11" Height="11" VerticalAlignment="Bottom">
+                        <Border Width="9" Height="4" Canvas.Left="1" Canvas.Top="0"
+                            Background="#2A2A2A" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,1,1,0" />
+                        <Rectangle Width="11" Height="4" Canvas.Left="0" Canvas.Top="4"
+                            Fill="WhiteSmoke" Stroke="{DynamicResource EdgeBrush}" StrokeThickness="1" />
+                        <Border Width="7" Height="3" Canvas.Left="2" Canvas.Top="8"
+                            Background="#2A2A2A" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" />
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="Edwards_AimX" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="21" Height="26" VerticalAlignment="Bottom">
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 7.5 24.5 h 6 V 26 h -6 z"/>
+                        <Path Fill="#FFAFAFAF" StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeMiterLimit="4" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 1.5 19.5 v 4 c 0 0.5 0.5 1 1 1 h 16 c 0.5 0 1 -0.5 1 -1 v -4"/>
+                        <Path StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeMiterLimit="4" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 7.5 24.5 v 1"/>
+                        <Path StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeMiterLimit="4" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 13.5 24.5 v 1"/>
+                        <Path Fill="#FFFF4856" StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeMiterLimit="4" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 20.5 19.5 h -20 v -3 c 0 -0.5 0 -1 1 -15 0 -0.5 0.5 -1 1 -1 h 16 c 0.5 0 1 0.5 1 1 1 14 1 14.5 1 15 v 3"/>
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="Inficon_CDG020D" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="17" Height="33" VerticalAlignment="Bottom">
+                        <Border Width="7" Height="2" Canvas.Left="5" Canvas.Top="31"
+                        Background="#A7A6B0" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" />
+                        <Rectangle Canvas.Left="3" Width="11" Height="31" Fill="#4B6496" />
+                        <Path Canvas.Left="3" Data="M0.5,0.5 h1.5 c 0,11 0,21 -1,29.5 l-0.5,0.5 z" Fill="#22FFFFFF" />
+                        <Path Canvas.Left="12" Data="M0,0.5 c 0,11 0,21 1,29.5 l0.5,0.5 V0.5 z" Fill="#22FFFFFF" />
+                        <Rectangle Canvas.Left="3" Width="11" Height="31" Stroke="{DynamicResource EdgeBrush}" />
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="Inficon_CDG025D" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="17" Height="23" VerticalAlignment="Bottom">
+                        <Border Width="7" Height="2" Canvas.Left="5" Canvas.Top="21"
+                        Background="#A7A6B0" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Rectangle Width="17" Height="21"
+                        Fill="#D6D6D6" Stroke="{DynamicResource EdgeBrush}" />
+                        <Path Canvas.Left="1" Canvas.Top="1"
+                        Data="M0,0 A 7.5,11 0 1 0 15,0 Z" Fill="#4B6496" />
+                        <Path Canvas.Left="1" Canvas.Top="1"
+                        Data="M0.5,0 A 7,10.5 0 1 0 14.5,0 H14 Q 14,4 12,6.5 A 7,4 0 0 1 3,6.5 Q 1,4 1,0" Fill="#22FFFFFF"/>
+                        <Path Canvas.Left="2" Canvas.Top="1"
+                        Data="M0,0 q 0,4 2,6.5 V0 M13,0 q0,4 -2,6.5 V0" Fill="#22000000"/>
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="MKS_722_HP" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="11" Height="26" VerticalAlignment="Bottom">
+                        <Path Fill="#FFAFAFAF" StrokeThickness="1" StrokeLineJoin="Miter" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 4.5 26 v -1.5 h -1 v -2 l -3 -3 v -19 h 10 v 19 l -3 3 v 2 h -1 V 26"/>
+                        <Path Fill="{x:Static Brushes.White}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 0.5 16 V 3 h 10 v 13 h -10"/>
+                        <Path Fill="#FF7D7D7D" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 3.5 24.5 v -2 L 1 20 h 9 l -2.5 2.5 v 2 h -4"/>
+                        <Path Fill="{DynamicResource GlassBrush}" StrokeThickness="1" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 4.5 24.5 V 22 l -2 -2 H 4 l 1.5 2 v 2.5 z"/>
+                        <Path StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeLineJoin="Miter" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 3.5 24.5 v -2 l -3 -3 v -19 h 10 v 19 l -3 3 v 2 h -4"/>
+                        <Path StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 4.5 24.5 v 1"/>
+                        <Path StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeLineJoin="Miter" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 6.5 24.5 v 1"/>
+                        <Path Fill="#FF194CC3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 5 8 V 6 H 8 V 5 h 1 v 1 h 1 V 8 H 7 V 7 H 6 v 1 z"/>
+                        <Path Fill="#FF194CC3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 3 6 V 5 h 1 v 1 z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 1 8 V 7 h 1 v 1 z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 3 7 H 4 V 8 H 3 Z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 3 9 h 6 v 1 H 3 Z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 3 11 h 3 v 1 H 3 Z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 7 11 h 1 v 1 H 7 Z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 3 13 h 2 v 1 H 3 Z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 6 13 h 2 v 1 H 6 Z"/>
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 9 13 h 1 v 1 H 9 Z"/>
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="MKS_722_LP" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="11" Height="26" VerticalAlignment="Bottom">
+                        <Border Height="1" Width="5" Canvas.Left="3" Canvas.Top="25" Background="#FFAFAFAF" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,0" />
+                        <Rectangle Height="5" Width="7" Canvas.Left="2" Canvas.Top="20" Style="{DynamicResource FittingShapeStyle}" Fill="#FFAFAFAF"/>
+                        <Rectangle Height="21" Width="11" Style="{DynamicResource FittingShapeStyle}" Fill="#FFAFAFAF"/>
+                        <Rectangle Fill="{x:Static Brushes.White}" Width="9" Height="13" Canvas.Left="1" Canvas.Top="3"/>
+                        <Rectangle Fill="#FF194CC3" Width="1" Height="1" Canvas.Left="3" Canvas.Top="5"/>
+                        <Path Fill="#FF194CC3" Data="M 0,1 V3 H1 V2 H2 V3 H5 V1 H4 V0 H3 V1 Z" Canvas.Left="5" Canvas.Top="5"/>
+                        <Path Stroke="#FFAFAFAF" StrokeDashArray="1,1" Data="M 0,0.5 h3" Canvas.Left="1" Canvas.Top="7"/>
+                        <Rectangle Fill="#FFAFAFAF" Height="1" Width="6" Canvas.Left="3" Canvas.Top="9"/>
+                        <Path Stroke="#FFAFAFAF" StrokeDashArray="3 1" Data="M 0,0.5 h5" Canvas.Left="3" Canvas.Top="11"/>
+                        <Path Stroke="#FFAFAFAF" StrokeDashArray="2 1" Data="M 0,0.5 h7" Canvas.Left="3" Canvas.Top="13"/>
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="MKS_901P" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="15" Height="14" VerticalAlignment="Bottom">
+                        <Path Fill="#FFAFAFAF" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 5.5 14 V 12.5 C 5.5 12 5 10.5 3 10.5 H 1.5 c -0.5 0 -1 -0.5 -1 -1 v -8 c 0 -0.5 0.5 -1 1 -1 h 12 c 0.5 0 1 0.5 1 1 v 8 c 0 0.5 -0.5 1 -1 1 H 12 c -2 0 -2.5 1.5 -2.5 2 V 14"/>
+                        <Path Fill="{x:Static Brushes.White}" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="m 0.5 3 h 14 v 4 h -14 z"/>
+                        <Path Fill="#FF7D7D7D" StrokeThickness="1" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="m 5.5 14 v -1.5 c 0 -1 -1 -2 -2.5 -2 V 10 h 9 v 0.5 c -1.5 0 -2.5 1 -2.5 2 V 14 Z"/>
+                        <Path Stroke="{DynamicResource EdgeBrush}" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 5.5 14 V 12.5 C 5.5 12 5 10.5 3 10.5 H 1.5 c -0.5 0 -1 -0.5 -1 -1 v -8 c 0 -0.5 0.5 -1 1 -1 h 12 c 0.5 0 1 0.5 1 1 v 8 c 0 0.5 -0.5 1 -1 1 H 12 c -2 0 -2.5 1.5 -2.5 2 V 14"/>
+                        <Path Fill="#FF194CC3" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 2 6 H 3 V 7 H 2 Z"/>
+                        <Path Fill="#FF194CC3" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 5 6 H 6 V 7 H 5 Z"/>
+                        <Path Fill="#FF194CC3" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="m 10 6 h 1 v 1 h -1 z"/>
+                        <Path Fill="#FF194CC3" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="m 13 5 h 1 v 1 h -1 z"/>
+                        <Path Fill="#FF194CC3" StrokeThickness="1" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 2 5 V 4 H 3 V 3 h 1 v 2 z"/>
+                        <Path Fill="#FF194CC3" StrokeThickness="1" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="M 5 5 V 4 H 7 V 3 h 1 v 1 h 3 v 1 z"/>
+                        <Path Fill="{DynamicResource GlassBrush}" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Data="m 5 10 c 0.7226562 0.421875 1.34375 1.019531 1.5 2 v 2 h 1 v -2 c 0 -0.757813 -0.3767286 -1.640154 -1 -2 z"/>
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="MKS_DMB" TargetType="{x:Type v:PressureSensor}">
+                <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Canvas x:Name="PART_canvas" Width="21" Height="25" VerticalAlignment="Bottom">
+                        <Path Fill="#FFAFAFAF" StrokeThickness="1" Stroke="{DynamicResource EdgeBrush}" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="m 8.5 25 v -1.5 h -7 v -15 h -1 v -4 h 1 v -4 h 18 v 4 h 1 v 4 h -1 v 15 h -7 V 25"/>
+                        <Path Fill="{DynamicResource GlassBrush}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 1 5 H 20 V 8 H 1 Z"/>
+                        <Path Fill="{DynamicResource EdgeBrush}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 2 4 H 19 V 5 H 2 Z"/>
+                        <Path Fill="{DynamicResource EdgeBrush}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 2 8 H 19 V 9 H 2 Z"/>
+                        <Path Fill="{DynamicResource EdgeBrush}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="m 9 23 h 3 v 1 H 9 Z"/>
+                    </Canvas>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Orientation" Value="Left">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Right" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Right">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Left" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Center" />
+                    </Trigger>
+                    <Trigger Property="Orientation" Value="Down">
+                        <Setter TargetName="PART_canvas" Property="HorizontalAlignment" Value="Center" />
+                        <Setter TargetName="PART_canvas" Property="VerticalAlignment" Value="Top" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Template" Value="{DynamicResource Port}" />
+        <Style.Triggers>
+            <Trigger Property="Type" Value="Port">
+                <Setter Property="Template" Value="{DynamicResource Port}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Edwards_AimX">
+                <Setter Property="Template" Value="{DynamicResource Edwards_AimX}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Inficon_CDG020D">
+                <Setter Property="Template" Value="{DynamicResource Inficon_CDG020D}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Inficon_CDG025D">
+                <Setter Property="Template" Value="{DynamicResource Inficon_CDG025D}" />
+            </Trigger>
+            <Trigger Property="Type" Value="MKS_722_HP">
+                <Setter Property="Template" Value="{DynamicResource MKS_722_HP}" />
+            </Trigger>
+            <Trigger Property="Type" Value="MKS_722_LP">
+                <Setter Property="Template" Value="{DynamicResource MKS_722_LP}" />
+            </Trigger>
+            <Trigger Property="Type" Value="MKS_901P">
+                <Setter Property="Template" Value="{DynamicResource MKS_901P}" />
+            </Trigger>
+            <Trigger Property="Type" Value="MKS_DMB">
+                <Setter Property="Template" Value="{DynamicResource MKS_DMB}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style TargetType="{x:Type v:VMPressure}">
+        <Setter Property="Component" Value="pVM1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:VMPressure}">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                        DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Canvas Width="78" Height="69">
+                            <Grid Canvas.Bottom="0" Background="Transparent"
+                                  v:View.Component="{Binding}" AutomationProperties.HelpText="Vacuum manifold pressure">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="26" />
+                                    <ColumnDefinition Width="26" />
+                                    <ColumnDefinition Width="26" />
+                                </Grid.ColumnDefinitions>
+                                <v:PressureSensor Type="Edwards_AimX" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,9"
+                                    Component="{Binding LowPressureManometer}" HelpText="Very low pressure manometer" />
+                                <v:PressureSensor Type="MKS_901P" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,9"
+                                    HelpText="Low pressure manometer">
+                                    <v:PressureSensor.Component>
+                                        <PriorityBinding>
+                                            <Binding Path="HighPressureManometer.LowPressureManometer" />
+                                            <Binding Path="HighPressureManometer" />
+                                        </PriorityBinding>
+                                    </v:PressureSensor.Component>
+                                </v:PressureSensor>
+                                <v:PressureSensor Type="Port" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                    HelpText="High pressure manometer" 
+                                    Visibility="{Binding Component, RelativeSource={RelativeSource Self}, Converter={x:Static c:NullToVisibilityConverter.Collapsed}}" d:Visibility="Visible">
+                                    <v:PressureSensor.Component>
+                                        <PriorityBinding>
+                                            <Binding Path="HighPressureManometer.HighPressureManometer" />
+                                        </PriorityBinding>
+                                    </v:PressureSensor.Component>
+                                </v:PressureSensor>
+                                <v:PressureGauge Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                                    Component="{Binding}" ContentStringFormat="0.0e0" FontSize="16" />
+                            </Grid>
+                        </Canvas>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

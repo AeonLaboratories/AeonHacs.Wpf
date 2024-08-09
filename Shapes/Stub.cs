@@ -21,13 +21,13 @@ public class Stub : FittingBase
     {
         switch (Orientation)
         {
-            case RelativeDirection.Left:
-                return Geometry.Parse($"M0,0.5 h{Length - 0.5} v{FittingSize} H0");
-            case RelativeDirection.Up:
-                return Geometry.Parse($"M0.5,0 v{Length - 0.5} h{FittingSize} V0");
-            case RelativeDirection.Down:
-                return Geometry.Parse($"M0.5,{Length} V0.5 h{FittingSize} V{Length}");
             case RelativeDirection.Right:
+                return Geometry.Parse($"M0,0.5 h{Length - 0.5} v{FittingSize} H0");
+            case RelativeDirection.Down:
+                return Geometry.Parse($"M0.5,0 v{Length - 0.5} h{FittingSize} V0");
+            case RelativeDirection.Up:
+                return Geometry.Parse($"M0.5,{Length} V0.5 h{FittingSize} V{Length}");
+            case RelativeDirection.Left:
                 return Geometry.Parse($"M{Length},0.5 H0.5 v{FittingSize} H{Length}");
             default:
                 return Geometry.Empty;

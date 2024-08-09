@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:AeonHacs.Wpf.Views"
-             xmlns:components="clr-namespace:AeonHacs.Components;assembly=AeonHacs.Hacs"
+             xmlns:components="clr-namespace:AeonHacs.Components;assembly=AeonHacs.Core"
 
              mc:Ignorable="d"
              d:DesignWidth="300"

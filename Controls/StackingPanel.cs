@@ -6,9 +6,17 @@ namespace AeonHacs.Wpf.Controls;
 
 public class StackingPanel : Panel
 {
-    public static readonly DependencyProperty OrientationProperty = LayoutProperties.OrientationProperty.AddOwner(typeof(StackingPanel));
+    static StackingPanel()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(StackingPanel), new FrameworkPropertyMetadata(typeof(StackingPanel)));
+    }
 
-    public RelativeDirection Orientation { get => (RelativeDirection)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
+    public static readonly DependencyProperty DirectionProperty = DependencyProperty.RegisterAttached(
+        nameof(Direction), typeof(RelativeDirection), typeof(StackingPanel), new FrameworkPropertyMetadata(RelativeDirection.Up,
+            FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange |
+            FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public static readonly DependencyProperty OrientationProperty = LayoutProperties.OrientationProperty.AddOwner(typeof(StackingPanel));
 
     public static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
         nameof(Offset), typeof(double), typeof(StackingPanel), new FrameworkPropertyMetadata(0.0,
@@ -17,6 +25,10 @@ public class StackingPanel : Panel
     public static readonly DependencyProperty SpacingProperty = DependencyProperty.Register(
         nameof(Spacing), typeof(double), typeof(StackingPanel), new FrameworkPropertyMetadata(0.0,
             FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+    public RelativeDirection Direction { get => (RelativeDirection)GetValue(DirectionProperty); set => SetValue(DirectionProperty, value); }
+
+    public RelativeDirection Orientation { get => (RelativeDirection)GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
 
     public double Offset { get => (double)GetValue(OffsetProperty); set => SetValue(OffsetProperty, value); }
 
@@ -36,7 +48,7 @@ public class StackingPanel : Panel
             maxHeight = Math.Max(maxHeight, child.DesiredSize.Height);
         }
 
-        switch (Orientation)
+        switch (Direction)
         {
             case RelativeDirection.Left:
             case RelativeDirection.Right:
@@ -56,9 +68,9 @@ public class StackingPanel : Panel
 
     protected override Size ArrangeOverride(Size finalSize)
     {
-        switch (Orientation)
+        switch (Direction)
         {
-            case RelativeDirection.Left:
+            case RelativeDirection.Right:
                 Point origin = new Point(Offset, 0);
                 foreach (UIElement child in Children)
                 {
@@ -68,7 +80,7 @@ public class StackingPanel : Panel
                 }
                 break;
             default:
-            case RelativeDirection.Up:
+            case RelativeDirection.Down:
                 origin = new Point(0, Offset);
                 foreach (UIElement child in Children)
                 {
@@ -77,7 +89,7 @@ public class StackingPanel : Panel
                     origin.Y += child.DesiredSize.Height + Spacing;
                 }
                 break;
-            case RelativeDirection.Down:
+            case RelativeDirection.Up:
                 origin = new Point(0, finalSize.Height - Offset);
                 foreach (UIElement child in Children)
                 {
@@ -87,7 +99,7 @@ public class StackingPanel : Panel
                     origin.Y -= Spacing;
                 }
                 break;
-            case RelativeDirection.Right:
+            case RelativeDirection.Left:
                 origin = new Point(finalSize.Width - Offset, 0);
                 foreach (UIElement child in Children)
                 {

@@ -166,7 +166,8 @@ namespace AeonHacs.Wpf.Views
                     }
                     contextMenu.Items.Add(menuItem);
                 }
-                contextMenu.Items.Add(new Separator() { Height = 1, Margin = new Thickness(0), Padding = new Thickness(0) });
+                if (contextMenu.Items.Count > 1)
+                    contextMenu.Items.Add(new Separator() { Height = 1, Margin = new Thickness(0), Padding = new Thickness(0) });
             }
 
             var propertiesMenuItem = new MenuItem() { Header = "Properties" };

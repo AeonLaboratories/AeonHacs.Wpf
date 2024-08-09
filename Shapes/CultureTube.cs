@@ -26,6 +26,7 @@ public class CultureTube : Shape
     static CultureTube()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(CultureTube), new FrameworkPropertyMetadata(typeof(CultureTube)));
+        OrientationProperty.OverrideMetadata(typeof(CultureTube), new FrameworkPropertyMetadata(RelativeDirection.Down));
     }
 
     protected virtual Geometry DefineGeometry()
@@ -37,7 +38,7 @@ public class CultureTube : Shape
 
         switch (Orientation)
         {
-            case RelativeDirection.Left:
+            case RelativeDirection.Right:
                 figure = new PathFigure()
                 {
                     StartPoint = new Point(0, strokeHalf),
@@ -50,7 +51,7 @@ public class CultureTube : Shape
                 };
                 break;
             default:
-            case RelativeDirection.Up:
+            case RelativeDirection.Down:
                 figure = new PathFigure()
                 {
                     StartPoint = new Point(strokeHalf, 0),
@@ -62,7 +63,7 @@ public class CultureTube : Shape
                     }
                 };
                 break;
-            case RelativeDirection.Down:
+            case RelativeDirection.Up:
                 figure = new PathFigure()
                 {
                     StartPoint = new Point(strokeHalf, length),
@@ -74,7 +75,7 @@ public class CultureTube : Shape
                     }
                 };
                 break;
-            case RelativeDirection.Right:
+            case RelativeDirection.Left:
                 figure = new PathFigure()
                 {
                     StartPoint = new Point(length, strokeHalf),

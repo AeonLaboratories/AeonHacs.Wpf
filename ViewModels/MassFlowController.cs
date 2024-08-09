@@ -18,7 +18,7 @@ namespace AeonHacs.Wpf.ViewModels
         public double MinimumSetpoint { get => Component.MinimumSetpoint; set => Component.MinimumSetpoint = value; }
         public double MaximumSetpoint { get => Component.MaximumSetpoint; set => Component.MaximumSetpoint = value; }
         public double FlowRate => Component.FlowRate;
-        public double Setpoint { get => Component.Setpoint; set => Component.Setpoint = value; }
+        public double TargetSetpoint { get => Component.Setpoint; set => Component.Setpoint = value; }
 
 
         protected string ResetTrackedFlowCaption { get; set; } = "Reset Tracked Flow";
@@ -40,6 +40,12 @@ namespace AeonHacs.Wpf.ViewModels
                 base.Run(command);
         }
 
-
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Setpoint")
+                base.OnPropertyChanged(sender, PropertyChangedEventArgs(nameof(TargetSetpoint)));
+            else
+                base.OnPropertyChanged(sender, e);
+        }
     }
 }
