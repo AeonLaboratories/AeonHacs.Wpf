@@ -1,4 +1,5 @@
-﻿using AeonHacs.Wpf.Behaviors;
+﻿using AeonHacs.Components;
+using AeonHacs.Wpf.Behaviors;
 using Microsoft.Xaml.Behaviors;
 using System.ComponentModel;
 using System.Windows;
@@ -87,14 +88,29 @@ public class SetpointAdorner : Adorner
     {
         string redirect = Component is ViewModels.VTColdfinger ? ".Heater" : "";
 
-        var targetManualModeBinding = new Binding() { Source = AdornedElement, Path = new PropertyPath($"Component{redirect}.TargetManualMode") };
-        SetBinding(TargetManualModeProperty, targetManualModeBinding);
+        if (Component is not ViewModels.ViewModel vm || vm.Component is not IHacsComponent component)
+            return;
 
-        var targetSetpointBinding = new Binding() { Source = AdornedElement, Path = new PropertyPath($"Component{redirect}.TargetSetpoint") };
-        SetBinding(TargetSetpointProperty, targetSetpointBinding);
+        if (component is VTColdfinger vtc)
+            component = vtc.Heater;
 
-        var targetPowerLevelBinding = new Binding() { Source = AdornedElement, Path = new PropertyPath($"Component{redirect}.TargetPowerLevel") };
-        SetBinding(TargetPowerLevelProperty, targetPowerLevelBinding);
+        if (component is IManualMode)
+        {
+            var targetManualModeBinding = new Binding() { Source = AdornedElement, Path = new PropertyPath($"Component{redirect}.TargetManualMode") };
+            SetBinding(TargetManualModeProperty, targetManualModeBinding);
+        }
+
+        if (component is ISetpoint)
+        {
+            var targetSetpointBinding = new Binding() { Source = AdornedElement, Path = new PropertyPath($"Component{redirect}.TargetSetpoint") };
+            SetBinding(TargetSetpointProperty, targetSetpointBinding);
+        }
+
+        if (component is IPowerLevel)
+        {
+            var targetPowerLevelBinding = new Binding() { Source = AdornedElement, Path = new PropertyPath($"Component{redirect}.TargetPowerLevel") };
+            SetBinding(TargetPowerLevelProperty, targetPowerLevelBinding);
+        }
 
         UpdateTextBoxBinding();
     }
