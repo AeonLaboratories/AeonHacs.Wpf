@@ -213,7 +213,7 @@ namespace AeonHacs.Wpf.Views
                 fe.ContextMenu = new ContextMenu();
                 fe.ContextMenu.Closed += (sender, e) =>
                 {
-                    fe.ContextMenu.Items.Clear();
+                    fe?.ContextMenu?.Items?.Clear();
                 };
 
                 fe.ContextMenuOpening += Open;
