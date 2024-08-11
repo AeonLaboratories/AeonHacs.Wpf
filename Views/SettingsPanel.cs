@@ -144,63 +144,66 @@ namespace AeonHacs.Wpf.Views
             {
                 enumerator.MoveNext();
                 var item = enumerator.Current;
-                var itemType = item.GetType();
-                if (itemType.IsEnum)
+                if (item != null)
                 {
-                    var comboBox = new ComboBox() { ItemsSource = Enum.GetValues(itemType) };
-                    if (item is null)
-                        comboBox.SelectedIndex = 0;
-                    else
-                        comboBox.SelectedItem = item;
-
-                    // todo Bind...
-
-                    Children.Add(comboBox);
-                }
-                else if (itemType.IsPrimitive || itemType == typeof(string))
-                {
-                    var textBox = new TextBox() { Padding = new Thickness(3, 1, 3, 1) };
-
-                    // TODO what's the path to a particular Child ?
-                    //textBox.SetBinding(TextBox.TextProperty, new Binding("???") { Source = this });
-                    //BoundObjects.Add(textBox);
-                    textBox.Text = item.ToString();
-
-                    Children.Add(textBox);
-                }
-                else
-                {
-                    var button = new Button();
-                    var content = "";
-                    var component = item;
-
-                    if (collection is IDictionary)
+                    var itemType = item.GetType();
+                    if (itemType.IsEnum)
                     {
-                        var dictionaryEnumerator = enumerator as IDictionaryEnumerator;
-                        content = dictionaryEnumerator.Key.ToString();
+                        var comboBox = new ComboBox() { ItemsSource = Enum.GetValues(itemType) };
+                        if (item is null)
+                            comboBox.SelectedIndex = 0;
+                        else
+                            comboBox.SelectedItem = item;
 
-                        if (dictionaryEnumerator.Value is AeonHacs.INamedObject namedObject)
+                        // todo Bind...
+
+                        Children.Add(comboBox);
+                    }
+                    else if (itemType.IsPrimitive || itemType == typeof(string))
+                    {
+                        var textBox = new TextBox() { Padding = new Thickness(3, 1, 3, 1) };
+
+                        // TODO what's the path to a particular Child ?
+                        //textBox.SetBinding(TextBox.TextProperty, new Binding("???") { Source = this });
+                        //BoundObjects.Add(textBox);
+                        textBox.Text = item.ToString();
+
+                        Children.Add(textBox);
+                    }
+                    else
+                    {
+                        var button = new Button();
+                        var content = "";
+                        var component = item;
+
+                        if (collection is IDictionary)
                         {
-                            content += $" ({namedObject?.Name})";
+                            var dictionaryEnumerator = enumerator as IDictionaryEnumerator;
+                            content = dictionaryEnumerator.Key.ToString();
+
+                            if (dictionaryEnumerator.Value is AeonHacs.INamedObject namedObject)
+                            {
+                                content += $" ({namedObject?.Name})";
+                                component = namedObject;
+                            }
+                        }
+                        else if (item is AeonHacs.INamedObject namedObject)
+                        {
+                            content = $"{namedObject?.Name}";
                             component = namedObject;
                         }
-                    }
-                    else if (item is AeonHacs.INamedObject namedObject)
-                    {
-                        content = $"{namedObject?.Name}";
-                        component = namedObject;
-                    }
-                    else
-                        content = $"{item}";
+                        else
+                            content = $"{item}";
 
-                    button.Content = content.Replace("_", "__");
-                    View.SetComponent(button, component as INotifyPropertyChanged);
-                    button.Click += (sender, e) =>
-                    {
-                        var topLevelPanel = button.GetSelfAndAncestors().Where(obj => obj is SettingsPanel).Cast<SettingsPanel>().Last();
-                        topLevelPanel.Source = component;
-                    };
-                    Children.Add(button);
+                        button.Content = content.Replace("_", "__");
+                        View.SetComponent(button, component as INotifyPropertyChanged);
+                        button.Click += (sender, e) =>
+                        {
+                            var topLevelPanel = button.GetSelfAndAncestors().Where(obj => obj is SettingsPanel).Cast<SettingsPanel>().Last();
+                            topLevelPanel.Source = component;
+                        };
+                        Children.Add(button);
+                    }
                 }
             }
         }
