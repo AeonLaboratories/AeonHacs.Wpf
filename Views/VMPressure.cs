@@ -4,13 +4,13 @@ namespace AeonHacs.Wpf.Views;
 
 public class VMPressure : View
 {
-    public static readonly DependencyProperty OrderProperty = DependencyProperty.Register(
-        nameof(Order), typeof(FlowDirection), typeof(VMPressure), new PropertyMetadata(FlowDirection.LeftToRight));
+    public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(
+        nameof(Direction), typeof(FlowDirection), typeof(VMPressure), new PropertyMetadata(FlowDirection.LeftToRight));
 
-    public FlowDirection Order
+    public FlowDirection Direction
     {
-        get => (FlowDirection)GetValue(OrderProperty);
-        set => SetValue(OrderProperty, value);
+        get => (FlowDirection)GetValue(DirectionProperty);
+        set => SetValue(DirectionProperty, value);
     }
 
     static VMPressure()
