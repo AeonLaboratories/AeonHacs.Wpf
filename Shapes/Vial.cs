@@ -24,13 +24,13 @@ public class Vial : Shape
 
         switch (Orientation)
         {
-            case RelativeDirection.Left:
-                return Geometry.Parse($"M{strokeHalf},{strokeHalf} v8 h34 v-8 z M6.5,{strokeHalf} v8");
-            case RelativeDirection.Up:
-                return Geometry.Parse($"M{strokeHalf},{strokeHalf} h8 v34 h-8 z M{strokeHalf},6.5 h8");
-            case RelativeDirection.Down:
-                return Geometry.Parse($"M{strokeHalf},{strokeHalf} h8 v34 h-8 z M{strokeHalf},28.5 h8");
             case RelativeDirection.Right:
+                return Geometry.Parse($"M{strokeHalf},{strokeHalf} v8 h34 v-8 z M6.5,{strokeHalf} v8");
+            case RelativeDirection.Down:
+                return Geometry.Parse($"M{strokeHalf},{strokeHalf} h8 v34 h-8 z M{strokeHalf},6.5 h8");
+            case RelativeDirection.Up:
+                return Geometry.Parse($"M{strokeHalf},{strokeHalf} h8 v34 h-8 z M{strokeHalf},28.5 h8");
+            case RelativeDirection.Left:
                 return Geometry.Parse($"M{strokeHalf},{strokeHalf} v8 h34 v-8 z M28.5,{strokeHalf} v8");
             default:
                 break;

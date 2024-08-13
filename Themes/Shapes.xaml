@@ -35,7 +35,7 @@
     <Style TargetType="{x:Type s:Vial}">
         <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}" />
         <Style.Triggers>
-            <Trigger Property="Orientation" Value="Left" >
+            <Trigger Property="Orientation" Value="Right" >
                 <Setter Property="Fill">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -45,7 +45,7 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <Trigger Property="Orientation" Value="Up" >
+            <Trigger Property="Orientation" Value="Down" >
                 <Setter Property="Fill">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -55,7 +55,7 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <Trigger Property="Orientation" Value="Right" >
+            <Trigger Property="Orientation" Value="Left" >
                 <Setter Property="Fill">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="1,0.5" EndPoint="0,0.5">
@@ -65,7 +65,7 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <Trigger Property="Orientation" Value="Down" >
+            <Trigger Property="Orientation" Value="Up" >
                 <Setter Property="Fill">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
