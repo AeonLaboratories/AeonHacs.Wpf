@@ -4,14 +4,14 @@ namespace AeonHacs.Wpf.Views;
 
 public enum TubeFurnaceType
 {
-    A,
-    B
+    Carbolite,
+    Thermolyne
 }
 
 public class TubeFurnace : View
 {
     public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
-        nameof(Type), typeof(TubeFurnaceType), typeof(TubeFurnace), new PropertyMetadata(TubeFurnaceType.A));
+        nameof(Type), typeof(TubeFurnaceType), typeof(TubeFurnace), new PropertyMetadata(TubeFurnaceType.Carbolite));
 
     public TubeFurnaceType Type
     {

@@ -4,7 +4,30 @@
     
     <Style TargetType="{x:Type v:TubeFurnace}">
         <Style.Resources>
-            <ControlTemplate x:Key="A" TargetType="{x:Type v:TubeFurnace}">
+            <ControlTemplate x:Key="Carbolite" TargetType="{x:Type v:TubeFurnace}">
+                <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid Height="83" Width="115">
+                        <Rectangle Width="115" Height="16" Fill="{DynamicResource GlassBrush}" Stroke="{DynamicResource EdgeBrush}" VerticalAlignment="Top" Margin="0, 17"
+                            v:View.Component="TFChamber" AutomationProperties.HelpText="TF Chamber" />
+                        <Rectangle Width="85" Height="48" VerticalAlignment="Top" Margin="1"
+                            Fill="LightGray" Stroke="{DynamicResource EdgeBrush}" />
+                        <Rectangle Width="51" Height="50" VerticalAlignment="Top"
+                            Fill="OrangeRed" Stroke="{DynamicResource EdgeBrush}" />
+                        <Rectangle Fill="Black" Width="5" Height="3" Margin="8,80,78,0" />
+                        <Rectangle Fill="Black" Width="5" Height="3" Margin="78,80,8,0" />
+                        <Border Width="85" Height="30" VerticalAlignment="Bottom" Margin="2"
+                            Background="Gray" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1">
+                            <Border Width="51" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Background="OrangeRed" Padding="2" Margin="2">
+                                <v:TemperatureGauge Component="{Binding Component}" HorizontalAlignment="Center"/>
+                            </Border>
+                        </Border>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+            <ControlTemplate x:Key="Thermolyne" TargetType="{x:Type v:TubeFurnace}">
                 <Border Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
@@ -36,37 +59,14 @@
                     </Canvas>
                 </Border>
             </ControlTemplate>
-            <ControlTemplate x:Key="B" TargetType="{x:Type v:TubeFurnace}">
-                <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                    <Grid Height="83" Width="115">
-                        <Rectangle Width="115" Height="16" Fill="{DynamicResource GlassBrush}" Stroke="{DynamicResource EdgeBrush}" VerticalAlignment="Top" Margin="0, 17"
-			                v:View.Component="TFChamber" AutomationProperties.HelpText="TF Chamber" />
-                        <Rectangle Width="85" Height="48" VerticalAlignment="Top" Margin="1"
-                            Fill="LightGray" Stroke="{DynamicResource EdgeBrush}" />
-                        <Rectangle Width="51" Height="50" VerticalAlignment="Top"
-                            Fill="OrangeRed" Stroke="{DynamicResource EdgeBrush}" />
-                        <Rectangle Fill="Black" Width="5" Height="3" Margin="8,80,78,0" />
-                        <Rectangle Fill="Black" Width="5" Height="3" Margin="78,80,8,0" />
-                        <Border Width="85" Height="30" VerticalAlignment="Bottom" Margin="2"
-                            Background="Gray" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1">
-                            <Border Width="51" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                Background="OrangeRed" Padding="2" Margin="2">
-                                <v:TemperatureGauge Component="{Binding Component}" HorizontalAlignment="Center"/>
-                            </Border>
-                        </Border>
-                    </Grid>
-                </Border>
-            </ControlTemplate>
         </Style.Resources>
-        <Setter Property="Template" Value="{DynamicResource A}" />
+        <Setter Property="Template" Value="{DynamicResource Carbolite}" />
         <Style.Triggers>
-            <Trigger Property="Type" Value="A">
-                <Setter Property="Template" Value="{DynamicResource A}" />
+            <Trigger Property="Type" Value="Carbolite">
+                <Setter Property="Template" Value="{DynamicResource Carbolite}" />
             </Trigger>
-            <Trigger Property="Type" Value="B">
-                <Setter Property="Template" Value="{DynamicResource B}" />
+            <Trigger Property="Type" Value="Thermolyne">
+                <Setter Property="Template" Value="{DynamicResource Thermolyne}" />
             </Trigger>
         </Style.Triggers>
     </Style>
