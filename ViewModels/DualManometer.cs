@@ -17,5 +17,7 @@ namespace AeonHacs.Wpf.ViewModels
         public double MaximumLowPressure { get => Component.MaximumLowPressure; set => Component.MaximumLowPressure = value; }
         public double MinimumHighPressure { get => Component.MinimumHighPressure; set => Component.MinimumHighPressure = value; }
         public double SwitchpointPressure { get => Component.SwitchpointPressure; set => Component.SwitchpointPressure = value; }
+
+        protected override void StartContext() { }
     }
 }
