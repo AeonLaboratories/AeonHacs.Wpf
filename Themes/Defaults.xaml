@@ -3,7 +3,12 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:v="clr-namespace:AeonHacs.Wpf.Views"
+                    xmlns:s="clr-namespace:AeonHacs.Wpf.Shapes"
                     mc:Ignorable="d">
+
+    <ResourceDictionary.MergedDictionaries>
+        <d:ResourceDictionary Source="/Themes/DesignTime.xaml" />
+    </ResourceDictionary.MergedDictionaries>
     
     <Color x:Key="ApplicationBackgroundColor">#FFBBBBBB</Color>
 
@@ -84,16 +89,4 @@
     <ScaleTransform x:Key="Mirror" ScaleX="-1"/>
     <ScaleTransform x:Key="Flip" ScaleY="-1"/>
 
-    <d:Style TargetType="{x:Type v:TemperatureGauge}">
-        <Setter Property="TemperatureBin" Value="Warm" />
-    </d:Style>
-
-    <d:Style TargetType="{x:Type v:PressureGauge}">
-        <Setter Property="PressureBin" Value="HighVacuum" />
-    </d:Style>
-
-    <d:Style TargetType="{x:Type v:Valve}">
-        <Setter Property="ValveState" Value="Opened" />
-    </d:Style>
-    
 </ResourceDictionary>
