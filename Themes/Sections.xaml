@@ -21,8 +21,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="250" Height="105">
-                            <v:Chamber x:Name="pchamber" Canvas.Right="0" Canvas.Top="2"
-                                Data="M17.5,0.5 v86 M0.5,43.5 h17 M0.5,69.5 h17 M17.5,17.5 h43 M43.5,4.5 v30" 
+                            <s:Chamber x:Name="pchamber" Canvas.Right="0" Canvas.Top="2"
+                                Data="M17,0 v86 M0,43 h17 M0,69 h17 M17,17 h43 M43,4 v30" 
                                 Component="Section.IM" HelpText="Inlet manifold" />
                             <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="5" Height="3" Canvas.Right="41" Canvas.Top="0" IsHitTestVisible="False"/>
                             <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="5" Height="3" Canvas.Right="41" Canvas.Top="88" IsHitTestVisible="False"/>
@@ -44,8 +44,50 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="PressureSensorType" Value="Port">
-                            <Setter TargetName="pchamber" Property="Data" Value="M17.5,0.5 v86 M0.5,43.5 h17 M0.5,69.5 h17 M17.5,17.5 h43 M43.5,17.5 v17" />
+                            <Setter TargetName="pchamber" Property="Data" Value="M17,0 v86 M0,43 h17 M0,69 h17 M17,17 h43 M43,17 v17" />
                             <Setter TargetName="pressure" Property="Canvas.Bottom" Value="90" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:IM2CA}">
+        <Setter Property="PressureSensorType" Value="Port" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:IM2CA}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Canvas Width="250" Height="105">
+                            <s:Chamber x:Name="pchamber" Canvas.Right="0" Canvas.Top="2"
+                                Data="M17,0 v86 M0,43 h17 M0,69 h17 M17,17 h69 M43,4 v30 M69,17 v-17" 
+                                Component="Section.IM" HelpText="Inlet manifold" />
+                            <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="5" Height="3" Canvas.Right="67" Canvas.Top="0" IsHitTestVisible="False"/>
+                            <Rectangle Style="{DynamicResource FittingShapeStyle}" Width="5" Height="3" Canvas.Right="67" Canvas.Top="88" IsHitTestVisible="False"/>
+
+                            <control:StackingPanel x:Name="pressure" Orientation="Up" Width="59" Canvas.Right="14" Canvas.Bottom="99" Spacing="5">
+                                <v:PressureSensor Component="pIM" HelpText="Inlet manifold pressure" Type="{TemplateBinding PressureSensorType}" />
+                                <v:PressureGauge x:Name="gauge" Component="pIM" HelpText="Inlet manifold pressure" ContentStringFormat="0" />
+                            </control:StackingPanel>
+
+                            <v:Switch Component="IpFan1" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" HelpText="Trap fan for IP1, IP2"
+                                Canvas.Right="110" Canvas.Top="38" Width="23" Height="67" />
+
+                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1" d:QuartzFurnace=""
+                                Canvas.Right="86" Canvas.Top="35" />
+
+                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP2" d:QuartzFurnace="" d:SampleFurnace=""
+                                Canvas.Right="86" Canvas.Top="61" />
+                        </Canvas>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="PressureSensorType" Value="Port">
+                            <Setter TargetName="pchamber" Property="Data" Value="M17.5,0.5 v86 M0.5,43.5 h17 M0.5,69.5 h17 M17.5,17.5 h69 M43.5,17.5 v17 M69.5,17.5 v-17" />
+                            <Setter TargetName="pressure" Property="Canvas.Bottom" Value="90" />
+                            <Setter TargetName="gauge" Property="Margin" Value="-2,0,2,0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -62,10 +104,10 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="250" Height="177">
-                            <v:Chamber x:Name="pchamber" Component="Section.IM" HelpText="Inlet manifold" Canvas.Top="6" Canvas.Right="0"
-                                Data="M0.5,4.5 h17 v156 h-17
-                                    M0.5,30.5 h17 M0.5,56.5 h17 M0.5,108.5 h17 M0.5,134.5 h17
-                                    M17.5,82.5 h43 M43.5,69.5 v30" />
+                            <s:Chamber x:Name="pchamber" Component="Section.IM" HelpText="Inlet manifold" Canvas.Right="0" Canvas.Top="6"
+                                Data="M0,0 h17 v156 H0
+                                      M0,26 h17 M0,52 h17 M0,104 h17 M0,130 h17
+                                      M17,78 h43 M43,65 v30" />
 
                             <control:StackingPanel x:Name="pressure" Orientation="Up" Width="59" Canvas.Right="-12" Canvas.Bottom="102" Spacing="5">
                                 <v:PressureSensor Component="pIM" HelpText="Inlet manifold pressure" Type="{TemplateBinding PressureSensorType}" />
@@ -95,9 +137,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="PressureSensorType" Value="Port">
                             <Setter TargetName="pchamber" Property="Data"
-                                Value="M0.5,4.5 h17 v156 h-17
-                                    M0.5,30.5 h17 M0.5,56.5 h17 M0.5,108.5 h17 M0.5,134.5 h17
-                                    M17.5,82.5 h43 M43.5,82.5 v17" />
+                                Value="M0,0 h17 v156 H0
+                                       M0,26 h17 M0,52 h17 M0,104 h17 M0,130 h17
+                                       M17,78 h43 M43,78 v17" />
                             <Setter TargetName="pressure" Property="Canvas.Bottom" Value="93" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -115,12 +157,12 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="250" Height="385">
-                            <v:Chamber Component="Section.IML" HelpText="Inlet manifold left" Canvas.Top="0" Canvas.Left="189"
-                                Data="M17.5,6.5 v151 M17.5,10.5 h-17 M17.5,36.5 h-17 M17.5,62.5 h-17 M17.5,88.5 h-17 M17.5,114.5 h-17 M17.5,140.5 h-17" />
-                            <v:Chamber Component="Section.IMR" HelpText="Inlet manifold right" Canvas.Bottom="-6" Canvas.Left="189"
-                                Data="M17.5,0.5 v151 M17.5,17.5 h-17 M17.5,43.5 h-17 M17.5,69.5 h-17 M17.5,95.5 h-17 M17.5,121.5 h-17 M17.5,147.5 h-17" />
-                            <v:Chamber x:Name="pchamber" Component="Section.IMC" HelpText="Inlet manifold center" Canvas.Top="192" Canvas.Right="0"
-                                Data="M0.5,0.5 h43 M0.5,-16.5 v34 M26.5,-12.5 v30" />
+                            <s:Chamber Component="Section.IML" HelpText="Inlet manifold left" Canvas.Right="39" Canvas.Top="6"
+                                Data="M0,0 h17 v147 M0,26 h17 M0,52 h17 M0,78 h17 M0,104 h17 M0,130 h17" />
+                            <s:Chamber Component="Section.IMR" HelpText="Inlet manifold right" Canvas.Right="39" Canvas.Bottom="6"
+                                Data="M0,0 h17 v-147 M0,-26 h17 M0,-52 h17 M0,-78 h17 M0,-104 h17 M0,-130 h17" />
+                            <s:Chamber x:Name="pchamber" Component="Section.IMC" HelpText="Inlet manifold center" Canvas.Right="0" Canvas.Top="175"
+                                Data="M0,0 v34 M0,17 h43 M26,4 v30" />
 
                             <v:Valve Canvas.Right="34" Canvas.Top="157" 
                                 Component="vIML_IMC" HelpText="IML-IMC valve" d:ValveState="Opened" />
@@ -160,7 +202,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="PressureSensorType" Value="Port">
                             <Setter TargetName="pchamber" Property="Data"
-                                Value="M0.5,0.5 h43 M0.5,-16.5 v34 M26.5,0.5 v17" />
+                                Value="M0,0 v34 M0,17 h43 M26,17 v17" />
                             <Setter TargetName="pressure" Property="Canvas.Bottom" Value="197" />
                             <Setter TargetName="gauge" Property="Margin" Value="2,0,-2,0" />
                         </Trigger>
@@ -178,21 +220,21 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
-                        <Canvas Width="105" Height="123">
-                            <v:Chamber Canvas.Top="0" Component="Section.CT" HelpText="Coil trap section"
-                                Data="M0.5,63.5 h8 M26.5,63.5 h21 M43.5,50.5 v26 M59.5,63.5 h47 M63.5,63.5 v13 M89.5,63.5 v17" />
+                        <Canvas Width="107" Height="72">
+                            <s:Chamber Canvas.Top="0" Component="Section.CT" HelpText="Coil trap section"
+                                Data="M0,13 h8 M26,13 h21 M43,0 v26 M63,26 v-13 h43 M89,13 v17" />
 
-                            <v:Valve Canvas.Left="8" Canvas.Top="54" Component="vCTFlow" HelpText="CT flow valve" d:ValveState="Opened">
+                            <v:Valve Canvas.Left="8" Canvas.Top="4" Component="vCTFlow" HelpText="CT flow valve" d:ValveState="Opened">
                                 <v:Restriction Orientation="Horizontal" />
                             </v:Valve>
-                            <control:StackingPanel Canvas.Left="14" Canvas.Bottom="73" Width="59" Spacing="5">
+                            <control:StackingPanel Canvas.Left="14" Canvas.Bottom="72" Width="59" Spacing="5">
                                 <v:PressureSensor Component="pCT" HelpText="Coil trap pressure" Type="{TemplateBinding PressureSensorType}" />
                                 <v:PressureGauge Component="pCT" HelpText="Coil trap pressure" ContentStringFormat="0.00" />
                             </control:StackingPanel>
-                            <v:FTC Canvas.Left="36" Canvas.Top="80" Width="35" Height="42"
+                            <v:FTC Canvas.Left="36" Canvas.Top="30" Width="35" Height="42"
                                 Component="ftcCT" HelpText="Coil trap coldfinger" />
 
-                            <v:CoilTrap HorizontalAlignment="Left" Canvas.Left="41" Canvas.Top="77" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                            <v:CoilTrap HorizontalAlignment="Left" Canvas.Left="41" Canvas.Top="27" VerticalAlignment="Center" IsHitTestVisible="False"/>
                         </Canvas>
                     </Border>
                 </ControlTemplate>
@@ -211,9 +253,9 @@
                         <Canvas Width="217" Height="194">
 
                             <!--CTF - Coil trap flow chamber-->
-                            <v:Chamber Component="Section.CTF" HelpText="Coil trap flow chamber" 
+                            <s:Chamber Component="Section.CTF" HelpText="Coil trap flow chamber" 
                                 Canvas.Left="0" Canvas.Top="39"
-                                Data="M0.5,43.5 h34 M17.5,43.5 v-17 M52.5,43.5 h30 M69.5,0.5 v60" />
+                                Data="M0,43 h34 M17,43 v-17 M52,43 h30 M69,0 v60" />
 
                             <Canvas Canvas.Left="82" Canvas.Top="75" Width="46" Height="35">
                                 <control:StackingPanel Orientation="Right" Canvas.Left="1" Canvas.Top="-5" Height="25">
@@ -224,29 +266,29 @@
                             </Canvas>
 
                             <!--CTO - Coil trap outlet-->
-                            <v:Chamber Component="Section.CTO" HelpText="Coil trap outlet"
-                                Data="M13.5,0.5 v60 M13.5,43.5 h43 M39.5,43.5 v17"
-                                Canvas.Left="160" Canvas.Top="39" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <s:Chamber Component="Section.CTO" HelpText="Coil trap outlet"
+                                Data="M0,0 v60 M0,43 h43 M26,43 v17"
+                                Canvas.Left="169" Canvas.Top="39" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
                             <!--CT1 - Coil trap 1-->
-                            <v:Chamber Component="Section.CT1" HelpText="Coil trap 1" 
-                                Canvas.Left="56.5" Canvas.Top="0"
-                                Data="M13,21.5 v-17 h29 v13 M62,17.5v-13 h55 v17 M91,4.5 v17" />
+                            <s:Chamber Component="Section.CT1" HelpText="Coil trap 1" 
+                                Canvas.Left="65" Canvas.Top="0"
+                                Data="M0,17 v-17 h29 v13 M49,13 v-13 h55 v17 M78,0 v17" />
 
                             <v:FTC Canvas.Left="91" Canvas.Top="21" Width="35" Height="42"
-                                Component="ftcCT1" HelpText="Coil trap 1 coldfinger" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                Component="ftcCT1" HelpText="Coil trap 1 coldfinger" />
 
-                            <v:CoilTrap Canvas.Left="96" Canvas.Top="18" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <v:CoilTrap Canvas.Left="96" Canvas.Top="18" IsHitTestVisible="False" />
 
                             <!--CT2 - Coil trap 2-->
-                            <v:Chamber Canvas.Left="56.5" Canvas.Top="117"
-                                Data="M13,0.5 v17 h29 v13 M62,30.5 v-13 h55 M117,0.5 v34" 
+                            <s:Chamber Canvas.Left="65" Canvas.Top="117"
+                                Data="M0,0 v17 h29 v13 M49,30 v-13 h55 M104,0 v34" 
                                 Component="Section.CT2" HelpText="Coil trap 2" />
 
                             <v:FTC Canvas.Left="91" Canvas.Top="151" Width="35" Height="42"
-                                Component="ftcCT2" HelpText="Coil trap 2 coldfinger" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                Component="ftcCT2" HelpText="Coil trap 2 coldfinger" />
 
-                            <v:CoilTrap Canvas.Left="96" Canvas.Top="148" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <v:CoilTrap Canvas.Left="96" Canvas.Top="148" IsHitTestVisible="False" />
 
                             <!--Valves-->
                             <v:Valve Canvas.Left="34" Canvas.Top="73" Component="vCTFlow" HelpText="CT flow valve" d:ValveState="Opened" >
@@ -275,8 +317,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="35" Height="76">
-                            <v:Chamber Canvas.Top="0" Component="{Binding}" HelpText="Variable-temperature trap"
-                                Data="M0.5,4.5 h34 M17.5,4.5 v13" />
+                            <s:Chamber Canvas.Top="0" Component="{Binding}" HelpText="Variable-temperature trap"
+                                Data="M0,0 h34 M17,0 v13" />
 
                             <control:StackingPanel Orientation="Down" Canvas.Left="-12" Canvas.Top="18" Width="59">
                                 <s:Adapter Connection1="3/8" Connection2="1/2" />
@@ -288,7 +330,6 @@
                                         Component="{Binding VTColdfinger}" HelpText="VTC temperature" ContentStringFormat="0" />
                                 </control:StackingPanel>
                             </control:StackingPanel>
-
                         </Canvas>
                     </Border>
                 </ControlTemplate>
@@ -306,8 +347,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="35" Height="79">
-                            <v:Chamber Canvas.Top="0" Component="{Binding}" HelpText="Measurement chamber section"
-                                Data="M17.5,0.5 v52 M0.5,13.5 h34 M0.5,39.5 h34" />
+                            <s:Chamber Canvas.Top="0" Component="{Binding}" HelpText="Measurement chamber section"
+                                Data="M17,0 v52 M0,13 h34 M0,39 h34" />
 
                             <v:PressureSensor Type="{TemplateBinding PressureSensorType}"
                                 Canvas.Left="0" Canvas.Bottom="79" Width="35"
@@ -362,6 +403,27 @@
         </Setter>
     </Style>
 
+    <!--TODO should Split/d13C be removed?-->
+    <Style TargetType="{x:Type v:Split}">
+        <Setter Property="Component" Value="Section.Split" />
+        <Setter Property="Data" Value="M0,0 h34" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:Split}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <s:Chamber Data="{TemplateBinding Data}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:d13C}" BasedOn="{StaticResource {x:Type v:Split}}">
+        <Setter Property="Component" Value="Section.d13C" />
+    </Style>
+
     <Style TargetType="{x:Type v:GM6}">
         <Setter Property="PressureSensorType" Value="Port" />
         <Setter Property="Template">
@@ -371,11 +433,10 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="225" Height="177">
-                            <v:Chamber x:Name="pchamber" Component="Section.GM" HelpText="Graphite manifold" Canvas.Top="6"
-                                Data="M60.5,4.5 h-17 v156 h17
-                                    M43.5,30.5 h17 M43.5,56.5 h17 M43.5,108.5 h17 M43.5,134.5 h17
-                                    M43.5,82.5 h-43
-                                    M17.5,69.5 v30" />
+                            <s:Chamber x:Name="pchamber" Component="Section.GM" HelpText="Graphite manifold" Canvas.Top="6"
+                                Data="M0,0 h-17 v156 H0
+                                      M0,26 h-17 M0,52 h-17 M0,104 h-17 M0,130 h-17
+                                      M-17,78 h-43 M-43,65 v30" />
 
                             <control:StackingPanel x:Name="pressure" Orientation="Up" Width="59" Canvas.Left="-12" Canvas.Bottom="102" Spacing="5">
                                 <v:PressureSensor Component="pGM" HelpText="Graphite manifold pressure" Type="{TemplateBinding PressureSensorType}" />
@@ -393,10 +454,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="PressureSensorType" Value="Port">
                             <Setter TargetName="pchamber" Property="Data"
-                                    Value="M60.5,4.5 h-17 v156 h17
-                                        M43.5,30.5 h17 M43.5,56.5 h17 M43.5,108.5 h17 M43.5,134.5 h17
-                                        M43.5,82.5 h-43
-                                        M17.5,82.5 v17" />
+                                    Value="M0,0 h-17 v156 H0
+                                      M0,26 h-17 M0,52 h-17 M0,104 h-17 M0,130 h-17
+                                      M-17,78 h-43 M-43,78 v17" />
                             <Setter TargetName="pressure" Property="Canvas.Bottom" Value="93" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -414,12 +474,12 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="225" Height="385">
-                            <v:Chamber Component="Section.GMR" HelpText="Graphite manifold right" Canvas.Top="0" Canvas.Left="43"
-                                Data="M0.5,6.5 v151 M0.5,10.5 h17 M0.5,36.5 h17 M0.5,62.5 h17 M0.5,88.5 h17 M0.5,114.5 h17 M0.5,140.5 h17" />
-                            <v:Chamber Component="Section.GML" HelpText="Graphite manifold left" Canvas.Bottom="-6" Canvas.Left="43"
-                                Data="M0.5,0.5 v151 M0.5,17.5 h17 M0.5,43.5 h17 M0.5,69.5 h17 M0.5,95.5 h17 M0.5,121.5 h17 M0.5,147.5 h17" />
-                            <v:Chamber x:Name="pchamber" Component="Section.GMC" HelpText="Graphite manifold center" Canvas.Top="192" 
-                                Data="M0.5,0.5 h43 M43.5,-16.5 v34 M17.5,-12.5 v30" />
+                            <s:Chamber Component="Section.GMR" HelpText="Graphite manifold left" Canvas.Left="39" Canvas.Top="6"
+                                Data="M0,0 h-17 v147 M0,26 h-17 M0,52 h-17 M0,78 h-17 M0,104 h-17 M0,130 h-17" />
+                            <s:Chamber Component="Section.GML" HelpText="Graphite manifold right" Canvas.Left="39" Canvas.Bottom="6"
+                                Data="M0,0 h-17 v-147 M0,-26 h-17 M0,-52 h-17 M0,-78 h-17 M0,-104 h-17 M0,-130 h-17" />
+                            <s:Chamber x:Name="pchamber" Component="Section.GMC" HelpText="Graphite manifold center" Canvas.Left="0" Canvas.Top="175"
+                                Data="M0,0 v34 M0,17 h-43 M-26,4 v30" />
 
                             <v:Valve Canvas.Left="34" Canvas.Top="157" Component="vGMR_GMC" HelpText="GMR-GMC valve" d:ValveState="Opened" />
                             <v:Valve Canvas.Left="34" Canvas.Bottom="157" Component="vGML_GMC" HelpText="GML-GMC valve" d:ValveState="Opened" />
@@ -446,7 +506,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="PressureSensorType" Value="Port">
                             <Setter TargetName="pchamber" Property="Data"
-                                    Value="M0.5,0.5 h43 M43.5,-16.5 v34 M17.5,0.5 v17" />
+                                    Value="M0,0 v34 M0,17 h-43 M-26,17 v17" />
                             <Setter TargetName="pressure" Property="Canvas.Bottom" Value="197" />
                             <Setter TargetName="gauge" Property="Margin" Value="-2,0,2,0" />
                         </Trigger>
@@ -466,7 +526,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Canvas Width="84" Height="139" Background="Transparent">
-                            <v:Chamber x:Name="pchamber" Canvas.Left="47" Canvas.Top="18" Data="M17.5,0.5 v60 M0.5,43.5 h21 M17.5,17.5 h13" HelpText="Foreline"/>
+                            <s:Chamber x:Name="pchamber" Canvas.Left="47" Canvas.Top="18" Data="M17,0 v60 M0,43 h17 M17,17 h13" HelpText="Foreline"/>
                             
                             <s:Connection FittingSize="3/8" Length="14" Canvas.Left="8" Canvas.Top="19" />
                             <s:Connection FittingSize="3/8" Length="4" Orientation="Left" Canvas.Left="25" Canvas.Top="57" />
@@ -489,7 +549,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="PressureSensorType" Value="Port">
                             <Setter TargetName="pchamber" Property="Data"
-                                    Value="M17.5,0.5 v60 M0.5,43.5 h21" />
+                                    Value="M17,0 v60 M0,43 h17" />
                             <Setter TargetName="pressure" Property="Canvas.Left" Value="69" />
                         </Trigger>
                     </ControlTemplate.Triggers>
