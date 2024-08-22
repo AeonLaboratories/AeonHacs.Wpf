@@ -136,4 +136,9 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type s:Chamber}" BasedOn="{StaticResource {x:Type s:FittingBase}}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FittingSize" Value="3/8" />
+    </Style>
+
 </ResourceDictionary>

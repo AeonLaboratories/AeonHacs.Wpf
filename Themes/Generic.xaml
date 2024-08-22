@@ -59,31 +59,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type v:Chamber}">
-        <Setter Property="Fill" Value="{DynamicResource BodyBrush}"/>
-        <Setter Property="Stroke" Value="{DynamicResource EdgeBrush}"/>
-        <Setter Property="Thickness" Value="8"/>
-        <Setter Property="HitDetectionThickness" Value="33" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type v:Chamber}">
-                    <Grid>
-                        <Path Data="{TemplateBinding Data}" StrokeThickness="{TemplateBinding HitDetectionThickness}"
-                              Stroke="Transparent" d:Stroke="#2200FFFF"/>
-                        <Path Fill="{TemplateBinding Fill}" Stroke="{TemplateBinding Stroke}" StrokeThickness="{TemplateBinding StrokeThickness}">
-                            <Path.Data>
-                                <MultiBinding Converter="{x:Static c:WidenedGeometryConverter.Instance}">
-                                    <Binding Path="Data" RelativeSource="{RelativeSource AncestorType={x:Type v:Chamber}}"/>
-                                    <Binding Path="Thickness" RelativeSource="{RelativeSource AncestorType={x:Type v:Chamber}}"/>
-                                </MultiBinding>
-                            </Path.Data>
-                        </Path>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type v:Breakseal}">
         <Setter Property="Template">
             <Setter.Value>
@@ -251,6 +226,12 @@
                             <Setter TargetName="combustion" Property="Visibility" Value="Visible" />
                             <Setter TargetName="combustion" Property="IsFlowThrough" Value="True" />
                             <Setter TargetName="contents" Property="Margin" Value="0,-13,0,13" />
+                        </Trigger>
+                        <Trigger Property="PortType" Value="TFCombustion">
+                            <Setter TargetName="combustion" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="combustion" Property="IsFlowThrough" Value="True" />
+                            <Setter TargetName="contents" Property="Margin" Value="35,-13,-35,13" />
+                            <Setter TargetName="contents" Property="MaxWidth" Value="35" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
