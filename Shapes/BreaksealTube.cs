@@ -60,7 +60,7 @@ public class BreaksealTube : Shape
             return defaultSize;
         }
 
-        bool reverse = Orientation == RelativeDirection.Left || Orientation == RelativeDirection.Up;
+        bool reverse = Orientation == RelativeDirection.Right || Orientation == RelativeDirection.Down;
 
         switch (Orientation)
         {
@@ -85,15 +85,15 @@ public class BreaksealTube : Shape
 
             switch (Orientation)
             {
-                case RelativeDirection.Left:
+                case RelativeDirection.Right:
                     drawingContext.PushTransform(new TranslateTransform(stickout - bounds.Width - 1, 0));
                     break;
-                case RelativeDirection.Up:
+                case RelativeDirection.Down:
                     drawingContext.PushTransform(new TranslateTransform(0, stickout - bounds.Height - 1));
                     break;
-                case RelativeDirection.Down:
+                case RelativeDirection.Up:
                     break;
-                case RelativeDirection.Right:
+                case RelativeDirection.Left:
                     break;
                 default:
                     break;
