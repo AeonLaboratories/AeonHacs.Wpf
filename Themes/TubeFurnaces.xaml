@@ -7,7 +7,8 @@
             <ControlTemplate x:Key="Carbolite" TargetType="{x:Type v:TubeFurnace}">
                 <Border Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}">
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                     <Grid Height="83" Width="115">
                         <Rectangle Width="115" Height="16" Fill="{DynamicResource GlassBrush}" Stroke="{DynamicResource EdgeBrush}" VerticalAlignment="Top" Margin="0, 17"
                             v:View.Component="TFChamber" AutomationProperties.HelpText="TF Chamber" />
@@ -30,7 +31,8 @@
             <ControlTemplate x:Key="Thermolyne" TargetType="{x:Type v:TubeFurnace}">
                 <Border Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                     <Canvas Height="85" Width="101">
                         <Border Background="#8F381A" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1,1,1,0" Width="59" Height="6" DockPanel.Dock="Top" Canvas.Left="21"/>
                         <Border Background="#BDA883" BorderBrush="{DynamicResource EdgeBrush}" BorderThickness="1" Height="49" Canvas.Left="21" Canvas.Top="6">
