@@ -80,7 +80,7 @@ namespace AeonHacs.Wpf.Views
             stepNames.RemoveAll(step => ProcessManager.ProcessDictionary[step] == null);
             stepNames.InsertRange(0, ParameterizedSteps.Keys);
 
-            var lb = new ListBox();
+            var lb = new ListBox() { BorderBrush = SystemColors.MenuHighlightBrush };
             foreach (var stepName in stepNames)
             {
                 var displayItem = new ListBoxItem() { Content = stepName };
@@ -104,24 +104,10 @@ namespace AeonHacs.Wpf.Views
 
                 AddStep(pss);
             };
-            lb.BorderThickness = new Thickness(0);
+            lb.SetBinding(HeightProperty, new Binding("ActualWidth") { Source = lb });
+            VirtualizingPanel.SetScrollUnit(lb, ScrollUnit.Pixel);
 
-            var sv = new ScrollViewer() { Content = lb };
-            sv.SetBinding(HeightProperty, new Binding("ActualWidth") { Source = sv });
-            sv.PreviewMouseWheel += (sender, e) =>
-            {
-                sv.ScrollToVerticalOffset(sv.VerticalOffset - e.Delta);
-                e.Handled = true;
-            };
-
-            var b = new Border()
-            {
-                BorderBrush = SystemColors.MenuHighlightBrush,
-                BorderThickness = new Thickness(1)
-            };
-            b.Child = sv;
-
-            NewStepSelector = new Popup() { Child = b };
+            NewStepSelector = new Popup() { Child = lb };
             NewStepSelector.AllowsTransparency = true;
             NewStepSelector.PlacementTarget = AddButton;
             NewStepSelector.Placement = PlacementMode.Relative;
@@ -159,14 +145,63 @@ namespace AeonHacs.Wpf.Views
         protected virtual void AddStep(ProcessSequenceStep step)
         {
             ListBoxItem displayItem = new ListBoxItem();
-            if (step is ParameterizedStep)
+            if (step is ParameterStep)
             {
+                var newStep = (ParameterStep)step.Clone();
+                var panel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Tag = newStep
+                };
+
+                var comboBox = new ComboBox
+                {
+                    ItemsSource = NamedObject.FindAll<CegsPreferences>().First().DefaultParameters.OrderBy(p => p.ParameterName),
+                    DisplayMemberPath = nameof(Parameter.ParameterName),
+                    SelectedValuePath = nameof(Parameter.ParameterName),
+                    SelectedValue = newStep.Name
+                };
+
+                var comboBoxItemStyle = new Style(typeof(ComboBoxItem));
+                comboBoxItemStyle.Setters.Add(new Setter(ToolTipProperty, new Binding(nameof(Parameter.Description))));
+
+                comboBox.Resources.Add(typeof(ComboBoxItem), comboBoxItemStyle);
+
+                comboBox.SelectionChanged += (sender, e) =>
+                {
+                    if (comboBox.SelectedItem is Parameter parameter)
+                    {
+                        newStep.Name = parameter.ParameterName;
+                        newStep.Description = parameter.Description;
+                        newStep.Value = parameter.Value;
+                    }
+                };
+                if (string.IsNullOrWhiteSpace(newStep.Name))
+                    comboBox.SelectedIndex = 0;
+
+                var textBox = new TextBox() { VerticalContentAlignment = VerticalAlignment.Center };
+                textBox.SetBinding(TextBox.TextProperty, new Binding(nameof(ParameterStep.Value)) { Source = newStep });
+
+                TextBlock setTextBlock = new TextBlock() { Text = "Set ", LineStackingStrategy = LineStackingStrategy.BlockLineHeight, VerticalAlignment = VerticalAlignment.Center };
+                TextBlock toTextBlock = new TextBlock() { Text = " to ", LineStackingStrategy = LineStackingStrategy.BlockLineHeight, VerticalAlignment = VerticalAlignment.Center };
+                panel.Children.Add(setTextBlock);
+                panel.Children.Add(comboBox);
+                panel.Children.Add(toTextBlock);
+                panel.Children.Add(textBox);
+
+                displayItem.Content = panel;
+                displayItem.SetBinding(ToolTipProperty, new Binding(nameof(ParameterStep.Description)) { Source = newStep });
+            }
+            else if (step is ParameterizedStep)
+            {
+                var newStep = (ParameterizedStep)step.Clone();
+
                 var headerTextBox = new TextBox() { BorderThickness = new Thickness(0), Background = Brushes.Transparent };
-                headerTextBox.SetBinding(TextBox.TextProperty, new Binding(nameof(ParameterizedStep.Name)) { Source = step, UpdateSourceTrigger = UpdateSourceTrigger.Explicit });
+                headerTextBox.SetBinding(TextBox.TextProperty, new Binding(nameof(ParameterizedStep.Name)) { Source = newStep });
                 displayItem.Content = new GroupBox()
                 {
                     Header = headerTextBox,
-                    Content = new SettingsPanel(true) { UpdateSourceTrigger = UpdateSourceTrigger.Explicit, Source = step }
+                    Content = new SettingsPanel(true) { Source = newStep }
                 };
             }
             else
@@ -195,18 +230,17 @@ namespace AeonHacs.Wpf.Views
             List<ProcessSequenceStep> newSteps = new List<ProcessSequenceStep>();
             foreach (var item in ProcessStepsList.Items.OfType<ListBoxItem>())
             {
-                if (item.Content is GroupBox gb)
+                if (item.Content is StackPanel p)
                 {
-                    if (gb.Header is TextBox tb)
-                        BindingOperations.GetBindingExpression(tb, TextBox.TextProperty).UpdateSource();
-                    if (gb.Content is SettingsPanel sp)
-                    {
-                        sp.UpdateSource();
-                        if (sp.Source is ProcessSequenceStep embeddedStep)
-                            newSteps.Add(embeddedStep);
-                    }
+                    if (p.Tag is ParameterStep ps)
+                        newSteps.Add(ps);
                 }
-                if (item.Content is ProcessSequenceStep step)
+                else if (item.Content is GroupBox gb)
+                {
+                    if (gb.Content is SettingsPanel sp && sp.Source is ProcessSequenceStep step)
+                        newSteps.Add(step);
+                }
+                else if (item.Content is ProcessSequenceStep step)
                     newSteps.Add(step);
             }
             (ProcessComboBox.SelectedItem as ProcessSequence).Steps = newSteps;

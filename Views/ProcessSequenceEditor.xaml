@@ -40,7 +40,7 @@
         </ScrollViewer>
         <TextBlock DockPanel.Dock="Bottom" Margin="10,5,10,0" Text="Checklist:"/>
         <DockPanel DockPanel.Dock="Top" Margin="10,5,10,0" LastChildFill="True">
-            <StackPanel Margin="10,0,0,10" DockPanel.Dock="Right">
+            <StackPanel Margin="10,0,0,0" DockPanel.Dock="Right">
                 <Button Padding="5" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="UpButton_Click">
                     <Button.Content>
                         <Path Data="M 0.5,0 0,0.9 1,0.9 Z" Fill="Black" Stretch="Uniform"/>
@@ -65,9 +65,8 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
-            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Left">
-                <ListBox x:Name="ProcessStepsList"/>
-            </ScrollViewer>
+            <ListBox x:Name="ProcessStepsList" DockPanel.Dock="Left"
+                     VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.VerticalScrollBarVisibility="Auto" />
         </DockPanel>
     </DockPanel>
 

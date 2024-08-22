@@ -176,15 +176,13 @@ namespace AeonHacs.Wpf.Views
             if (processSequenceEditor == null)
             {
                 var w = processSequenceEditor = new Window();
-                MoveWindowToMouse(processSequenceEditor);
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 w.Title = Title + " Process Sequences";
                 w.Content = new ProcessSequenceEditor(Hacs as Components.ProcessManager);
-                w.SizeToContent = SizeToContent.WidthAndHeight;
-                w.ContentRendered += (sender, e) =>
+                w.SizeToContent = SizeToContent.Width;
+                w.ContentRendered += (_, _) =>
                 {
-                    w.ClearValue(SizeToContentProperty);
-                    w.MinWidth = w.ActualWidth;
-                    w.MinHeight = w.ActualHeight;
+                    w.MinHeight = w.MinWidth = w.ActualWidth;
                 };
                 w.Closed += (sender, e) => processSequenceEditor = null;
                 w.Show();
