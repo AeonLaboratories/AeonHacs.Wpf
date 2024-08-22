@@ -286,6 +286,7 @@
     
     <Style TargetType="{x:Type v:VMPressure}">
         <Setter Property="Component" Value="pVM1" />
+        <Setter Property="LowVacuumSensorType" Value="MKS_901P" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type v:VMPressure}">
@@ -305,7 +306,7 @@
                             </Grid.ColumnDefinitions>
                             <v:PressureSensor x:Name="IG" Type="Edwards_AimX" Grid.Row="1" Width="26" VerticalAlignment="Bottom" Margin="0,5,0,9"
                                     Component="{Binding LowPressureManometer}" HelpText="Very low pressure manometer" />
-                            <v:PressureSensor Type="MKS_901P" Grid.Row="1" Grid.Column="1" Width="26" VerticalAlignment="Bottom" Margin="0,5,0,9"
+                            <v:PressureSensor Type="{TemplateBinding LowVacuumSensorType}" Grid.Row="1" Grid.Column="1" Width="26" VerticalAlignment="Bottom" Margin="0,5,0,9"
                                     HelpText="Low pressure manometer">
                                 <v:PressureSensor.Component>
                                     <PriorityBinding>
