@@ -28,9 +28,9 @@ namespace AeonHacs.Wpf.Converters
             MismatchValue = Visibility.Hidden
         };
 
-        protected object MatchValue { get; set; }
+        public object MatchValue { get; set; }
 
-        protected object MismatchValue { get; set; }
+        public object MismatchValue { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
