@@ -114,7 +114,7 @@
                                 <v:PressureGauge Component="pIM" HelpText="Inlet manifold pressure" ContentStringFormat="0" />
                             </control:StackingPanel>
 
-                            <v:Switch Component="IpFan1-3" HelpText="Trap fan for IP1..IP3" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
+                            <v:Switch Component="IpFan1" HelpText="Trap fan for IP1..IP3" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
                                 Canvas.Right="84" Canvas.Top="3" Width="23" Height="67" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="0" 
                                 Component="IP1" HelpText="Inlet port 1" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
@@ -123,7 +123,7 @@
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="52" 
                                 Component="IP3" HelpText="Inlet port 3" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
 
-                            <v:Switch Component="IpFan4-6" HelpText="Trap fan for IP4..IP6" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self} }" 
+                            <v:Switch Component="IpFan2" HelpText="Trap fan for IP4..IP6" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self} }" 
                                 Canvas.Right="84" Canvas.Bottom="3" Width="23" Height="67" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="104" 
                                 Component="IP4" HelpText="Inlet port 4" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
@@ -174,25 +174,25 @@
                                 <v:PressureGauge x:Name="gauge" Component="pIM" HelpText="Inlet manifold pressure" ContentStringFormat="0" />
                             </control:StackingPanel>
 
-                            <v:Switch Component="IpFan1-3" HelpText="Trap fan for IP1..IP3" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
+                            <v:Switch Component="IpFan1" HelpText="Trap fan for IP1..IP3" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
                                 Canvas.Right="84" Canvas.Top="3" Width="23" Height="67" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="0" Component="IP1" HelpText="Inlet port 1" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="26" Component="IP2" HelpText="Inlet port 2" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="52" Component="IP3" HelpText="Inlet port 3" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
 
-                            <v:Switch Component="IpFan4-6" HelpText="Trap fan for IP4..IP6" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self} }" 
+                            <v:Switch Component="IpFan2" HelpText="Trap fan for IP4..IP6" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self} }" 
                                 Canvas.Right="84" Canvas.Top="81" Width="23" Height="67" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="78" Component="IP4" HelpText="Inlet port 4" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="104" Component="IP5" HelpText="Inlet port 5" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Top="130" Component="IP6" HelpText="Inlet port 6" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
 
-                            <v:Switch Component="IpFan7-9" HelpText="Trap fan for IP7..IP9" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
+                            <v:Switch Component="IpFan3" HelpText="Trap fan for IP7..IP9" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
                                 Canvas.Right="84" Canvas.Bottom="81" Width="23" Height="67" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Bottom="130" Component="IP7" HelpText="Inlet port 7" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Bottom="104" Component="IP8" HelpText="Inlet port 8" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Bottom="78" Component="IP9" HelpText="Inlet port 9" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
 
-                            <v:Switch Component="IpFan10-12" HelpText="Trap fan for IP10..IP12" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
+                            <v:Switch Component="IpFan4" HelpText="Trap fan for IP10..IP12" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
                                 Canvas.Right="84" Canvas.Bottom="3" Width="23" Height="67" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Bottom="52" Component="IP10" HelpText="Inlet port 10" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
                             <v:InletPort Orientation="Left" Canvas.Right="60" Canvas.Bottom="26" Component="IP11" HelpText="Inlet port 11" d:PortType="Combustion" d:QuartzFurnace="" d:SampleFurnace="" />
