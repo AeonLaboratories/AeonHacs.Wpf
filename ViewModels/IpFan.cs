@@ -21,6 +21,8 @@ namespace AeonHacs.Wpf.ViewModels
             set { if (Component != null) Component.InletPorts = value?.ConvertAll(x => x.Component as Components.IInletPort); }
         }
 
+        public bool IsOn => Component?.Fan?.IsOn ?? false;
+
         protected string MonitorCaption { get; set; } = "Monitor";
         protected string StayOnCaption { get; set; } = "Stay On";
         protected string StayOffCaption { get; set; } = "Stay Off";

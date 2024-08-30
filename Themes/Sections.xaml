@@ -32,7 +32,7 @@
                                 <v:PressureGauge Component="pIM" HelpText="Inlet manifold pressure" ContentStringFormat="0" />
                             </control:StackingPanel>
 
-                            <v:Switch Component="IpFan1" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" HelpText="Trap fan for IP1, IP2"
+                            <v:Switch Component="IpFan1" HelpText="Trap fan for IP1, IP2"
                                 Canvas.Right="84" Canvas.Top="38" Width="23" Height="67" />
 
                             <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1" d:QuartzFurnace=""
@@ -517,7 +517,7 @@
     </Style>
 
     <Style TargetType="{x:Type v:VacuumSystem}">
-        <Setter Property="Component" Value="VacuumSystem1" />
+        <Setter Property="Component" Value="VacuumSystem" />
         <Setter Property="HelpText" Value="Vacuum system" />
         <Setter Property="Template">
             <Setter.Value>
