@@ -285,7 +285,7 @@
     </Style>
     
     <Style TargetType="{x:Type v:VMPressure}">
-        <Setter Property="Component" Value="pVM1" />
+        <Setter Property="Component" Value="pVM" />
         <Setter Property="LowVacuumSensorType" Value="MKS_901P" />
         <Setter Property="Template">
             <Setter.Value>
