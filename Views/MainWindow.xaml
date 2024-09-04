@@ -19,13 +19,19 @@
     <c:Viewport>
         <DockPanel LastChildFill="True">
 
-            <Menu DockPanel.Dock="Top">
+            <Menu DockPanel.Dock="Top" >
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel HorizontalAlignment="Stretch"></DockPanel>
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Samples" Click="Samples_Click"/>
                     <MenuItem Header="Process Sequences" Click="ProcessSequences_Click"/>
                     <MenuItem Header="Settings" Click="Settings_Click"/>
                     <MenuItem Header="Preferences" Click="Preferences_Click"/>
                 </MenuItem>
+                <MenuItem Header="Restart" HorizontalAlignment="Right" Click="Restart_Click" />
             </Menu>
 
             <StatusBar DockPanel.Dock="Bottom" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1,0,0">

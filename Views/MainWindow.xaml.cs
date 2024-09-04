@@ -2,11 +2,11 @@
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -39,7 +39,7 @@ namespace AeonHacs.Wpf.Views
         public bool IsClosed { get; protected set; }
 
         public ControlPanel ControlPanel { get; protected set; }
-        protected AeonHacs.HacsBase Hacs => ControlPanel?.Bridge?.GetHacs();
+        protected HacsBase Hacs => ControlPanel?.Bridge?.HacsImplementation;
 
         Window sampleManager;
         Window processSequenceEditor;
@@ -65,9 +65,7 @@ namespace AeonHacs.Wpf.Views
             ControlPanel = controlPanel;
             Loaded += controlPanel.UILoaded;
             ContentRendered += controlPanel.UIShown;
-            //Closing += controlPanel.UIClosing;
 
-            //MainContent.Children.Add(controlPanel);
             MainContent.Child = controlPanel;
 
             Title = Hacs?.Name ?? "Aeon Hacs";
@@ -89,7 +87,14 @@ namespace AeonHacs.Wpf.Views
             base.OnClosed(e);
             IsClosed = true;
             NativeMethods.SetThreadExecutionState(NativeMethods.ES_CONTINUOUS);
+            if (AeonHacs.Hacs.RestartRequested && !restarting)
+            {
+                restarting = true;
+                Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+            }
         }
+        bool restarting = false;
+
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -136,10 +141,6 @@ namespace AeonHacs.Wpf.Views
             var mouse = PointToScreen(Mouse.GetPosition(this));
             window.Top = mouse.Y;
             window.Left = mouse.X;
-        }
-
-        void ShowBackPanel()
-        {
         }
 
         /// <summary>
@@ -256,5 +257,14 @@ namespace AeonHacs.Wpf.Views
             ShowSettings();
         private void Preferences_Click(object sender, RoutedEventArgs e) =>
             ShowPreferencesWindow();
+
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to restart the application?", "Restart", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                AeonHacs.Hacs.RestartRequested = true;
+                Close();
+            }
+        }
     }
 }

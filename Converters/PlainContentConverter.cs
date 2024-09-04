@@ -13,7 +13,11 @@ namespace AeonHacs.Wpf.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string text)
+            {
+                if (text.IsBlank())
+                    return DependencyProperty.UnsetValue;
                 return text.Replace("_", "__");
+            }
             return value;
         }
 
