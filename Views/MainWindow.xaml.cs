@@ -3,12 +3,14 @@ using Microsoft.Xaml.Behaviors;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Input;
 using System.Windows.Media;
+using static AeonHacs.Notify;
 
 namespace AeonHacs.Wpf.Views
 {
@@ -39,7 +41,7 @@ namespace AeonHacs.Wpf.Views
         public bool IsClosed { get; protected set; }
 
         public ControlPanel ControlPanel { get; protected set; }
-        protected HacsBase Hacs => ControlPanel?.Bridge?.HacsImplementation;
+        protected HacsBase Hacs => ControlPanel?.Hacs;
 
         Window sampleManager;
         Window processSequenceEditor;
@@ -49,6 +51,8 @@ namespace AeonHacs.Wpf.Views
         public MainWindow()
         {
             InitializeComponent();
+            InitializeSound();
+            SubscribeNotifications();
 
             var preventSleep = NativeMethods.ES_CONTINUOUS | NativeMethods.ES_SYSTEM_REQUIRED;
             if (0 == NativeMethods.SetThreadExecutionState(preventSleep))
@@ -56,29 +60,51 @@ namespace AeonHacs.Wpf.Views
                 MessageBox.Show("Call to SetThreadExecutionState failed unexpectedly.",
                     Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            Loaded += (_, _) => SizeToContent = SizeToContent.Manual;
         }
 
         public virtual void LoadControlPanel(ControlPanel controlPanel)
         {
             ControlPanel = controlPanel;
-            Loaded += controlPanel.UILoaded;
-            ContentRendered += controlPanel.UIShown;
 
             MainContent.Child = controlPanel;
 
             Title = Hacs?.Name ?? "Aeon Hacs";
         }
 
+        protected virtual void PlaySound(Notice notice)
+        {
+            // TODO dispatch?
+            System.Media.SystemSounds.Beep.Play();
+        }
+
+        // TODO use SoundPlayer
+        protected virtual void InitializeSound()
+        {
+            OnSound += PlaySound;
+        }
+
+        protected virtual void ShowNotice(Notice notice) =>
+            Dispatcher.BeginInvoke(() => NoticeWindow.Show(notice));
+
+        protected virtual async Task<Notice?> RequestResponse(Notice notice) =>
+            await Dispatcher.Invoke(() => NoticeWindow.ShowDialog(notice));
+
+        protected virtual void SubscribeNotifications()
+        {
+            OnInfo += ShowNotice;
+            OnQuestion += RequestResponse;
+            OnWarning += RequestResponse;
+            OnError += RequestResponse;
+        }
+
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (AeonHacs.Hacs.Stopped)
+            if (AeonHacs.Hacs.Stopped || ControlPanel == null)
                 base.OnClosing(e);
             else if (!AeonHacs.Hacs.Stopping)
             {
                 e.Cancel = true;
-                Task.Run(() => ControlPanel.UIClosing(this, e)).ContinueWith(t => Dispatcher.Invoke(Close));
+                Task.Run(AeonHacs.Hacs.Stop).ContinueWith(t => Dispatcher.Invoke(Close));
             }
         }
 

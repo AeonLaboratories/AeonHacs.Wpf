@@ -265,7 +265,12 @@ namespace AeonHacs.Wpf.Views
                     valueControl = new ComboBox() { ItemsSource = Enum.GetValues(valueType) };
                     dependencyProperty = Selector.SelectedItemProperty;
                 }
-                else if (valueType.IsEnum || valueType.IsPrimitive || valueType == typeof(string) || valueType == typeof(DateTime))
+                else if (
+                    valueType.IsEnum ||
+                    valueType.IsPrimitive ||
+                    valueType == typeof(string) ||
+                    valueType == typeof(DateTime) ||
+                    valueType == typeof(TimeSpan))
                 {
                     valueControl = new TextBox() { Padding = new Thickness(3, 1, 3, 1), IsEnabled = editable };
                     valueBinding.UpdateSourceTrigger = UpdateSourceTrigger;
