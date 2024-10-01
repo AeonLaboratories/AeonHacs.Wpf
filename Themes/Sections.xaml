@@ -35,10 +35,10 @@
                             <v:Switch Component="IpFan1" HelpText="Trap fan for IP1, IP2"
                                 Canvas.Right="84" Canvas.Top="38" Width="23" Height="67" />
 
-                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1" d:QuartzFurnace=""
+                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1" HelpText="Inlet port 1" d:QuartzFurnace=""
                                 Canvas.Right="60" Canvas.Top="35" />
 
-                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP2" d:QuartzFurnace="" d:SampleFurnace=""
+                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP2" HelpText="Inlet port 2" d:QuartzFurnace="" d:SampleFurnace=""
                                 Canvas.Right="60" Canvas.Top="61" />
                         </Canvas>
                     </Border>
@@ -76,10 +76,10 @@
                             <v:Switch Component="IpFan1" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" HelpText="Trap fan for IP1, IP2"
                                 Canvas.Right="110" Canvas.Top="38" Width="23" Height="67" />
 
-                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1" d:QuartzFurnace=""
+                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1" HelpText="Inlet port 1" d:QuartzFurnace=""
                                 Canvas.Right="86" Canvas.Top="35" />
 
-                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP2" d:QuartzFurnace="" d:SampleFurnace=""
+                            <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP2" HelpText="Inlet port 2" d:QuartzFurnace="" d:SampleFurnace=""
                                 Canvas.Right="86" Canvas.Top="61" />
                         </Canvas>
                     </Border>
@@ -325,9 +325,9 @@
                                 <s:CultureTube Size="12mm" Canvas.Left="14" Canvas.Top="53" IsHitTestVisible="False" />
                                 <control:StackingPanel Offset="-23" Panel.ZIndex="-1" Spacing="5">
                                     <v:FTC Canvas.Left="6" Canvas.Top="56" Width="23" Height="31"
-                                        Component="{Binding VTColdfinger.Coldfinger}" HelpText="Measurement chamber coldfinger" />
+                                        Component="{Binding Coldfinger}" HelpText="Variable temperature coldfinger" />
                                     <v:TemperatureGauge Canvas.Top="79" Canvas.Left="17.5"
-                                        Component="{Binding VTColdfinger}" HelpText="VTC temperature" ContentStringFormat="0" />
+                                        Component="{Binding Coldfinger}" HelpText="VTC temperature" ContentStringFormat="0" />
                                 </control:StackingPanel>
                             </control:StackingPanel>
                         </Canvas>
