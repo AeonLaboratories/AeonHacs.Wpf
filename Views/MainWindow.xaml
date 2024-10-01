@@ -12,7 +12,8 @@
         Title="MainWindow"
         Icon="{DynamicResource KegIcon}"
         Background="{DynamicResource ApplicationBackgroundBrush}"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
     <i:Interaction.Behaviors>
         <b:ComponentToolTipBehavior />
     </i:Interaction.Behaviors>
