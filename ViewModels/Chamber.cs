@@ -18,7 +18,6 @@ namespace AeonHacs.Wpf.ViewModels
         public ViewModel Thermometer => GetFromModel(Component?.Thermometer);
         public ViewModel Heater => GetFromModel(Component?.Heater);
         public ViewModel Coldfinger => GetFromModel(Component?.Coldfinger);
-        public ViewModel VTColdfinger => GetFromModel(Component?.VTColdfinger);
 
 
     }

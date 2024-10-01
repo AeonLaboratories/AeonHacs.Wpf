@@ -89,7 +89,7 @@ namespace AeonHacs.Wpf.ViewModels
                 ContextStart.Add(new Context(OpenPortsCaption));
                 ContextStart.Add(new Context(ClosePortsCaption));
             }
-            if (Component?.VTColdfinger != null || Component?.Coldfinger != null)
+            if (Component?.Coldfinger != null)
             {
                 ContextStart.Add(new Context(FreezeCaption));
                 ContextStart.Add(new Context(EmptyAndFreezeCaption));
