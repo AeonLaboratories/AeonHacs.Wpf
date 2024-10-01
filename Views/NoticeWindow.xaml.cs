@@ -28,19 +28,14 @@ public partial class NoticeWindow : Window
         // Responses are not returned.
         window.CancelButton.Visibility = Visibility.Collapsed;
 
-        Notify.PlaySound();
         window.Show(notice.CancellationToken);
     }
 
-    public static async Task<Notice?> ShowDialog(Notice notice)
-    {
-        var window = new NoticeWindow(notice);
-        Notify.PlaySound();
-        return await window.ShowDialog(notice.CancellationToken);
-    }
+    public static async Task<Notice> ShowDialog(Notice notice) =>
+        await new NoticeWindow(notice).ShowDialog(notice.CancellationToken);
 
-    Notice? response;
-    public Notice? Response
+    Notice response = Notice.NoResponse;
+    public Notice Response
     {
         get => response;
         set
@@ -96,14 +91,17 @@ public partial class NoticeWindow : Window
         cancellationToken.Register(() => Dispatcher.Invoke(Close));
 
         if (!cancellationToken.IsCancellationRequested)
+        {
             Show();
+            Notify.PlaySound();
+        }
     }
 
-    public async Task<Notice?> ShowDialog(CancellationToken cancellationToken)
+    public async Task<Notice> ShowDialog(CancellationToken cancellationToken)
     {
-        var tcs = new TaskCompletionSource<Notice?>();
+        var tcs = new TaskCompletionSource<Notice>();
 
-        Closed += (sender, e) => tcs.TrySetResult(Response ?? new Notice("Cancel"));
+        Closed += (sender, e) => tcs.TrySetResult(Response);
 
         Show(cancellationToken);
 

@@ -1,9 +1,10 @@
 ﻿using AeonHacs.Wpf.Behaviors;
 using Microsoft.Xaml.Behaviors;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -71,23 +72,41 @@ namespace AeonHacs.Wpf.Views
             Title = Hacs?.Name ?? "Aeon Hacs";
         }
 
+        static readonly Dictionary<string, SoundPlayer> sounds = new();
+
         protected virtual void PlaySound(Notice notice)
         {
-            // TODO dispatch?
-            System.Media.SystemSounds.Beep.Play();
+            try
+            {
+                if (sounds.TryGetValue(notice.Message, out var sound))
+                    sound.Play();
+                else
+                {
+                    //TODO support full path in message?
+                    var player = new SoundPlayer(@$"C:\Windows\Media\{notice.Message}.wav");
+                    player.Play();
+                    sounds.Add(notice.Message, player);
+                }
+                return;
+            }
+            catch { }
+
+            SystemSounds.Beep.Play();
         }
 
-        // TODO use SoundPlayer
         protected virtual void InitializeSound()
         {
             OnSound += PlaySound;
         }
 
-        protected virtual void ShowNotice(Notice notice) =>
+        public virtual void ShowNotice(Notice notice) =>
             Dispatcher.BeginInvoke(() => NoticeWindow.Show(notice));
 
-        protected virtual async Task<Notice?> RequestResponse(Notice notice) =>
+        protected virtual async Task<Notice> ShowNoticeAsync(Notice notice) =>
             await Dispatcher.Invoke(() => NoticeWindow.ShowDialog(notice));
+
+        public virtual Notice RequestResponse(Notice notice) =>
+            ShowNoticeAsync(notice).Result;
 
         protected virtual void SubscribeNotifications()
         {
