@@ -159,13 +159,36 @@ namespace AeonHacs.Wpf.Views
                     ItemsSource = NamedObject.FindAll<CegsPreferences>().First().DefaultParameters.OrderBy(p => p.ParameterName),
                     DisplayMemberPath = nameof(Parameter.ParameterName),
                     SelectedValuePath = nameof(Parameter.ParameterName),
-                    SelectedValue = newStep.Name
+                    SelectedValue = newStep.Name,
+                    IsEditable = true,
+                    IsTextSearchEnabled = false
                 };
 
                 var comboBoxItemStyle = new Style(typeof(ComboBoxItem));
                 comboBoxItemStyle.Setters.Add(new Setter(ToolTipProperty, new Binding(nameof(Parameter.Description))));
 
                 comboBox.Resources.Add(typeof(ComboBoxItem), comboBoxItemStyle);
+
+                // TODO clean this up.
+                comboBox.AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler((sender, e) =>
+                {
+                    var text = comboBox.Text;
+                    if (comboBox.SelectedItem is Parameter parameter && parameter.ParameterName != text)
+                    {
+                        var index = 0;
+                        foreach (TextChange tc in e.Changes)
+                            index = tc.Offset + tc.AddedLength;
+                        comboBox.SelectedItem = null;
+                        comboBox.Text = text;
+                        var tb = (TextBox)comboBox.Template.FindName("PART_EditableTextBox", comboBox);
+                        tb.CaretIndex = index;
+                    }
+                    else if (comboBox.SelectedItem == null)
+                    {
+                        newStep.Name = text;
+                        newStep.Description = null;
+                    }
+                }));
 
                 comboBox.SelectionChanged += (sender, e) =>
                 {
@@ -178,6 +201,8 @@ namespace AeonHacs.Wpf.Views
                 };
                 if (string.IsNullOrWhiteSpace(newStep.Name))
                     comboBox.SelectedIndex = 0;
+                else if (comboBox.SelectedItem == null)
+                    comboBox.Text = newStep.Name;
 
                 var textBox = new TextBox() { VerticalContentAlignment = VerticalAlignment.Center };
                 textBox.SetBinding(TextBox.TextProperty, new Binding(nameof(ParameterStep.Value)) { Source = newStep });
@@ -190,6 +215,7 @@ namespace AeonHacs.Wpf.Views
                 panel.Children.Add(textBox);
 
                 displayItem.Content = panel;
+                // TODO: Update "ToolTip" to be a popup that contains a textbox so description can be edited
                 displayItem.SetBinding(ToolTipProperty, new Binding(nameof(ParameterStep.Description)) { Source = newStep });
             }
             else if (step is ParameterizedStep)
