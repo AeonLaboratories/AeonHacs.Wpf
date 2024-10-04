@@ -48,7 +48,7 @@ namespace AeonHacs.Wpf
                 this.contentPresenter.Opacity = 0.5;
                 this.contentPresenter.HorizontalAlignment = Control.HorizontalContentAlignment;
                 this.contentPresenter.VerticalAlignment = Control.VerticalContentAlignment;
-                this.contentPresenter.Margin = new Thickness(Control.Padding.Left + 3, Control.Padding.Top + 1, 0, 0);
+                this.contentPresenter.Margin = new Thickness(Control.Padding.Left + 3, Control.Padding.Top + 1, Control.Padding.Right + 3, Control.Padding.Bottom + 1);
 
                 if (this.Control is ItemsControl && !(this.Control is ComboBox))
                 {
