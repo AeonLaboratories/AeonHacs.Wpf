@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
 
 namespace AeonHacs.Wpf.Views
 {
@@ -29,7 +31,7 @@ namespace AeonHacs.Wpf.Views
         {
             var value = SampleList.SelectedValue;
             var index = SampleList.SelectedIndex;
-            var list = NamedObject.FindAll<Sample>();
+            var list = new ObservableCollection<Sample>(NamedObject.FindAll<Sample>());
             if (index < 0) index = 0;
             if (index > list.Count - 1) index = list.Count - 1;
             SampleList.ItemsSource = list;
@@ -41,11 +43,18 @@ namespace AeonHacs.Wpf.Views
 
         void Edit(ISample sample)
         {
-            var w = new Window();
-            var se = new SampleEditor(sample);
-            se.Updated += RefreshSampleList;
-            w.Content = se;
-            w.SizeToContent = SizeToContent.WidthAndHeight;
+            //HacsCommands.EditSample.Execute(sample, Application.Current.MainWindow);
+
+            var editor = new SampleEditor(sample);
+            editor.Updated += RefreshSampleList;
+            var w = new Window
+            {
+                Content = editor,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
+            w.SetBinding(Window.TitleProperty, new Binding("Sample.Name") { Source = editor, FallbackValue = "New Sample" });
+            w.CommandBindings.Add(new(FormCommands.Close, (_, _) => w.Close()));
+
             w.Show();
         }
 

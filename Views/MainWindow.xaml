@@ -36,7 +36,7 @@
             </Menu>
 
             <StatusBar DockPanel.Dock="Bottom" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1,0,0">
-                <TextBlock Text="{Binding HelpText, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
+                <TextBlock Text="{Binding (local:View.Component).Description, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
             </StatusBar>
 
             <Decorator x:Name="MainContent"/>

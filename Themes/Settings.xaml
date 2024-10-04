@@ -1,0 +1,244 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AeonHacs.Wpf.Data"
+                    xmlns:control="clr-namespace:AeonHacs.Wpf.Controls"
+                    xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
+                    xmlns:wpf="clr-namespace:AeonHacs.Wpf"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Style TargetType="{x:Type local:PropertyCard}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertyCard}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Row="0" Grid.Column="2" VerticalContentAlignment="Center"
+                                     Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:BooleanCard}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:BooleanCard}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
+                            </TextBlock>
+                            <CheckBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                     IsChecked="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:SelectorCard}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SelectorCard}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
+                            </TextBlock>
+                            <ComboBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch"
+                                      ItemsSource="{TemplateBinding StandardValues}"
+                                      SelectedItem="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:ValueWithUnitsCard}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ValueWithUnitsCard}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Units" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
+                            </TextBlock>
+                            <TextBox Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                                     Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ComboBox Grid.Row="0" Grid.Column="4" VerticalAlignment="Stretch"
+                                      ItemsSource="{Binding StandardValues, RelativeSource={RelativeSource TemplatedParent}}" DisplayMemberPath="Symbol"
+                                      SelectedItem="{Binding Units, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:ParametersCard}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ParametersCard}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
+                            </TextBlock>
+                            <StackPanel Grid.RowSpan="2" Grid.Column="2">
+                                <ItemsControl Grid.RowSpan="2" Grid.Column="2"
+                                          ItemsSource="{Binding Parameters, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,0,0,5">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" SharedSizeGroup="ParameterName" />
+                                                    <ColumnDefinition Width="5" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="5" />
+                                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Remove" />
+                                                </Grid.ColumnDefinitions>
+                                                <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{x:Static local:ParametersCard.DefaultParameters}"
+                                                          SelectedValuePath="ParameterName" SelectedValue="{Binding ParameterName}"
+                                                          DisplayMemberPath="ParameterName" IsEditable="True" />
+                                                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Value}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                                                <Button Grid.Row="0" Grid.Column="4" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                                        Content="✕" Command="local:ParametersCard.RemoveParameter" CommandParameter="{Binding}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                    </Grid.RowDefinitions>
+                                    <Button Content="Add Parameter" Command="local:ParametersCard.AddParameter" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:AliquotsCard}">
+        <Style.Resources>
+            <c:BoolToVisibilityConverter x:Key="FalseVisible" TrueVisibility="Collapsed" FalseVisibility="Visible" />
+        </Style.Resources>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:AliquotsCard}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
+                            </TextBlock>
+                            <ItemsControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" ItemsSource="{Binding IDs, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,0,0,5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="5" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
+                                                <wpf:WatermarkService.Watermark>
+                                                    <TextBlock Text="Generate ID" />
+                                                </wpf:WatermarkService.Watermark>
+                                            </TextBox>
+                                            <Button Grid.Row="0" Grid.Column="2"
+                                                    Content="✕" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                    Command="local:AliquotsCard.RemoveAliquot" CommandParameter="{Binding}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button Grid.Row="2" Grid.Column="2" Content="Add Aliquot" Command="local:AliquotsCard.AddAliquot" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

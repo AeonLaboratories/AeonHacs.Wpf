@@ -1,216 +1,224 @@
 ﻿using AeonHacs.Components;
-using AeonHacs;
+using AeonHacs.Wpf.Data;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
+using System.Windows.Input;
 
-namespace AeonHacs.Wpf.Views
+namespace AeonHacs.Wpf.Views;
+
+// TODO RENAME
+public class FormCommands
 {
-    /// <summary>
-    /// Interaction logic for SampleEditor.xaml
-    /// </summary>
-    public partial class SampleEditor : UserControl
+    public static readonly RoutedUICommand Save = new("Save", nameof(Save), typeof(FormCommands));
+    //{
+    //    InputGestures = { new KeyGesture(Key.S, ModifierKeys.Control) }
+    //};
+
+    public static readonly RoutedUICommand Ok = new("Ok", nameof(Ok), typeof(FormCommands));
+    //{
+    //    InputGestures = { new KeyGesture(Key.Enter, ModifierKeys.Control) }
+    //};
+
+    public static readonly RoutedUICommand Close = new("Cancel", nameof(Close), typeof(FormCommands));
+    //{
+    //    InputGestures = { new KeyGesture(Key.Escape) }
+    //};
+}
+
+/// <summary>
+/// Interaction logic for SampleEditor.xaml
+/// </summary>
+public partial class SampleEditor : UserControl
+{
+    public event Action Updated;
+
+    private static readonly DependencyPropertyKey SamplePropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(Sample),
+        typeof(ISample),
+        typeof(SampleEditor),
+        new PropertyMetadata()
+    );
+
+    private static readonly DependencyPropertyKey SampleDataPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(SampleData),
+        typeof(SampleData),
+        typeof(SampleEditor),
+        new PropertyMetadata()
+    );
+
+    public static IEnumerable<Data.MassUnits> MassUnits { get; } = typeof(Data.MassUnits).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)
+        .Select(f => (Data.MassUnits)f.GetValue(null));
+
+    public static readonly DependencyProperty ProcessTypeProperty = DependencyProperty.Register(
+        nameof(ProcessType),
+        typeof(string),
+        typeof(SampleEditor),
+        new PropertyMetadata(ProcessTypeChanged)
+    );
+
+    private static void ProcessTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        public delegate void SampleUpdated();
+        if (d is SampleEditor se)
+            se.FilterProcesses();
+    }
 
-        public event SampleUpdated Updated;
+    public static readonly DependencyProperty ProcessesProperty = DependencyProperty.Register(
+        nameof(Processes),
+        typeof(IEnumerable<string>),
+        typeof(SampleEditor)
+    );
 
-        public ISample Sample
+    public static IEnumerable<string> ProcessTypes { get; } = Enum.GetNames<InletPortType>().Prepend("Any");
+
+    public static Visibility Take13CVisibility { get; } =
+        NamedObject.FindAll<Id13CPort>().Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+    public static IEnumerable<string> InletPorts { get; } = NamedObject.FindAll<IInletPort>().Select(ip => ip.Name).Prepend("None");
+
+    protected IInletPort StartingIP { get; set; }
+
+    public ISample Sample
+    {
+        get => (ISample)GetValue(SamplePropertyKey.DependencyProperty);
+        protected set => SetValue(SamplePropertyKey, value);
+    }
+
+    public SampleData SampleData
+    {
+        get => (SampleData)GetValue(SampleDataPropertyKey.DependencyProperty);
+        protected set => SetValue(SampleDataPropertyKey, value);
+    }
+
+    public string ProcessType
+    {
+        get => (string)GetValue(ProcessTypeProperty);
+        set => SetValue(ProcessTypeProperty, value);
+    }
+
+    public IEnumerable<string> Processes
+    {
+        get => (IEnumerable<string>)GetValue(ProcessesProperty);
+        set => SetValue(ProcessesProperty, value);
+    }
+
+    public SampleEditor(ISample sample = null)
+    {
+        InitializeComponent();
+        InitializeCommands();
+
+        Sample = sample;
+        SampleData = new(sample);
+
+        if (Sample?.InletPort.PortType is InletPortType processType)
+            ProcessType = processType.ToString();
+        else
+            ProcessType = "Any";
+    }
+
+    public SampleEditor(IInletPort ip) : this(ip?.Sample)
+    {
+        StartingIP = ip;
+        SampleData.InletPort = ip?.Name ?? "None";
+    }
+
+    protected virtual void InitializeCommands()
+    {
+        CommandBindings.Add(new(FormCommands.Save, (_, _) => Save(), CanSave));
+        CommandBindings.Add(new(FormCommands.Ok, (_, _) => { Save(); FormCommands.Close.Execute(null, this); }));
+        //CommandBindings.Add(new(FormCommands.Close, (_, _) => Window.GetWindow(this).Close()));
+    }
+
+    private void CanSave(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = true;
+        //e.CanExecute = 
+        //    Sample.LabId != SampleData.LabId ||
+        //    Sample.Grams != SampleData.Grams ||
+        //    Sample.Process != SampleData.Process ||
+        //    Sample.AliquotsCount != SampleData.AliquotsCount ||
+        //    //Sample.AliquotIds != SampleData.AliquotIds ||
+        //    Sample.Take_d13C != SampleData.Take_d13C ||
+        //    Sample.SulfurSuspected != SampleData.SulfurSuspected ||
+        //    Sample.InletPort != SampleData.InletPort;
+    }
+
+    public virtual void Save()
+    {
+        Sample ??= new Sample();
+
+        Sample.LabId = SampleData.LabId;
+        Sample.Grams = SampleData.Units.ToGrams(SampleData.Mass);
+        Sample.Process = SampleData.Process;
+
+        Sample.Parameters.Clear();
+        foreach (var parameter in SampleData.Parameters)
+            Sample.SetParameter(parameter.Clone());
+
+        // Refresh SampleData in case redundant parameters were removed
+        SampleData.Parameters.Clear();
+        foreach (var parameter in Sample.Parameters)
+            SampleData.Parameters.Add(parameter.Clone());
+
+        Sample.AliquotsCount = SampleData.AliquotIds.Count();
+        for (int i = 0; i < Sample.AliquotsCount; i++)
+            Sample.Aliquots[i].Name = SampleData.AliquotIds[i].Id;
+
+        Sample.Take_d13C = SampleData.Take_d13C;
+        Sample.SulfurSuspected = SampleData.SulfurSuspected;
+        if (SampleData.InletPort == "None")
+            Sample.InletPort = null;
+        else
+            Sample.InletPort = NamedObject.Find<IInletPort>(SampleData.InletPort);
+
+        // Should we change StartingIP.Sample?
+        if (StartingIP != null && StartingIP.Sample == Sample && Sample.InletPort != StartingIP)
+            StartingIP.ClearContents();
+
+        // Should we change Sample.InletPort.Sample?
+        if (Sample.InletPort is IInletPort ip)
         {
-            get => sample ??= new Sample()
-            {
-                Take_d13C = CegsPreferences.Take13CDefault
-            };
-            set
-            {
-                if (value != null)
-                {
-                    sample = value;
-                    SampleIsVirtual = false;
-                    MassTextBox.Text = GetMassInUnits(sample.Grams).ToString();
-                }
-            }
-        }
-        ISample sample;
-        bool SampleIsVirtual = true;
-
-        public MassUnits MassUnits { get; set; } = CegsPreferences.DefaultMassUnits;
-
-        public SampleEditor()
-        {
-            InitializeComponent();
-            InletPortComboBox.ItemsSource = NamedObject.FindAll<IInletPort>();
-            InletPortComboBox.DisplayMemberPath = "Name";
-            PortTypeComboBox.ItemsSource = Enum.GetValues(typeof(AeonHacs.InletPortType));
-            MassUnitsComboBox.ItemsSource = Enum.GetValues(typeof(MassUnits));
-            ProcessComboBox.ItemsSource = NamedObject.CachedList<ProcessSequence>();
-            ProcessComboBox.DisplayMemberPath = "Name";
-            d13CRow.Visibility = NamedObject.FindAll<Id13CPort>().Count() > 0 ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public SampleEditor(ISample sample) : this()
-        {
-            Sample = sample;
-        }
-
-        public SampleEditor(IInletPort inletPort) : this(inletPort?.Sample)
-        {
-            Sample.InletPort = inletPort;
-        }
-
-        protected double GetMassInUnits(double grams)
-        {
-            return MassUnits switch
-            {
-                MassUnits.μmol => grams / CegsPreferences.GramsCarbonPerMole * 1000000,
-                MassUnits.μg => grams * 1000000,
-                MassUnits.mg => grams * 1000,
-                _ => grams,
-            };
-        }
-
-        protected double GetGrams(double mass, MassUnits units)
-        {
-            return units switch
-            {
-                MassUnits.μmol => mass / 1000000 * CegsPreferences.GramsCarbonPerMole,
-                MassUnits.μg => mass / 1000000,
-                MassUnits.mg => mass / 1000,
-                _ => mass,
-            };
-        }
-
-        protected virtual void Save()
-        {
-            SampleIsVirtual = false;
-
-            if (InletPortComboBox.SelectedItem is IInletPort ip)
-            {
-                // if the user changed the Sample's InletPort
-                // and the old inlet port still contains Sample,
-                // remove it from there
-                if (Sample.InletPort is IInletPort oldIp && ip != oldIp && oldIp.Sample == Sample)
-                    oldIp.Aliquot = null;    // clear LinePort.Sample by clearing LinePort.Aliquot
-
-                var ipIsFree =
+            var ipIsFree =
+                    ip.Sample == null ||
                     ip.State == LinePort.States.Complete ||
-                    ip.State == LinePort.States.Loaded ||
                     ip.State == LinePort.States.Empty;
 
-                if (ipIsFree)
-                {
-                    if (ip.Sample != Sample)
-                        ip.Sample = Sample;
-
-                    if (ip.State == LinePort.States.Empty || LabIDTextBox.Text != Sample.LabId)
-                        ip.State = LinePort.States.Loaded;
-                }
-
-                if (ip.State == LinePort.States.Loaded &&
-                    NamedObject.FirstOrDefault<Cegs>() is Cegs cegs &&
-                    (cegs.InletPorts?.Contains(ip) ?? false))
-                {
-                    if (!cegs.Busy)
-                        cegs.InletPort = ip;
-                }
-            }
-
-            BindingOperations.GetBindingExpression(LabIDTextBox, TextBox.TextProperty)?.UpdateSource();
-
-            //BindingOperations.GetBindingExpression(MassTextBox, TextBox.TextProperty)?.UpdateSource();
-            if (double.TryParse(MassTextBox.Text, out double mass))
-                Sample.Grams = GetGrams(mass, MassUnits);
-
-            BindingOperations.GetBindingExpression(InletPortComboBox, Selector.SelectedItemProperty)?.UpdateSource();
-            BindingOperations.GetBindingExpression(PortTypeComboBox, Selector.SelectedItemProperty)?.UpdateSource();
-            BindingOperations.GetBindingExpression(ProcessComboBox, Selector.SelectedValueProperty)?.UpdateSource();
-            BindingOperations.GetBindingExpression(NotifyRaiseCheckBox, ToggleButton.IsCheckedProperty)?.UpdateSource();
-            BindingOperations.GetBindingExpression(Taked13CCheckBox, ToggleButton.IsCheckedProperty)?.UpdateSource();
-            BindingOperations.GetBindingExpression(SulfurSuspectedCheckBox, ToggleButton.IsCheckedProperty)?.UpdateSource();
-            BindingOperations.GetBindingExpression(AliquotsTextBox, TextBox.TextProperty)?.UpdateSource();
-
-            Updated?.Invoke();
-        }
-
-        protected virtual void Close()
-        {
-            Window.GetWindow(this).Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sample != null && SampleIsVirtual)
-                sample.Name = null;    // delete it
-            Close();
-        }
-
-        private void OKButton_Click(object sender, RoutedEventArgs e)
-        {
-            Save();
-            Close();
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            Save();
-
-            // Give some indication to the user that the save button has actually saved. This is just visual.
-            SaveButton.IsEnabled = false;
-            Task.Delay(200).ContinueWith((task) => Dispatcher.Invoke(() => SaveButton.IsEnabled = true));
-        }
-
-        private void MassUnitsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.RemovedItems.Count < 1)
-                return;
-            if (double.TryParse(MassTextBox.Text, out double mass))
-                MassTextBox.Text = GetMassInUnits(GetGrams(mass, (MassUnits)e.RemovedItems[0])).ToString();
-        }
-
-        private void InletPortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!(InletPortComboBox.SelectedItem is IInletPort ip)) return;
-
-            PortTypeComboBox.ItemsSource = ip.SupportedPortTypes;
-            PortTypeComboBox.SelectedValue = ip.PortType;
-            if (PortTypeComboBox.SelectedIndex == -1 && PortTypeComboBox.Items.Count > 0)
-                PortTypeComboBox.SelectedIndex = 0;
-        }
-
-        private void PortTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            CollectionView v = (CollectionView)CollectionViewSource.GetDefaultView(ProcessComboBox.ItemsSource);
-            v.Filter = (item) =>
+            if (ipIsFree)
             {
-                return item is ProcessSequence ps &&
-                    PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType &&
-                    ps.PortType == portType;
-            };
-
-            ProcessComboBox.SelectedValue = Sample.Process;
-            if (ProcessComboBox.SelectedIndex == -1 && ProcessComboBox.Items.Count > 0)
-                ProcessComboBox.SelectedValue = ProcessComboBox.Items[0];
-
-            // TODO: Should this functionality be completely removed or should 'independentFurnaces' be a
-            //           system property that can be set in the settings file.
-            var isCombustion = PortTypeComboBox.SelectedItem is AeonHacs.InletPortType portType &&
-                portType == AeonHacs.InletPortType.Combustion;
-            var independentFurnaces = false;
-            NotifyRaiseCheckBox.Visibility = isCombustion && independentFurnaces ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void AliquotsTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var lines = AliquotsTextBox.Text.Split(Environment.NewLine);
-            if (lines.Count() > 3)
-            {
-                AliquotsTextBox.Text = string.Join(Environment.NewLine, lines[0..3]);
-                e.Handled = true;
+                ip.Sample = Sample;
+                ip.State = LinePort.States.Loaded;
             }
         }
+
+        // Should we update Cegs's Sample?
+        if (NamedObject.FirstOrDefault<Cegs>() is Cegs cegs && !cegs.Busy)
+            cegs.Sample = Sample;
+
+        Updated?.Invoke();
+    }
+
+    protected virtual void FilterProcesses()
+    {
+        InletPortType ToIPType(string type) => type switch
+        {
+            "Combustion" =>  InletPortType.Combustion,
+            "Needle" => InletPortType.Needle,
+            "Manual" => InletPortType.Manual,
+            "GasSupply" => InletPortType.GasSupply,
+            "TFCombustion" => InletPortType.TFCombustion,
+            "FlowThrough" => InletPortType.FlowThrough,
+            _ => InletPortType.Combustion
+        };
+
+        IEnumerable<ProcessSequence> processes = NamedObject.FindAll<ProcessSequence>();
+
+        var process = SampleData.Process;
+        if (ProcessType != "Any")
+            processes = processes.Where(p => p.PortType == ToIPType(ProcessType));
+        Processes = processes.Select(p => p.Name);
+        if (!Processes.Contains(process))
+            SampleData.Process = Processes.FirstOrDefault() ?? "";
     }
 }

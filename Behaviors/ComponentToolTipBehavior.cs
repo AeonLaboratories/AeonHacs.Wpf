@@ -1,5 +1,4 @@
 ﻿using AeonHacs.Wpf.Converters;
-using AeonHacs.Wpf.ViewModels;
 using AeonHacs.Wpf.Views;
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -21,10 +20,19 @@ public class ComponentToolTipBehavior : Behavior<Window>
     protected override void OnAttached()
     {
         toolTip.PlacementTarget = AssociatedObject;
-        toolTip.SetBinding(ContentControl.ContentProperty, new Binding() { Path = new PropertyPath(View.ComponentProperty), RelativeSource = RelativeSource.Self, Converter = new ToStringConverter() });
-        var bindingExpression = BindingOperations.GetBindingExpression(toolTip, ContentControl.ContentProperty);
+        toolTip.Closed += (s, e) => View.SetComponent(AssociatedObject, null);
+        
+        var toolTipBinding = new Binding()
+        {
+            Path = new PropertyPath(View.ComponentProperty),
+            Source = AssociatedObject,
+            Converter = new ToStringConverter()
+        };
 
-        updateTimer.Tick += (s, e) => bindingExpression?.UpdateTarget();
+        toolTip.SetBinding(ContentControl.ContentProperty, toolTipBinding);
+        var toolTipBindingExpression = BindingOperations.GetBindingExpression(toolTip, ContentControl.ContentProperty);
+
+        updateTimer.Tick += (s, e) => toolTipBindingExpression?.UpdateTarget();
 
         AssociatedObject.PreviewMouseMove += AssociatedObject_PreviewMouseMove;
         AssociatedObject.MouseMove += AssociatedObject_MouseMove;
@@ -37,12 +45,12 @@ public class ComponentToolTipBehavior : Behavior<Window>
     {
         base.OnDetaching();
 
-        toolTip.IsOpen = false;
-        updateTimer.Stop();
-        BindingOperations.ClearBinding(toolTip, ContentControl.ContentProperty);
         AssociatedObject.PreviewMouseMove -= AssociatedObject_PreviewMouseMove;
         AssociatedObject.MouseMove -= AssociatedObject_MouseMove;
         AssociatedObject.MouseLeave -= AssociatedObject_MouseLeave;
+
+        HideToolTip();
+        BindingOperations.ClearBinding(toolTip, ContentControl.ContentProperty);
     }
 
     protected virtual void UpdateToolTipPosition()
@@ -88,13 +96,13 @@ public class ComponentToolTipBehavior : Behavior<Window>
                 }
                 if (View.GetComponent(visual) is INotifyPropertyChanged component)
                 {
-                    View.SetComponent(toolTip, component);
+                    View.SetComponent(AssociatedObject, component);
                     ShowToolTip();
                     return HitTestResultBehavior.Stop;
                 }
                 if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && View.GetComponent(d2) is INotifyPropertyChanged component2)
                 {
-                    View.SetComponent(toolTip, component2);
+                    View.SetComponent(AssociatedObject, component2);
                     ShowToolTip();
                     return HitTestResultBehavior.Stop;
                 }
@@ -104,6 +112,7 @@ public class ComponentToolTipBehavior : Behavior<Window>
         );
     }
 
+    // TODO should this be done in PreviewMouseMove instead?
     private void AssociatedObject_MouseMove(object sender, MouseEventArgs e)
     {
         UpdateToolTipPosition();

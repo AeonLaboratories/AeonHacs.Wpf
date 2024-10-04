@@ -1,7 +1,4 @@
 ﻿using AeonHacs.Components;
-using AeonHacs.Wpf.Views;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
@@ -59,13 +56,7 @@ namespace AeonHacs.Wpf.ViewModels
 
         void EditSample()
         {
-            Application.Current.Dispatcher.Invoke((Action)delegate {
-                var w = new Window();
-                var se = new SampleEditor(Component);
-                w.Content = se;
-                w.SizeToContent = SizeToContent.WidthAndHeight;
-                w.Show();
-            });
+            Application.Current.Dispatcher.Invoke(() => HacsCommands.EditSample.Execute(Component, null));
         }
     }
 }

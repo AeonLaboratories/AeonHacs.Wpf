@@ -8,9 +8,8 @@ using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation;
+using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using static AeonHacs.Notify;
 
 namespace AeonHacs.Wpf.Views
@@ -28,11 +27,6 @@ namespace AeonHacs.Wpf.Views
             public const uint ES_CONTINUOUS = 0x80000000;
             public const uint ES_SYSTEM_REQUIRED = 0x00000001;
         }
-
-        public static readonly DependencyProperty HelpTextProperty = AutomationProperties.HelpTextProperty.AddOwner(
-                       typeof(MainWindow), new FrameworkPropertyMetadata(""));
-
-        public string HelpText { get => (string)GetValue(HelpTextProperty); set => SetValue(HelpTextProperty, value); }
 
         public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(
             nameof(Scale), typeof(double), typeof(MainWindow));
@@ -52,6 +46,7 @@ namespace AeonHacs.Wpf.Views
         public MainWindow()
         {
             InitializeComponent();
+            InitializeCommands();
             InitializeSound();
             SubscribeNotifications();
 
@@ -61,6 +56,11 @@ namespace AeonHacs.Wpf.Views
                 MessageBox.Show("Call to SetThreadExecutionState failed unexpectedly.",
                     Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        protected virtual void InitializeCommands()
+        {
+            CommandBindings.Add(new(HacsCommands.EditSample, (_, e) => EditSample(e.Parameter)));
         }
 
         public virtual void LoadControlPanel(ControlPanel controlPanel)
@@ -148,44 +148,32 @@ namespace AeonHacs.Wpf.Views
                 FocusManager.SetFocusedElement(this, this);
         }
 
-        protected override void OnPreviewMouseMove(MouseEventArgs e)
-        {
-            VisualTreeHelper.HitTest(
-                this,
-                null,
-                r =>
-                {
-                    if (r.VisualHit is not UIElement visual || visual.IsHitTestVisible == false)
-                        return HitTestResultBehavior.Continue;
-                    if (visual is FrameworkElement fe && fe.TemplatedParent == this)
-                    {
-                        HelpText = "";
-                        return HitTestResultBehavior.Stop;
-                    }
-                    if (AutomationProperties.GetHelpText(visual) is string helpText && !string.IsNullOrWhiteSpace(helpText))
-                    {
-                        HelpText = helpText;
-                        return HitTestResultBehavior.Stop;
-                    }
-                    if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && AutomationProperties.GetHelpText(d2) is string helpText2 && !string.IsNullOrWhiteSpace(helpText2))
-                    {
-                        HelpText = helpText2;
-                        return HitTestResultBehavior.Stop;
-                    }
-                    return HitTestResultBehavior.Continue;
-                },
-                new PointHitTestParameters(e.GetPosition(this))
-            );
-
-            base.OnPreviewMouseMove(e);
-        }
-
         //TODO static method in some? class or is there a better way?
         void MoveWindowToMouse(Window window)
         {
             var mouse = PointToScreen(Mouse.GetPosition(this));
             window.Top = mouse.Y;
             window.Left = mouse.X;
+        }
+
+        void EditSample(object source)
+        {
+            SampleEditor editor;
+            if (source is Components.Sample sample)
+                editor = new(sample);
+            else if (source is Components.InletPort ip)
+                editor = new(ip);
+            else
+                editor = new();
+            var w = new Window
+            {
+                Content = editor,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
+            w.SetBinding(TitleProperty, new Binding("Sample.Name") { Source = editor, FallbackValue = "New Sample" });
+            w.CommandBindings.Add(new(FormCommands.Close, (_, _) => w.Close()));
+
+            w.Show();
         }
 
         /// <summary>
