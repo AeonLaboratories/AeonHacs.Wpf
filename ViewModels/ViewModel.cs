@@ -181,6 +181,16 @@ public class ViewModel : BindableObject, INamedObject
     }
     INotifyPropertyChanged component;
 
+    public virtual string Description
+    {
+        get => (Component as AeonHacs.NamedObject)?.Description;
+        set
+        {
+            if (Component is AeonHacs.NamedObject namedObject)
+                namedObject.Description = value;
+        }
+    }
+
     [Browsable(false)]
     public virtual string Name { get; set; }
 

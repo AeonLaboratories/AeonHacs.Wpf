@@ -7,7 +7,7 @@
              xmlns:c="clr-namespace:AeonHacs.Wpf.Converters"
              mc:Ignorable="d" >
     <UserControl.Resources>
-        <c:NullToDependencyPropertyUnsetConverter x:Key="UnsetNull" />
+        <c:BlankToDependencyPropertyUnsetConverter x:Key="UnsetBlank" />
         <c:ObjectToTypeStringConverter x:Key="TypeString" />
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Text" Value=">" />
@@ -28,7 +28,7 @@
             <Setter Property="Content">
                 <Setter.Value>
                     <PriorityBinding>
-                        <Binding Path="(local:View.Component).Name" RelativeSource="{RelativeSource Self}" Converter="{StaticResource UnsetNull}"/>
+                        <Binding Path="(local:View.Component).Name" RelativeSource="{RelativeSource Self}" Converter="{StaticResource UnsetBlank}"/>
                         <Binding Path="(local:View.Component)" RelativeSource="{RelativeSource Self}" Converter="{StaticResource TypeString}" />
                     </PriorityBinding>
                 </Setter.Value>

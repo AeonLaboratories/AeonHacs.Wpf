@@ -75,6 +75,7 @@ namespace AeonHacs.Wpf.Views
                 dp.Children.Add(sv);
 
                 var window = ViewModel.SettingsWindow = new Window();
+                Interaction.GetBehaviors(window).Add(new ComponentToolTipBehavior());
 
                 window.Content = dp;
                 window.MaxHeight = 0.7 * SystemParameters.PrimaryScreenHeight;

@@ -1,4 +1,5 @@
-﻿using AeonHacs.Wpf.Behaviors;
+﻿using AeonHacs.Core;
+using AeonHacs.Wpf.Behaviors;
 using AeonHacs.Wpf.Data;
 using Microsoft.Xaml.Behaviors;
 using Newtonsoft.Json;
@@ -239,7 +240,11 @@ namespace AeonHacs.Wpf.Views
 
             layoutGrid.Margin = new Thickness(0, 1, 0, 1);
             if (description != null)
+            {
+                ToolTipService.SetPlacement(layoutGrid, PlacementMode.Right);
+                ToolTipService.SetHorizontalOffset(layoutGrid, 3);
                 layoutGrid.ToolTip = description;
+            }
 
             // TODO editability of complex objects?
             // if value is a complex object,
@@ -263,6 +268,13 @@ namespace AeonHacs.Wpf.Views
                 if (valueType.IsEnum && editable)   // use a TextBox if not editable
                 {
                     valueControl = new ComboBox() { ItemsSource = Enum.GetValues(valueType) };
+
+                    if (property.GetCustomAttribute(typeof(StandardValuesSourceAttribute)) is StandardValuesSourceAttribute { PropertyName: string itemsSource })
+                    {
+                        valueControl.SetBinding(ItemsControl.ItemsSourceProperty, new Binding(itemsSource) { Source = Source });
+                    }
+                    else
+                        (valueControl as ComboBox).ItemsSource = Enum.GetValues(valueType);
                     dependencyProperty = Selector.SelectedItemProperty;
                 }
                 else if (
