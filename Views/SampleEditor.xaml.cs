@@ -122,19 +122,20 @@ public partial class SampleEditor : UserControl
     {
         StartingIP = ip;
         SampleData.InletPort = ip?.Name ?? "None";
+        if (ProcessType == "Any")
+            ProcessType = ip?.PortType.ToString() ?? "Any";
     }
 
     protected virtual void InitializeCommands()
     {
         CommandBindings.Add(new(FormCommands.Save, (_, _) => Save(), CanSave));
         CommandBindings.Add(new(FormCommands.Ok, (_, _) => { Save(); FormCommands.Close.Execute(null, this); }));
-        //CommandBindings.Add(new(FormCommands.Close, (_, _) => Window.GetWindow(this).Close()));
     }
 
     private void CanSave(object sender, CanExecuteRoutedEventArgs e)
     {
         e.CanExecute = true;
-        //e.CanExecute = 
+        //e.CanExecute =
         //    Sample.LabId != SampleData.LabId ||
         //    Sample.Grams != SampleData.Grams ||
         //    Sample.Process != SampleData.Process ||
@@ -142,7 +143,7 @@ public partial class SampleEditor : UserControl
         //    //Sample.AliquotIds != SampleData.AliquotIds ||
         //    Sample.Take_d13C != SampleData.Take_d13C ||
         //    Sample.SulfurSuspected != SampleData.SulfurSuspected ||
-        //    Sample.InletPort != SampleData.InletPort;
+        //    Sample.InletPort.Name != SampleData.InletPort;
     }
 
     public virtual void Save()

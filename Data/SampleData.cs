@@ -2,11 +2,14 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace AeonHacs.Wpf.Data;
 
-public class SampleData : BindableObject
+public class SampleData : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
     string labId;
     public string LabId
     {
@@ -90,11 +93,22 @@ public class SampleData : BindableObject
         };
     }
 
-    protected override void NotifyPropertyChanged(object sender, PropertyChangedEventArgs e)
+    protected bool Ensure<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
+    {
+        if (!field?.Equals(value) ?? value != null)
+        {
+            field = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return true;
+        }
+        return false;
+    }
+
+    protected virtual void NotifyPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (sender == mwu)
-            base.NotifyPropertyChanged(this, e);
+            PropertyChanged?.Invoke(this, e);
         else
-            base.NotifyPropertyChanged(sender, e);
+            PropertyChanged?.Invoke(sender, e);
     }
 }

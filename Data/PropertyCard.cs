@@ -14,7 +14,8 @@ public class PropertyCard : Control
     public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
         nameof(Value),
         typeof(object),
-        typeof(PropertyCard)
+        typeof(PropertyCard),
+        new FrameworkPropertyMetadata(null, flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
     );
 
     static PropertyCard()

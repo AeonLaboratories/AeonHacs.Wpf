@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace AeonHacs.Wpf.Data;
@@ -29,8 +30,10 @@ public class MassUnits
     }
 }
 
-public class MassWithUnits : BindableObject
+public class MassWithUnits : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
     double grams;
     public double Grams
     {
@@ -69,13 +72,19 @@ public class MassWithUnits : BindableObject
         set
         {
             if (Ensure(ref units, value))
-                NotifyPropertyChanged(nameof(Mass));
+                PropertyChanged?.Invoke(this, new(nameof(Mass)));
         }
     }
 
-    protected override void NotifyPropertyChanged(object sender, PropertyChangedEventArgs e)
+    protected bool Ensure<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
     {
-        base.NotifyPropertyChanged(sender, e);
+        if (!field?.Equals(value) ?? value != null)
+        {
+            field = value;
+            PropertyChanged?.Invoke(this, new(propertyName));
+            return true;
+        }
+        return false;
     }
 }
 
@@ -86,7 +95,8 @@ public class ValueWithUnitsCard : PropertyCard
     public static readonly DependencyProperty UnitsProperty = DependencyProperty.Register(
         nameof(Units),
         typeof(object),
-        typeof(ValueWithUnitsCard)
+        typeof(ValueWithUnitsCard),
+        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
     );
 
     static ValueWithUnitsCard()

@@ -18,19 +18,19 @@
         </Border>
         <ScrollViewer Padding="10" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel Grid.IsSharedSizeScope="True" DataContext="{Binding SampleData, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}}">
-                <data:PropertyCard DisplayName="Lab ID" Value="{Binding LabId, Mode=TwoWay}" />
-                <data:ValueWithUnitsCard DisplayName="Mass" Value="{Binding Mass, Mode=TwoWay}"
-                                         StandardValues="{x:Static local:SampleEditor.MassUnits}" Units="{Binding Units, Mode=TwoWay}" Margin="0,5,0,0"/>
+                <data:PropertyCard DisplayName="Lab ID" Value="{Binding LabId}" />
+                <data:ValueWithUnitsCard DisplayName="Mass" Value="{Binding Mass}"
+                                         StandardValues="{x:Static local:SampleEditor.MassUnits}" Units="{Binding Units}" Margin="0,5,0,0"/>
                 <data:SelectorCard DisplayName="Process Type" StandardValues="{x:Static local:SampleEditor.ProcessTypes}"
-                                   Value="{Binding ProcessType, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}, Mode=TwoWay}" Margin="0,5,0,0" />
+                                   Value="{Binding ProcessType, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}}" Margin="0,5,0,0" />
                 <data:SelectorCard DisplayName="Process" StandardValues="{Binding Processes, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}}"
-                                   Value="{Binding Process, Mode=TwoWay}" Margin="0,5,0,0" />
+                                   Value="{Binding Process}" Margin="0,5,0,0" />
                 <data:ParametersCard DisplayName="Parameters" Parameters="{Binding Parameters}" Margin="0,5,0,0" />
                 <data:AliquotsCard DisplayName="Aliquots" IDs="{Binding AliquotIds}" Margin="0,5,0,0" />
-                <data:BooleanCard DisplayName="Take d13C" Value="{Binding Take_d13C, Mode=TwoWay}" Visibility="{x:Static local:SampleEditor.Take13CVisibility}" Margin="0,5,0,0" />
-                <data:BooleanCard DisplayName="Sulfur Suspected" Value="{Binding SulfurSuspected, Mode=TwoWay}" Margin="0,5,0,0" />
+                <data:BooleanCard DisplayName="Take d13C" Value="{Binding Take_d13C}" Visibility="{x:Static local:SampleEditor.Take13CVisibility}" Margin="0,5,0,0" />
+                <data:BooleanCard DisplayName="Sulfur Suspected" Value="{Binding SulfurSuspected}" Margin="0,5,0,0" />
                 <data:SelectorCard DisplayName="Inlet Port" StandardValues="{x:Static local:SampleEditor.InletPorts}"
-                                   Value="{Binding InletPort, Mode=TwoWay}" Margin="0,5,0,0" />
+                                   Value="{Binding InletPort}" Margin="0,5,0,0" />
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

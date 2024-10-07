@@ -113,7 +113,7 @@
                                 <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
                             </TextBlock>
                             <TextBox Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                                     Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                                     Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat=0.#####################}" />
                             <ComboBox Grid.Row="0" Grid.Column="4" VerticalAlignment="Stretch"
                                       ItemsSource="{Binding StandardValues, RelativeSource={RelativeSource TemplatedParent}}" DisplayMemberPath="Symbol"
                                       SelectedItem="{Binding Units, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -198,7 +198,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" SharedSizeGroup="Single" />
                                 <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="DisplayName" />
@@ -208,32 +207,41 @@
                             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <Run Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}" /><Run Text=":" />
                             </TextBlock>
-                            <ItemsControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" ItemsSource="{Binding IDs, RelativeSource={RelativeSource TemplatedParent}}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="0,0,0,5">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" SharedSizeGroup="Single" />
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="5" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
-                                                <wpf:WatermarkService.Watermark>
-                                                    <TextBlock Text="Generate ID" />
-                                                </wpf:WatermarkService.Watermark>
-                                            </TextBox>
-                                            <Button Grid.Row="0" Grid.Column="2"
-                                                    Content="✕" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                                    Command="local:AliquotsCard.RemoveAliquot" CommandParameter="{Binding}" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <Button Grid.Row="2" Grid.Column="2" Content="Add Aliquot" Command="local:AliquotsCard.AddAliquot" />
+                            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                </Grid.RowDefinitions>
+                                <ItemsControl Grid.Row="0" ItemsSource="{Binding IDs, RelativeSource={RelativeSource TemplatedParent}}" AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,0,0,5">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" SharedSizeGroup="Single" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="5" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
+                                                    <TextBox.InputBindings>
+                                                        <KeyBinding Key="V" Modifiers="Ctrl" Command="local:AliquotsCard.PasteAliquots" CommandParameter="{Binding (ItemsControl.AlternationIndex), RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </TextBox.InputBindings>
+                                                    <wpf:WatermarkService.Watermark>
+                                                        <TextBlock Text="Generate ID" />
+                                                    </wpf:WatermarkService.Watermark>
+                                                </TextBox>
+                                                <Button Grid.Row="0" Grid.Column="2"
+                                                        Content="✕" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                        Command="local:AliquotsCard.RemoveAliquot" CommandParameter="{Binding}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Button Grid.Row="1" Content="Add Aliquot" Command="local:AliquotsCard.AddAliquot" />
+                            </Grid>
                         </Grid>
                     </Border>
                 </ControlTemplate>
