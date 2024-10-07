@@ -1,9 +1,11 @@
 ﻿using AeonHacs.Wpf.Converters;
+using AeonHacs.Wpf.ViewModels;
 using AeonHacs.Wpf.Views;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -35,7 +37,6 @@ public class ComponentToolTipBehavior : Behavior<Window>
         updateTimer.Tick += (s, e) => toolTipBindingExpression?.UpdateTarget();
 
         AssociatedObject.PreviewMouseMove += AssociatedObject_PreviewMouseMove;
-        AssociatedObject.MouseMove += AssociatedObject_MouseMove;
         AssociatedObject.MouseLeave += AssociatedObject_MouseLeave;
 
         base.OnAttached();
@@ -46,21 +47,10 @@ public class ComponentToolTipBehavior : Behavior<Window>
         base.OnDetaching();
 
         AssociatedObject.PreviewMouseMove -= AssociatedObject_PreviewMouseMove;
-        AssociatedObject.MouseMove -= AssociatedObject_MouseMove;
         AssociatedObject.MouseLeave -= AssociatedObject_MouseLeave;
 
         HideToolTip();
         BindingOperations.ClearBinding(toolTip, ContentControl.ContentProperty);
-    }
-
-    protected virtual void UpdateToolTipPosition()
-    {
-        if (toolTip.IsOpen)
-        {
-            var mousePos = Mouse.GetPosition(AssociatedObject);
-            toolTip.HorizontalOffset = mousePos.X + SystemParameters.CursorWidth / 2;
-            toolTip.VerticalOffset = mousePos.Y + SystemParameters.CursorHeight / 2 + 5;
-        }
     }
 
     protected virtual void ShowToolTip()
@@ -83,43 +73,49 @@ public class ComponentToolTipBehavior : Behavior<Window>
 
     private void AssociatedObject_PreviewMouseMove(object sender, MouseEventArgs e)
     {
+        string helpText = "";
+        HitTestResultBehavior Test(FrameworkElement element)
+        {
+            if (element == AssociatedObject)
+                return HitTestResultBehavior.Stop;
+            if (View.GetComponent(element) is INotifyPropertyChanged component)
+            {
+                View.SetComponent(AssociatedObject, component);
+                if (helpText.IsBlank() && component is ViewModel vm)
+                    helpText = vm.Description;
+                ShowToolTip();
+                return HitTestResultBehavior.Stop;
+            }
+            if (helpText.IsBlank() && element.GetValue(AutomationProperties.HelpTextProperty) is string ht)
+                helpText = ht;
+            return HitTestResultBehavior.Continue;
+        }
+
+        var mousePos = e.GetPosition(AssociatedObject);
         VisualTreeHelper.HitTest(AssociatedObject,
             null,
             r =>
             {
-                if (r.VisualHit is not UIElement visual || visual.IsHitTestVisible == false)
+                if (r.VisualHit is not FrameworkElement element || element.IsHitTestVisible == false)
                     return HitTestResultBehavior.Continue;
-                if (visual is FrameworkElement fe && fe.TemplatedParent == AssociatedObject)
-                {
-                    HideToolTip();
-                    return HitTestResultBehavior.Stop;
-                }
-                if (View.GetComponent(visual) is INotifyPropertyChanged component)
-                {
-                    View.SetComponent(AssociatedObject, component);
-                    ShowToolTip();
-                    return HitTestResultBehavior.Stop;
-                }
-                if (visual is FrameworkElement fe2 && fe2.TemplatedParent is DependencyObject d2 && View.GetComponent(d2) is INotifyPropertyChanged component2)
-                {
-                    View.SetComponent(AssociatedObject, component2);
-                    ShowToolTip();
-                    return HitTestResultBehavior.Stop;
-                }
-                return HitTestResultBehavior.Continue;
+                if (Test(element) == HitTestResultBehavior.Continue && element.TemplatedParent is FrameworkElement parent)
+                    return Test(parent);
+                HideToolTip();
+                return HitTestResultBehavior.Stop;
             },
-            new PointHitTestParameters(e.GetPosition(AssociatedObject))
+            new PointHitTestParameters(mousePos)
         );
-    }
-
-    // TODO should this be done in PreviewMouseMove instead?
-    private void AssociatedObject_MouseMove(object sender, MouseEventArgs e)
-    {
-        UpdateToolTipPosition();
+        AutomationProperties.SetHelpText(AssociatedObject, helpText);
+        if (toolTip.IsOpen)
+        {
+            toolTip.HorizontalOffset = mousePos.X + SystemParameters.CursorWidth / 2;
+            toolTip.VerticalOffset = mousePos.Y + SystemParameters.CursorHeight / 2 + 5;
+        }
     }
 
     private void AssociatedObject_MouseLeave(object sender, MouseEventArgs e)
     {
         HideToolTip();
+        AutomationProperties.SetHelpText(AssociatedObject, "");
     }
 }
