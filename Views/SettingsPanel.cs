@@ -242,7 +242,8 @@ namespace AeonHacs.Wpf.Views
             if (description != null)
             {
                 ToolTipService.SetPlacement(layoutGrid, PlacementMode.Right);
-                ToolTipService.SetHorizontalOffset(layoutGrid, 3);
+                //TODO update tooltip to give offset. The below code looks bad if the panel is near the edge of the screen.
+                //ToolTipService.SetHorizontalOffset(layoutGrid, 3);
                 layoutGrid.ToolTip = description;
             }
 
