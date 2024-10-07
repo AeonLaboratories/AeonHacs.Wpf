@@ -1,5 +1,4 @@
-﻿using AeonHacs.Core;
-using AeonHacs.Wpf.Behaviors;
+﻿using AeonHacs.Wpf.Behaviors;
 using AeonHacs.Wpf.Data;
 using Microsoft.Xaml.Behaviors;
 using Newtonsoft.Json;
