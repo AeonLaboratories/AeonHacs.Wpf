@@ -77,7 +77,10 @@ public class ComponentToolTipBehavior : Behavior<Window>
         HitTestResultBehavior Test(FrameworkElement element)
         {
             if (element == AssociatedObject)
+            {
+                HideToolTip();
                 return HitTestResultBehavior.Stop;
+            }
             if (View.GetComponent(element) is INotifyPropertyChanged component)
             {
                 View.SetComponent(AssociatedObject, component);
@@ -98,10 +101,11 @@ public class ComponentToolTipBehavior : Behavior<Window>
             {
                 if (r.VisualHit is not FrameworkElement element || element.IsHitTestVisible == false)
                     return HitTestResultBehavior.Continue;
-                if (Test(element) == HitTestResultBehavior.Continue && element.TemplatedParent is FrameworkElement parent)
+                if (Test(element) == HitTestResultBehavior.Stop)
+                    return HitTestResultBehavior.Stop;
+                if (element.TemplatedParent is FrameworkElement parent)
                     return Test(parent);
-                HideToolTip();
-                return HitTestResultBehavior.Stop;
+                return HitTestResultBehavior.Continue;
             },
             new PointHitTestParameters(mousePos)
         );
