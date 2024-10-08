@@ -151,9 +151,12 @@ namespace AeonHacs.Wpf.Views
         //TODO static method in some? class or is there a better way?
         void MoveWindowToMouse(Window window)
         {
-            var mouse = PointToScreen(Mouse.GetPosition(this));
-            window.Top = mouse.Y;
-            window.Left = mouse.X;
+            var mousePos = PointToScreen(Mouse.GetPosition(this));
+            var source = PresentationSource.FromVisual(this);
+            Point dpi = new(source.CompositionTarget.TransformToDevice.M11, source.CompositionTarget.TransformToDevice.M22);
+
+            window.Left = mousePos.X / dpi.X;
+            window.Top = mousePos.Y / dpi.Y;
         }
 
         void EditSample(object source)
