@@ -294,7 +294,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                         DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
                         <Grid Canvas.Bottom="0" Background="Transparent"
-                                  v:View.Component="{Binding}" AutomationProperties.HelpText="Vacuum manifold pressure">
+                                  v:View.Component="{Binding}" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -305,9 +305,8 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <v:PressureSensor x:Name="IG" Type="Edwards_AimX" Grid.Row="1" Width="26" VerticalAlignment="Bottom" Margin="0,5,0,9"
-                                    Component="{Binding LowPressureManometer}" HelpText="Very low pressure manometer" />
-                            <v:PressureSensor Type="{TemplateBinding LowVacuumSensorType}" Grid.Row="1" Grid.Column="1" Width="26" VerticalAlignment="Bottom" Margin="0,5,0,9"
-                                    HelpText="Low pressure manometer">
+                                    Component="{Binding LowPressureManometer}" />
+                            <v:PressureSensor Type="{TemplateBinding LowVacuumSensorType}" Grid.Row="1" Grid.Column="1" Width="26" VerticalAlignment="Bottom" Margin="0,5,0,9">
                                 <v:PressureSensor.Component>
                                     <PriorityBinding>
                                         <Binding Path="HighPressureManometer.LowPressureManometer" />
@@ -316,7 +315,6 @@
                                 </v:PressureSensor.Component>
                             </v:PressureSensor>
                             <v:PressureSensor x:Name="GP" Type="Port" Grid.Row="1" Grid.Column="2" Width="26" VerticalAlignment="Bottom"
-                                    HelpText="High pressure manometer" 
                                     Visibility="{Binding Component, RelativeSource={RelativeSource Self}, Converter={x:Static c:NullToVisibilityConverter.Collapsed}}" d:Visibility="Visible" >
                                 <v:PressureSensor.Component>
                                     <PriorityBinding>
