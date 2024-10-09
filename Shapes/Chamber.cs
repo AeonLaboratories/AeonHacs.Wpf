@@ -18,8 +18,6 @@ public class Chamber : Fitting
 
     public static readonly DependencyProperty ComponentProperty = View.ComponentProperty.AddOwner(typeof(Chamber));
 
-    public static readonly DependencyProperty HelpTextProperty = View.HelpTextProperty.AddOwner(typeof(Chamber));
-
     static Chamber()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Chamber), new FrameworkPropertyMetadata(typeof(Chamber)));
@@ -43,12 +41,6 @@ public class Chamber : Fitting
     {
         get => (INotifyPropertyChanged)GetValue(ComponentProperty);
         set => SetValue(ComponentProperty, value);
-    }
-
-    public string HelpText
-    {
-        get => (string)GetValue(HelpTextProperty);
-        set => SetValue(HelpTextProperty, value);
     }
 
     protected override Geometry DefineGeometry()

@@ -140,14 +140,14 @@
                     <Border Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                         DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
-                        <Grid v:View.Component="{TemplateBinding Component}" Background="Transparent">
+                        <Grid v:View.Component="{Binding .}" Background="Transparent">
                             <v:FTC Component="{Binding LevelSensor}" IsHitTestVisible="False" />
                             <Label Padding="0,0,8,0" HorizontalAlignment="Right"
-                                AutomationProperties.HelpText="LN Manifold level sensor"
+                                AutomationProperties.HelpText="LN manifold level sensor"
                                 Content="{Binding LevelSensor.Temperature, FallbackValue='-- &#176;C'}"
                                 ContentStringFormat="0 &#176;C" />
                             <StackPanel Margin="10,10,10,10">
-                                <Label Content="{TemplateBinding HelpText}" HorizontalContentAlignment="Center" FontSize="10" Margin="0,10,0,10" Padding="0" IsHitTestVisible="False" />
+                                <Label Content="{Binding Description}" d:Content="LN manifold" HorizontalContentAlignment="Center" FontSize="10" Margin="0,10,0,10" Padding="0" IsHitTestVisible="False" />
                                 <ItemsControl ItemsSource="{TemplateBinding Valves}" HorizontalAlignment="Center">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>

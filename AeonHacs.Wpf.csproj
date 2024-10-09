@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyVersion>3.3.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <PackageVersion>$(AssemblyVersion)</PackageVersion>
         <Title>Aeon Laboratories WPF Elements</Title>
         <Description>User Interface Modules for HacsComponent classes</Description>

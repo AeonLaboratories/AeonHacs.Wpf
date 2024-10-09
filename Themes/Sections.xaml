@@ -520,7 +520,6 @@
 
     <Style TargetType="{x:Type v:VacuumSystem}">
         <Setter Property="Component" Value="VacuumSystem" />
-        <Setter Property="HelpText" Value="Vacuum system" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type v:VacuumSystem}">

@@ -84,8 +84,14 @@ public class ComponentToolTipBehavior : Behavior<Window>
             if (View.GetComponent(element) is INotifyPropertyChanged component)
             {
                 View.SetComponent(AssociatedObject, component);
-                if (helpText.IsBlank() && component is ViewModel vm)
-                    helpText = vm.Description;
+                if (helpText.IsBlank())
+                {
+                    if (component is ViewModel vm)
+                        helpText = vm.Description;
+                    else if (component is NamedObject no)
+                        helpText = no.Description;
+                }
+
                 ShowToolTip();
                 return HitTestResultBehavior.Stop;
             }

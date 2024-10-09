@@ -265,18 +265,6 @@ namespace AeonHacs.Wpf.Views
 
         #endregion Component
 
-        #region HelpText
-
-        public static readonly DependencyProperty HelpTextProperty = AutomationProperties.HelpTextProperty.AddOwner(typeof(View));
-
-        public string HelpText
-        {
-            get => (string)GetValue(HelpTextProperty);
-            set => SetValue(HelpTextProperty, value);
-        }
-
-        #endregion HelpText
-
         #region Events
 
         // TODO Update click checking
