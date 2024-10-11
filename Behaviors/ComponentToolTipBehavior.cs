@@ -115,7 +115,7 @@ public class ComponentToolTipBehavior : Behavior<Window>
             },
             new PointHitTestParameters(mousePos)
         );
-        AutomationProperties.SetHelpText(AssociatedObject, helpText);
+        AutomationProperties.SetHelpText(AssociatedObject, helpText ?? "");
         if (toolTip.IsOpen)
         {
             toolTip.HorizontalOffset = mousePos.X + SystemParameters.CursorWidth / 2;
