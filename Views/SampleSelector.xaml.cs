@@ -26,18 +26,17 @@ namespace AeonHacs.Wpf.Views
 
         protected ObservableCollection<CheckBox> Checks = new ObservableCollection<CheckBox>();
 
-        protected AlphanumericComparer Comparer = new AlphanumericComparer();
-
         public SampleSelector(bool selectAll = false)
         {
             InitializeComponent();
 
-            var ips = new ObservableCollection<IInletPort>(GetLoadedIPs());
-            foreach (IInletPort ip in ips)
+            foreach (var sample in
+                NamedObject.FindAll<ISample>(s => s.State <= Sample.States.Prepared)
+                .OrderBy(s => s.InletPort?.Name).ThenBy(s => s.Name))
             {
-                Available.Add(ip.Sample);
+                Available.Add(sample);
                 if (selectAll)
-                    Selected.Add(ip.Sample);
+                    Selected.Add(sample);
             }
 
             SelectedListBox.ItemsSource = Selected;
@@ -49,6 +48,7 @@ namespace AeonHacs.Wpf.Views
             ChecklistPanel.ItemsSource = Checks;
             UpdateChecklist();
         }
+
 
         protected virtual void UpdateChecklist()
         {
@@ -87,18 +87,6 @@ namespace AeonHacs.Wpf.Views
 
         protected virtual void EnableDisableOK() =>
             OKButton.IsEnabled = Checks.All(cb => cb.IsChecked ?? false);
-
-        /// <summary>
-        /// Returns the list of IPs which are Loaded or Prepared and
-        /// which also contain Samples with non-blank LabIds.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IEnumerable<IInletPort> GetLoadedIPs() =>
-            NamedObject.FindAll<IInletPort>(
-                ip => (!ip?.Sample?.LabId.IsBlank() ?? false) &&
-                (ip.State == LinePort.States.Loaded ||
-                ip.State == LinePort.States.Prepared))
-            .OrderBy(ip => ip.Name, Comparer);
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
