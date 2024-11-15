@@ -24,20 +24,19 @@ namespace AeonHacs.Wpf.ViewModels
         public int CenterValue => Component.CenterValue;
         public int ClosedValue => Component.ClosedValue;
         public bool OpenIsPositive => Component.OpenIsPositive;
-        public AeonHacs.ValveState LastMotion => Component.LastMotion;
         public virtual List<string> Operations => Component?.Operations;
 
         #region Integration
 
-        static string CloseMore10Operation = "Close More 10";
-        static string CloseMore50Operation = "Close More 50";
-        static string CloseLess10Operation = "Close Less 10";
-        static string CloseLess50Operation = "Close Less 50";
+        static string CloseMore10Operation = "Close More (10)";
+        static string CloseMore50Operation = "Close More (50)";
+        static string CloseLess10Operation = "Close Less (10)";
+        static string CloseLess50Operation = "Close Less (50)";
 
-        static string OpenMore10Operation = "Open More 10";
-        static string OpenMore50Operation = "Open More 50";
-        static string OpenLess10Operation = "Open Less 10";
-        static string OpenLess50Operation = "Open Less 50";
+        static string OpenMore10Operation = "Open More (10)";
+        static string OpenMore50Operation = "Open More (50)";
+        static string OpenLess10Operation = "Open Less (10)";
+        static string OpenLess50Operation = "Open Less (50)";
 
         protected override void StartContext()
         {
