@@ -327,8 +327,7 @@
                                 <s:CultureTube Size="12mm" Canvas.Left="14" Canvas.Top="53" IsHitTestVisible="False" />
                                 <control:StackingPanel Offset="-23" Panel.ZIndex="-1" Spacing="5">
                                     <v:FTC Canvas.Left="6" Canvas.Top="56" Width="23" Height="31"
-                                        Component="{Binding Coldfinger.Coldfinger}" /> 
-                                            <!-- how do we know first one is VTColdfinger? -->
+                                        Component="{Binding Coldfinger}" />
                                     <v:TemperatureGauge Canvas.Top="79" Canvas.Left="17.5"
                                         Component="{Binding Coldfinger}" ContentStringFormat="0" />
                                 </control:StackingPanel>

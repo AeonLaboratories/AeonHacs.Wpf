@@ -113,7 +113,15 @@
 
     <Style TargetType="{x:Type v:FTC}" BasedOn="{StaticResource {x:Type v:View}}">
         <Setter Property="Background" Value="{DynamicResource FoamBrush}" />
-        <Setter Property="FillLevel" Value="{Binding Component.Temperature, RelativeSource={RelativeSource Self}, Converter={x:Static c:ScaledValueConverter.LiquidNitrogen}}" />
+        <!--<Setter Property="FillLevel" Value="{Binding Component.Temperature, RelativeSource={RelativeSource Self}, Converter={x:Static c:ScaledValueConverter.LiquidNitrogen}}" />-->
+        <Setter Property="FillLevel">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="Component.Coldfinger.Temperature" RelativeSource="{RelativeSource Self}" Converter="{x:Static c:ScaledValueConverter.LiquidNitrogen}" />
+                    <Binding Path="Component.Temperature" RelativeSource="{RelativeSource Self}" Converter="{x:Static c:ScaledValueConverter.LiquidNitrogen}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
         <Setter Property="FillColor" Value="{Binding Background, RelativeSource={RelativeSource Self}, Converter={x:Static c:DarkenConverter.Instance}, ConverterParameter=0.2}" />
         <Setter Property="Template">
             <Setter.Value>
