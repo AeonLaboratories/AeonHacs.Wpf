@@ -112,7 +112,7 @@ public partial class SampleEditor : UserControl
         Sample = sample;
         SampleData = new(sample);
 
-        if (Sample?.InletPort.PortType is InletPortType processType)
+        if (Sample?.InletPort?.PortType is InletPortType processType)
             ProcessType = processType.ToString();
         else
             ProcessType = "Any";
