@@ -13,7 +13,7 @@ namespace AeonHacs.Wpf.ViewModels
         public double MaximumVoltage { get => Component.MaximumVoltage; set => Component.MaximumVoltage = value; }
         public double MinimumVoltage { get => Component.MinimumVoltage; set => Component.MinimumVoltage = value; }
         public new bool OverRange => Component.OverRange;
-        public new bool UnderRange => Component.OverRange;
+        public new bool UnderRange => Component.UnderRange;
 
     }
 }
