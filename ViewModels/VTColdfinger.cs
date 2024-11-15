@@ -18,6 +18,8 @@ namespace AeonHacs.Wpf.ViewModels
 
         public AeonHacs.StopAction StopAction { get => Component.StopAction; set => Component.StopAction = value; }
 
+        public ViewModel Heater => GetFromModel(Component.Heater);
+
         public ViewModel Coldfinger => GetFromModel(Component.Coldfinger);
 
         protected string StandbyCaption { get; set; } = "Standby";
