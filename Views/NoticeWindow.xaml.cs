@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ public partial class NoticeWindow : Window
     public NoticeWindow(Notice notice) : this()
     {
         Icon = GetIcon(notice.Type);
-        Title = notice.Subject ?? notice.Type.ToString();
+        Title = (notice.Subject ?? notice.Type.ToString()) + $" - {DateTime.Now:yyyy-MM-dd hh:mm}";
 
         Message.Text = notice.Message;
 
