@@ -78,8 +78,6 @@ public partial class SampleEditor : UserControl
 
     public static IEnumerable<string> InletPorts { get; } = NamedObject.FindAll<IInletPort>().Select(ip => ip.Name).Prepend("None");
 
-    protected IInletPort StartingIP { get; set; }
-
     public ISample Sample
     {
         get => (ISample)GetValue(SamplePropertyKey.DependencyProperty);
@@ -120,7 +118,6 @@ public partial class SampleEditor : UserControl
 
     public SampleEditor(IInletPort ip) : this(ip?.Sample)
     {
-        StartingIP = ip;
         SampleData.InletPort = ip?.Name ?? "None";
         if (ProcessType == "Any")
             ProcessType = ip?.PortType.ToString() ?? "Any";
@@ -169,14 +166,16 @@ public partial class SampleEditor : UserControl
 
         Sample.Take_d13C = SampleData.Take_d13C;
         Sample.SulfurSuspected = SampleData.SulfurSuspected;
+
+        var oldIP = Sample.InletPort;
+
         if (SampleData.InletPort == "None")
             Sample.InletPort = null;
         else
             Sample.InletPort = NamedObject.Find<IInletPort>(SampleData.InletPort);
 
-        // Should we change StartingIP.Sample?
-        if (StartingIP != null && StartingIP.Sample == Sample && Sample.InletPort != StartingIP)
-            StartingIP.ClearContents();
+        if (Sample.InletPort != oldIP && oldIP?.Sample == Sample)
+            oldIP.ClearContents();
 
         // Should we change Sample.InletPort.Sample?
         if (Sample.InletPort is IInletPort ip)
@@ -190,6 +189,12 @@ public partial class SampleEditor : UserControl
             {
                 ip.Sample = Sample;
                 ip.State = LinePort.States.Loaded;
+            }
+
+            if (ip.Sample == Sample)
+            {
+                if (NamedObject.Find<ProcessSequence>(Sample.Process) is ProcessSequence ps)
+                    ip.PortType = ps.PortType;
             }
         }
 
