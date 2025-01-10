@@ -32,7 +32,7 @@
                                 <v:PressureGauge Component="pIM" ContentStringFormat="0" />
                             </control:StackingPanel>
 
-                            <v:Switch Component="IpFan1"
+                            <v:Switch Component="IpFan1" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
                                 Canvas.Right="84" Canvas.Top="38" Width="23" Height="67" />
 
                             <v:InletPort Orientation="Left" d:PortType="FlowThrough" Component="IP1"
@@ -143,6 +143,60 @@
                                        M0,26 h17 M0,52 h17 M0,104 h17 M0,130 h17
                                        M17,78 h43 M43,78 v17" />
                             <Setter TargetName="pressure" Property="Canvas.Bottom" Value="93" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type v:IM6CA}">
+        <Setter Property="PressureSensorType" Value="Port" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type v:IM6CA}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            DataContext="{Binding Component, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Canvas Width="250" Height="177">
+                            <s:Chamber x:Name="pchamber" Component="Section.IM" Canvas.Right="0" Canvas.Top="6"
+                                Data="M0,0 h17 v156 H0
+                                      M0,26 h17 M0,52 h17 M17,78 h69 M0,104 h17 M0,130 h17 
+                                      M43,65 v30 M69,78 v-17" />
+
+                            <control:StackingPanel x:Name="pressure" Orientation="Up" Width="59" Canvas.Right="14" Canvas.Bottom="102" Spacing="5">
+                                <v:PressureSensor Component="pIM" Type="{TemplateBinding PressureSensorType}" />
+                                <v:PressureGauge x:Name="gauge" Component="pIM" ContentStringFormat="0" />
+                            </control:StackingPanel>
+
+                            <v:Switch Component="IpFan1" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}" 
+                                Canvas.Right="110" Canvas.Top="3" Width="23" Height="67" />
+                            <v:InletPort Orientation="Left" Canvas.Right="86" Canvas.Top="0" 
+                                Component="IP1" d:PortType="FlowThrough" d:QuartzFurnace="" d:SampleFurnace="" />
+                            <v:InletPort Orientation="Left" Canvas.Right="86" Canvas.Top="26" 
+                                Component="IP2" d:PortType="Manual" d:QuartzFurnace="" d:SampleFurnace="" />
+                            <v:InletPort Orientation="Left" Canvas.Right="86" Canvas.Top="52" 
+                                Component="IP3" d:PortType="Manual" d:QuartzFurnace="" d:SampleFurnace="" />
+
+                            <v:Switch Component="IpFan2" IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self} }" 
+                                Canvas.Right="110" Canvas.Bottom="3" Width="23" Height="67" />
+                            <v:InletPort Orientation="Left" Canvas.Right="86" Canvas.Top="104" 
+                                Component="IP4" d:PortType="Manual" d:QuartzFurnace="" d:SampleFurnace="" />
+                            <v:InletPort Orientation="Left" Canvas.Right="86" Canvas.Top="130" 
+                                Component="IP5" d:PortType="Manual" d:QuartzFurnace="" d:SampleFurnace="" />
+                            <v:InletPort Orientation="Left" Canvas.Right="86" Canvas.Top="156" 
+                                Component="IP6" d:PortType="Manual" d:QuartzFurnace="" d:SampleFurnace="" />
+
+                        </Canvas>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="PressureSensorType" Value="Port">
+                            <Setter TargetName="pchamber" Property="Data"
+                                Value="M0,0 h17 v156 H0
+                                       M0,26 h17 M0,52 h17 M17,78 h69 M0,104 h17 M0,130 h17 
+                                       M43,78 v17 M69,78 v-17" />
+                            <Setter TargetName="pressure" Property="Canvas.Bottom" Value="93" />
+                            <Setter TargetName="gauge" Property="Margin" Value="-2, 0, 2, 0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
