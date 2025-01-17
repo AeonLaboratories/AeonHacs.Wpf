@@ -47,8 +47,7 @@ namespace AeonHacs.Wpf.Views
         {
             InitializeComponent();
             InitializeCommands();
-            InitializeSound();
-            SubscribeNotifications();
+            SubscribeNotices();
 
             var preventSleep = NativeMethods.ES_CONTINUOUS | NativeMethods.ES_SYSTEM_REQUIRED;
             if (0 == NativeMethods.SetThreadExecutionState(preventSleep))
@@ -94,13 +93,13 @@ namespace AeonHacs.Wpf.Views
             SystemSounds.Beep.Play();
         }
 
-        protected virtual void InitializeSound()
+        public virtual void ShowNotice(Notice notice)
         {
-            OnSound += PlaySound;
+            if (notice.Type == NoticeType.Sound)
+                PlaySound(notice);
+            else
+                Dispatcher.BeginInvoke(() => NoticeWindow.Show(notice));
         }
-
-        public virtual void ShowNotice(Notice notice) =>
-            Dispatcher.BeginInvoke(() => NoticeWindow.Show(notice));
 
         protected virtual async Task<Notice> ShowNoticeAsync(Notice notice) =>
             await Dispatcher.Invoke(() => NoticeWindow.ShowDialog(notice));
@@ -108,12 +107,10 @@ namespace AeonHacs.Wpf.Views
         public virtual Notice RequestResponse(Notice notice) =>
             ShowNoticeAsync(notice).Result;
 
-        protected virtual void SubscribeNotifications()
+        protected virtual void SubscribeNotices()
         {
-            OnInfo += ShowNotice;
-            OnQuestion += RequestResponse;
-            OnWarning += RequestResponse;
-            OnError += RequestResponse;
+            OnNotice += ShowNotice;
+            OnPrompt += RequestResponse;
         }
 
         protected override void OnClosing(CancelEventArgs e)

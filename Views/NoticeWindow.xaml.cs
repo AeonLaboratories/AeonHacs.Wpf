@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
@@ -15,6 +17,9 @@ public partial class NoticeWindow : Window
 
     public static void Show(Notice notice)
     {
+        if (notice.CancellationToken.IsCancellationRequested)
+            return;
+
         if (windows.TryGetValue(notice.Message, out var window))
         {
             Notify.PlaySound();
@@ -25,15 +30,16 @@ public partial class NoticeWindow : Window
         window = new NoticeWindow(notice);
         windows.Add(notice.Message, window);
         window.Closed += (_, _) => windows.Remove(notice.Message);
-        
-        // Responses are not returned.
-        window.CancelButton.Visibility = Visibility.Collapsed;
 
         window.Show(notice.CancellationToken);
     }
 
-    public static async Task<Notice> ShowDialog(Notice notice) =>
-        await new NoticeWindow(notice).ShowDialog(notice.CancellationToken);
+    public static async Task<Notice> ShowDialog(Notice notice)
+    {
+        if (notice.CancellationToken.IsCancellationRequested)
+            return Notice.NoResponse;
+        return await new NoticeWindow(notice).ShowDialog(notice.CancellationToken);
+    }
 
     Notice response = Notice.NoResponse;
     public Notice Response
@@ -54,13 +60,14 @@ public partial class NoticeWindow : Window
     public NoticeWindow(Notice notice) : this()
     {
         Icon = GetIcon(notice.Type);
-        Title = (notice.Subject ?? notice.Type.ToString()) + $" - {DateTime.Now:yyyy-MM-dd hh:mm}";
+        Title = $"{notice.Message} - {DateTime.Now:yyyy-MM-dd HH:mm}";
 
-        Message.Text = notice.Message;
+        Message.Text = notice.Details;
 
-        // Alert is a special case, it's used to pause the program when the caller doesn't care about response.
-        if (notice.Type == NoticeType.Alert)
-            CancelButton.Visibility = Visibility.Collapsed;
+        if (notice.Responses.Any())
+            Responses.ItemsSource = notice.Responses;
+        else
+            Responses.Items.Add("Ok");
     }
 
     private static BitmapSource GetIcon(NoticeType noticeType)
@@ -77,14 +84,9 @@ public partial class NoticeWindow : Window
         };
     }
 
-    private void OkButton_Click(object sender, RoutedEventArgs e)
+    private void ResponseButton_Click(object sender, RoutedEventArgs e)
     {
-        Response = new Notice("Ok");
-    }
-
-    private void CancelButton_Click(object sender, RoutedEventArgs e)
-    {
-        Response = new Notice("Cancel");
+        Response = new Notice((string)((Button)sender).Content);
     }
 
     public void Show(CancellationToken cancellationToken)
