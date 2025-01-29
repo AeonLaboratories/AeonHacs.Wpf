@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AeonHacs.Wpf.Controls"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Notice Message"
+        Title="Type"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen">
     <DockPanel UseLayoutRounding="True">
@@ -38,7 +38,9 @@
                    DockPanel.Dock="Left" VerticalAlignment="Top"
                    Width="32" Margin="0,0,8,0" Stretch="Uniform" d:Visibility="Collapsed" />
             <!-- TODO enforce max width of text? -->
-            <TextBlock x:Name="Message" d:Text="Notice details." VerticalAlignment="Center" />
+            <TextBlock x:Name="Message" d:Text="Message" DockPanel.Dock="Top" FontWeight="Bold" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
+            <TextBlock Text="    " DockPanel.Dock="Left" />
+            <TextBlock x:Name="Details" d:Text="Details" DockPanel.Dock="Left" TextTrimming="CharacterEllipsis" />
         </DockPanel>
     </DockPanel>
 </Window>

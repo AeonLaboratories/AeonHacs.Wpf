@@ -60,9 +60,10 @@ public partial class NoticeWindow : Window
     public NoticeWindow(Notice notice) : this()
     {
         Icon = GetIcon(notice.Type);
-        Title = $"{notice.Message} - {DateTime.Now:yyyy-MM-dd HH:mm}";
 
-        Message.Text = notice.Details;
+        Title = $"{notice.Type} - {DateTime.Now:yyyy-MM-dd HH:mm}";
+        Message.Text = notice.Message;
+        Details.Text = notice.Details;
 
         if (notice.Responses.Any())
             Responses.ItemsSource = notice.Responses;
