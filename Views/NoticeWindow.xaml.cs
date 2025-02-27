@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AeonHacs.Wpf.Views;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -22,8 +23,9 @@ public partial class NoticeWindow : Window
 
         if (windows.TryGetValue(notice.Message, out var window))
         {
-            Notify.PlaySound();
-            window.Activate();
+            // TODO check time since last shown?
+            //MainWindow.PlaySound(notice);
+            //window.Activate();
             return;
         }
 
@@ -40,6 +42,8 @@ public partial class NoticeWindow : Window
             return Notice.NoResponse;
         return await new NoticeWindow(notice).ShowDialog(notice.CancellationToken);
     }
+
+    Notice notice;
 
     Notice response = Notice.NoResponse;
     public Notice Response
@@ -59,6 +63,7 @@ public partial class NoticeWindow : Window
 
     public NoticeWindow(Notice notice) : this()
     {
+        this.notice = notice;
         Icon = GetIcon(notice.Type);
 
         Title = $"{notice.Type} - {DateTime.Now:yyyy-MM-dd HH:mm}";
@@ -97,7 +102,7 @@ public partial class NoticeWindow : Window
         if (!cancellationToken.IsCancellationRequested)
         {
             Show();
-            Notify.PlaySound();
+            MainWindow.PlaySound(notice);
         }
     }
 

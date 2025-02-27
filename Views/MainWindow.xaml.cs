@@ -73,7 +73,7 @@ namespace AeonHacs.Wpf.Views
 
         static readonly Dictionary<string, SoundPlayer> sounds = new();
 
-        protected virtual void PlaySound(Notice notice)
+        public static void PlaySound(Notice notice)
         {
             try
             {
