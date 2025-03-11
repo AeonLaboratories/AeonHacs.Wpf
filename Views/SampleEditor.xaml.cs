@@ -182,6 +182,7 @@ public partial class SampleEditor : UserControl
         {
             var ipIsFree =
                     ip.Sample == null ||
+                    ip.Sample.State == Components.Sample.States.Complete ||
                     ip.State == LinePort.States.Complete ||
                     ip.State == LinePort.States.Empty;
 
