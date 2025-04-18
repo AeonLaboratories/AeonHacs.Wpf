@@ -42,6 +42,7 @@ namespace AeonHacs.Wpf.ViewModels
         protected string IsolateCaption { get; set; } = "Isolate";
         protected string EvacuateCaption { get; set; } = "Evacuate";
         protected string IsolateManifoldCaption { get; set; } = "Isolate Vacuum Manifold";
+        protected string OpenLineCaption { get; set; } = "Open Line";
         protected string RoughCaption { get; set; } = "Rough";
         protected string StandbyCaption { get; set; } = "Standby";
 
@@ -51,6 +52,7 @@ namespace AeonHacs.Wpf.ViewModels
             ContextStart.Add(new Context(IsolateCaption));
             ContextStart.Add(new Context(EvacuateCaption));
             ContextStart.Add(new Context(IsolateManifoldCaption));
+            ContextStart.Add(new Context(OpenLineCaption));
             ContextStart.Add(new Context(RoughCaption));
             ContextStart.Add(new Context(StandbyCaption));
         }
@@ -76,6 +78,8 @@ namespace AeonHacs.Wpf.ViewModels
                 Component?.Evacuate();
             else if (command == RoughCaption)
                 Component?.Rough();
+            else if (command == OpenLineCaption)
+                Component?.OpenLine();
             else if (command == AutoManometerCaption && Component != null)
                 Component.AutoManometer = true;
             else if (command == ManualManometerCaption && Component != null)
