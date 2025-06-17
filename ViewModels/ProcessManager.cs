@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using AeonHacs.Utilities;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AeonHacs.Wpf.ViewModels
