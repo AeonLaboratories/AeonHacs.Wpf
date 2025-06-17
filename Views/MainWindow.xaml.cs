@@ -28,6 +28,13 @@ namespace AeonHacs.Wpf.Views
             public const uint ES_SYSTEM_REQUIRED = 0x00000001;
         }
 
+        static MainWindow()
+        {
+            // Fixes an issue where windows appear blank when
+            // shown while the screensaver is active.
+            System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
+        }
+
         public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(
             nameof(Scale), typeof(double), typeof(MainWindow));
 
