@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-namespace AeonHacs.Wpf.ViewModels
+namespace AeonHacs.Wpf.ViewModels;
 {
     public class LabJackU6 : DeviceManager
     {

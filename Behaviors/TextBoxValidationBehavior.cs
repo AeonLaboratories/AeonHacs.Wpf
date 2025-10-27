@@ -1,56 +1,52 @@
 ﻿using Microsoft.Xaml.Behaviors;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AeonHacs.Wpf.Behaviors
+namespace AeonHacs.Wpf.Behaviors;
+
+public class TextBoxValidationBehavior : Behavior<TextBox>
 {
-    public class TextBoxValidationBehavior : Behavior<TextBox>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
+        if (AssociatedObject != null)
         {
-            if (AssociatedObject != null)
-            {
-                base.OnAttached();
-                Validation.AddErrorHandler(AssociatedObject, HandleValidationError);
-                AssociatedObject.PreviewLostKeyboardFocus += AssociatedObject_PreviewLostKeyboardFocus;
-            }
+            base.OnAttached();
+            Validation.AddErrorHandler(AssociatedObject, HandleValidationError);
+            AssociatedObject.PreviewLostKeyboardFocus += AssociatedObject_PreviewLostKeyboardFocus;
         }
+    }
 
-        protected override void OnDetaching()
+    protected override void OnDetaching()
+    {
+        if (AssociatedObject != null)
         {
-            if (AssociatedObject != null)
-            {
-                AssociatedObject.PreviewLostKeyboardFocus -= AssociatedObject_PreviewLostKeyboardFocus;
-                Validation.RemoveErrorHandler(AssociatedObject, HandleValidationError);
-                base.OnDetaching();
-            }
+            AssociatedObject.PreviewLostKeyboardFocus -= AssociatedObject_PreviewLostKeyboardFocus;
+            Validation.RemoveErrorHandler(AssociatedObject, HandleValidationError);
+            base.OnDetaching();
         }
+    }
 
-        protected virtual void HandleValidationError(object sender, ValidationErrorEventArgs e)
+    protected virtual void HandleValidationError(object sender, ValidationErrorEventArgs e)
+    {
+        if (sender is DependencyObject d)
         {
-            if (sender is DependencyObject d)
-            {
-                if (e.Action == ValidationErrorEventAction.Added)
-                    ToolTipService.SetToolTip(d, e.Error.ErrorContent);
-                else if (Validation.GetErrors(d).Count < 1)
-                    ToolTipService.SetToolTip(d, null);
-            }
+            if (e.Action == ValidationErrorEventAction.Added)
+                ToolTipService.SetToolTip(d, e.Error.ErrorContent);
+            else if (Validation.GetErrors(d).Count < 1)
+                ToolTipService.SetToolTip(d, null);
         }
+    }
 
-        private void AssociatedObject_PreviewLostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+    private void AssociatedObject_PreviewLostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+    {
+        if (Validation.GetErrors(AssociatedObject).Count > 0)
         {
-            if (Validation.GetErrors(AssociatedObject).Count > 0)
-            {
-                // Try to maintain focus.
-                e.Handled = true;
-                AssociatedObject.Focus();
-                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(AssociatedObject), AssociatedObject);
-                AssociatedObject.SelectAll();
-            }
+            // Try to maintain focus.
+            e.Handled = true;
+            AssociatedObject.Focus();
+            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(AssociatedObject), AssociatedObject);
+            AssociatedObject.SelectAll();
         }
     }
 }

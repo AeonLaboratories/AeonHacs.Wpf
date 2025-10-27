@@ -1,14 +1,13 @@
-﻿namespace AeonHacs.Wpf.ViewModels
+﻿namespace AeonHacs.Wpf.ViewModels;
+
+public class Img100 : SwitchedManometer
 {
-    public class Img100 : SwitchedManometer
+    public new Components.IImg100 Component
     {
-        public new Components.IImg100 Component
-        {
-            get => base.Component as Components.IImg100;
-            protected set => base.Component = value;
-        }
-        // TODO
-        //Xgs600 Controller { get; set; }
-        //string UserLabel { get; set; }
+        get => base.Component as Components.IImg100;
+        protected set => base.Component = value;
     }
+    // TODO
+    //Xgs600 Controller { get; set; }
+    //string UserLabel { get; set; }
 }

@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel;
-namespace AeonHacs.Wpf.ViewModels
+namespace AeonHacs.Wpf.ViewModels;
+
+public class ManagedDevice : HacsDevice
 {
-    public class ManagedDevice : HacsDevice
+    [Browsable(false)]
+    public new Components.IManagedDevice Component
     {
-        [Browsable(false)]
-        public new Components.IManagedDevice Component
-        {
-            get => base.Component as Components.IManagedDevice;
-            protected set => base.Component = value;
-        }
-        public ViewModel Manager => GetFromModel(Component?.Manager);
+        get => base.Component as Components.IManagedDevice;
+        protected set => base.Component = value;
     }
+    public ViewModel Manager => GetFromModel(Component?.Manager);
 }

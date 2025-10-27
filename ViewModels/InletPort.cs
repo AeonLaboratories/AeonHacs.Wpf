@@ -2,61 +2,60 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace AeonHacs.Wpf.ViewModels
+namespace AeonHacs.Wpf.ViewModels;
+
+public class InletPort : LinePort
 {
-    public class InletPort : LinePort
+    public InletPort() { RunHasDefault = true; }
+
+    [Browsable(false)]
+    public new Components.IInletPort Component
     {
-        public InletPort() { RunHasDefault = true; }
+        get => base.Component as Components.IInletPort;
+        protected set => base.Component = value;
+    }
 
-        [Browsable(false)]
-        public new Components.IInletPort Component
+    public AeonHacs.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
+
+    public ViewModel QuartzFurnace
+    {
+        get => GetFromModel(Component?.QuartzFurnace);
+        set { }
+    }
+    public ViewModel SampleFurnace
+    {
+        get
         {
-            get => base.Component as Components.IInletPort;
-            protected set => base.Component = value;
+            if (Component?.SampleFurnace is ITubeFurnace)
+                return null;    // omit CC furnace if it's depicted elsewhere
+            return GetFromModel(Component?.SampleFurnace);
         }
+    }
 
-        public AeonHacs.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
+    public bool NotifySampleFurnaceNeeded { get => Component.NotifySampleFurnaceNeeded; set => Component.NotifySampleFurnaceNeeded = value; }
+    public int WarmTemperature { get => Component.WarmTemperature; set => Component.WarmTemperature = value; }
 
-        public ViewModel QuartzFurnace
-        {
-            get => GetFromModel(Component?.QuartzFurnace);
-            set { }
-        }
-        public ViewModel SampleFurnace
-        {
-            get
-            {
-                if (Component?.SampleFurnace is ITubeFurnace)
-                    return null;    // omit CC furnace if it's depicted elsewhere
-                return GetFromModel(Component?.SampleFurnace);
-            }
-        }
+    // TODO Decide context menu for InletPorts
 
-        public bool NotifySampleFurnaceNeeded { get => Component.NotifySampleFurnaceNeeded; set => Component.NotifySampleFurnaceNeeded = value; }
-        public int WarmTemperature { get => Component.WarmTemperature; set => Component.WarmTemperature = value; }
+    //void TurnOffFurnaces();
 
-        // TODO Decide context menu for InletPorts
+    protected string SampleCaption { get; set; } = "Edit Sample";
+    protected override void StartContext()
+    {
+        ContextStart.Add(new Wpf.Context(SampleCaption, dispatch:false));
+        base.StartContext();
+    }
 
-        //void TurnOffFurnaces();
+    public override void Run(string command = "")
+    {
+        if (command == SampleCaption || command.IsBlank())
+            EditSample();
+        else
+            base.Run(command);
+    }
 
-        protected string SampleCaption { get; set; } = "Edit Sample";
-        protected override void StartContext()
-        {
-            ContextStart.Add(new Wpf.Context(SampleCaption, dispatch:false));
-            base.StartContext();
-        }
-
-        public override void Run(string command = "")
-        {
-            if (command == SampleCaption || command.IsBlank())
-                EditSample();
-            else
-                base.Run(command);
-        }
-
-        void EditSample()
-        {
-            Application.Current.Dispatcher.Invoke(() => HacsCommands.EditSample.Execute(Component, null));
-        }
+    void EditSample()
+    {
+        Application.Current.Dispatcher.Invoke(() => HacsCommands.EditSample.Execute(Component, null));
     }
 }

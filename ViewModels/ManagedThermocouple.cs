@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel;
-namespace AeonHacs.Wpf.ViewModels
+namespace AeonHacs.Wpf.ViewModels;
+
+public class ManagedThermocouple : Thermocouple
 {
-    public class ManagedThermocouple : Thermocouple
+    [Browsable(false)]
+    public new Components.IManagedThermocouple Component
     {
-        [Browsable(false)]
-        public new Components.IManagedThermocouple Component
-        {
-            get => base.Component as Components.IManagedThermocouple;
-            protected set => base.Component = value;
-        }
-        public ViewModel Manager => GetFromModel(Component?.Manager);
+        get => base.Component as Components.IManagedThermocouple;
+        protected set => base.Component = value;
     }
+    public ViewModel Manager => GetFromModel(Component?.Manager);
 }

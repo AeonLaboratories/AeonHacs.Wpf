@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 
-namespace AeonHacs.Wpf.Converters
+namespace AeonHacs.Wpf.Converters;
+
+public class BlankToDependencyPropertyUnsetConverter : IValueConverter
 {
-    public class BlankToDependencyPropertyUnsetConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is string s)
-                return s.IsBlank() ? DependencyProperty.UnsetValue : s;
-            return value ?? DependencyProperty.UnsetValue;
-        }
+        if (value is string s)
+            return s.IsBlank() ? DependencyProperty.UnsetValue : s;
+        return value ?? DependencyProperty.UnsetValue;
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

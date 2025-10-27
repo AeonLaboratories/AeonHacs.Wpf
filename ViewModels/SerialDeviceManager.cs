@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel;
 
-namespace AeonHacs.Wpf.ViewModels
+namespace AeonHacs.Wpf.ViewModels;
+
+public class SerialDeviceManager : DeviceManager
 {
-    public class SerialDeviceManager : DeviceManager
+    [Browsable(false)]
+    public new Components.ISerialDeviceManager Component
     {
-        [Browsable(false)]
-        public new Components.ISerialDeviceManager Component
-        {
-            get => base.Component as Components.ISerialDeviceManager;
-            protected set => base.Component = value;
-        }
-
-        public ViewModel SerialController => GetFromModel(Component.SerialController);
-
+        get => base.Component as Components.ISerialDeviceManager;
+        protected set => base.Component = value;
     }
+
+    public ViewModel SerialController => GetFromModel(Component.SerialController);
+
 }

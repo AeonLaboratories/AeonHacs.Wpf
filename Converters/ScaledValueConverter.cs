@@ -1,38 +1,36 @@
-﻿using AeonHacs.Components;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace AeonHacs.Wpf.Converters
+namespace AeonHacs.Wpf.Converters;
+
+[ValueConversion(typeof(double), typeof(double))]
+public class ScaledValueConverter : IValueConverter
 {
-    [ValueConversion(typeof(double), typeof(double))]
-    public class ScaledValueConverter : IValueConverter
+    public static ScaledValueConverter LiquidNitrogen = new ScaledValueConverter(20.0, -195.8);
+
+    public double MinInput { get; }
+    public double MaxInput { get; }
+
+    public ScaledValueConverter(double minInput, double maxInput)
     {
-        public static ScaledValueConverter LiquidNitrogen = new ScaledValueConverter(20.0, -195.8);
+        MinInput = minInput;
+        MaxInput = maxInput;
+    }
 
-        public double MinInput { get; }
-        public double MaxInput { get; }
-
-        public ScaledValueConverter(double minInput, double maxInput)
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is double input)
         {
-            MinInput = minInput;
-            MaxInput = maxInput;
+            var ratio = (input - MinInput) / (MaxInput - MinInput);
+            return Math.Clamp(ratio, 0.0, 1.0);
         }
+        else
+            return 0;
+    }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is double input)
-            {
-                var ratio = (input - MinInput) / (MaxInput - MinInput);
-                return Math.Clamp(ratio, 0.0, 1.0);
-            }
-            else
-                return 0;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }
