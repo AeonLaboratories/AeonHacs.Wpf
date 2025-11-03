@@ -27,7 +27,7 @@
                 </Menu.ItemsPanel>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Samples" Click="Samples_Click"/>
-                    <MenuItem Header="Process Sequences" Click="ProcessSequences_Click"/>
+                    <MenuItem Header="Protocols" Click="Protocols_Click"/>
                     <MenuItem Header="Settings" Click="Settings_Click"/>
                     <MenuItem Header="Preferences" Click="Preferences_Click"/>
                 </MenuItem>

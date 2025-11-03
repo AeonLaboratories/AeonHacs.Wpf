@@ -46,7 +46,7 @@ namespace AeonHacs.Wpf.Views
         protected HacsBase Hacs => ControlPanel?.Hacs;
 
         Window sampleManager;
-        Window processSequenceEditor;
+        Window protocolEditor;
         Window deviceSettings;
         Window preferences;
 
@@ -212,27 +212,27 @@ namespace AeonHacs.Wpf.Views
         }
 
 
-        void ShowProcessSequenceEditor()
+        void ShowProtocolEditor()
         {
-            if (processSequenceEditor == null)
+            if (protocolEditor == null)
             {
-                var w = processSequenceEditor = new Window();
+                var w = protocolEditor = new Window();
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                w.Title = Title + " Process Sequences";
-                w.Content = new ProcessSequenceEditor(Hacs as Components.ProcessManager);
+                w.Title = Title + " Protocols";
+                w.Content = new ProtocolEditor(Hacs as Components.ProcessManager);
                 w.SizeToContent = SizeToContent.Width;
                 w.ContentRendered += (_, _) =>
                 {
                     w.MinHeight = w.MinWidth = w.ActualWidth;
                 };
-                w.Closed += (sender, e) => processSequenceEditor = null;
+                w.Closed += (sender, e) => protocolEditor = null;
                 w.Show();
             }
             else
             {
-                if (processSequenceEditor.WindowState == WindowState.Minimized)
-                    processSequenceEditor.WindowState = WindowState.Normal;
-                processSequenceEditor.Activate();
+                if (protocolEditor.WindowState == WindowState.Minimized)
+                    protocolEditor.WindowState = WindowState.Normal;
+                protocolEditor.Activate();
             }
         }
 
@@ -290,8 +290,8 @@ namespace AeonHacs.Wpf.Views
         private void Samples_Click(object sender, RoutedEventArgs e) =>
             ShowSampleManager();
 
-        private void ProcessSequences_Click(object sender, RoutedEventArgs e) =>
-            ShowProcessSequenceEditor();
+        private void Protocols_Click(object sender, RoutedEventArgs e) =>
+            ShowProtocolEditor();
 
         private void Settings_Click(object sender, RoutedEventArgs e) =>
             ShowSettings();

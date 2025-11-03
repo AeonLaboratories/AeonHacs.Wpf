@@ -53,11 +53,11 @@ namespace AeonHacs.Wpf.Views
         protected virtual void UpdateChecklist()
         {
             var processStrings = new List<string>();
-            var processes = new List<ProcessSequence>();
+            var processes = new List<Protocol>();
             var checklist = new List<string>();
             foreach (var sample in Selected)
-                processStrings.Add(sample.Process);
-            processes = NamedObject.FindAll<ProcessSequence>(processStrings);
+                processStrings.Add(sample.Protocol);
+            processes = NamedObject.FindAll<Protocol>(processStrings);
             processes.ForEach(p =>
             {
                 if (p != null)

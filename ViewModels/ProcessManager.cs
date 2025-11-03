@@ -15,7 +15,7 @@ public class ProcessManager : HacsBase
     }
 
     [Browsable(false)]
-    public Dictionary<string, Components.ProcessSequence> ProcessSequences { get => Component.ProcessSequences; set => Component.ProcessSequences = value; }
+    public Dictionary<string, Components.Protocol> Protocols { get => Component.Protocols; set => Component.Protocols = value; }
 
     [Browsable(false)]
     public List<string> ProcessNames => Component.ProcessNames;

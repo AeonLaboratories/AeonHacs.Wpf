@@ -70,7 +70,7 @@ public class SampleData : INotifyPropertyChanged
         {
             LabId = sample.LabId;
             Mass = sample.Grams;
-            Process = sample.Process;
+            Process = sample.Protocol;
             sample.Parameters.ForEach(p => Parameters.Add(p.Clone()));
             AliquotIds = new(sample.AliquotIds.Select(id => new AliquotId() { Id = id }));
             Take_d13C = sample.Take_d13C;

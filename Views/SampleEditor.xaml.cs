@@ -149,7 +149,7 @@ public partial class SampleEditor : UserControl
 
         Sample.LabId = SampleData.LabId;
         Sample.Grams = SampleData.Units.ToGrams(SampleData.Mass);
-        Sample.Process = SampleData.Process;
+        Sample.Protocol = SampleData.Process;
 
         Sample.Parameters.Clear();
         foreach (var parameter in SampleData.Parameters)
@@ -194,7 +194,7 @@ public partial class SampleEditor : UserControl
 
             if (ip.Sample == Sample)
             {
-                if (NamedObject.Find<ProcessSequence>(Sample.Process) is ProcessSequence ps)
+                if (NamedObject.Find<Protocol>(Sample.Protocol) is Protocol ps)
                     ip.PortType = ps.PortType;
             }
         }
@@ -219,7 +219,7 @@ public partial class SampleEditor : UserControl
             _ => InletPortType.Combustion
         };
 
-        IEnumerable<ProcessSequence> processes = NamedObject.FindAll<ProcessSequence>();
+        IEnumerable<Protocol> processes = NamedObject.FindAll<Protocol>();
 
         var process = SampleData.Process;
         if (ProcessType != "Any")

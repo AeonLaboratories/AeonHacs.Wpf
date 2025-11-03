@@ -13,7 +13,7 @@ public class Sample : HacsComponent
     }
     public string LabId { get => Component.LabId; set => Component.LabId = value; }
     public ViewModel InletPort => GetFromModel(Component?.InletPort);
-    public string Process { get => Component.Process; set => Component.Process = value; }
+    public string Process { get => Component.Protocol; set => Component.Protocol = value; }
     public bool SulfurSuspected { get => Component.SulfurSuspected; set => Component.SulfurSuspected = value; }
     public bool Take_d13C { get => Component.Take_d13C; set => Component.Take_d13C = value; }
     public double Grams { get => Component.Grams; set => Component.Grams = value; }

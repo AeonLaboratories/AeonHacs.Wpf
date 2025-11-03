@@ -16,9 +16,9 @@ using System.Windows.Media;
 namespace AeonHacs.Wpf.Views
 {
     /// <summary>
-    /// Interaction logic for ProcessSequenceEditor.xaml
+    /// Interaction logic for ProtocolEditor.xaml
     /// </summary>
-    public partial class ProcessSequenceEditor : UserControl
+    public partial class ProtocolEditor : UserControl
     {
         //TODO add checklist compatability
 
@@ -26,51 +26,85 @@ namespace AeonHacs.Wpf.Views
 
         public ProcessManager ProcessManager { get; protected set; }
 
-        protected ObservableCollection<ProcessSequence> ProcessSequences { get; set; } = new ObservableCollection<ProcessSequence>();
+        protected ObservableCollection<Protocol> Protocols { get; set; } = new ObservableCollection<Protocol>();
 
         protected Popup NewStepSelector { get; set; }
 
-        static ProcessSequenceEditor()
+        static ProtocolEditor()
         {
-            ParameterizedSteps = AppDomain.CurrentDomain.GetAssemblies().Where(
-                assembly => !assembly.IsDynamic).SelectMany(
-                assembly => assembly.GetTypes()).Where(
-                type => type.IsClass && !type.IsAbstract && typeof(ParameterizedStep).IsAssignableFrom(type)).ToDictionary(
-                    type => type.Name.EndsWith("Step") ? type.Name[0..^4] : type.Name, type => type
-                );
+            ParameterizedSteps = new Dictionary<string, Type>()
+            {
+                { "Parameter", typeof(ParameterStep) },
+                { "Combustion", typeof(CombustionStep) }
+            };
+            // Parameterized steps (except for Parameter) are deprecated and being phased out.
+            //ParameterizedSteps = AppDomain.CurrentDomain.GetAssemblies().Where(
+            //    assembly => !assembly.IsDynamic).SelectMany(
+            //    assembly => assembly.GetTypes()).Where(
+            //    type => type.IsClass && !type.IsAbstract && typeof(ParameterizedStep).IsAssignableFrom(type)).ToDictionary(
+            //        type => type.Name.EndsWith("Step") ? type.Name[0..^4] : type.Name, type => type
+            //    );
         }
 
-        public ProcessSequenceEditor()
+        public ProtocolEditor()
         {
             InitializeComponent();
         }
 
-        public ProcessSequenceEditor(ProcessManager processManager) : this()
+        public ProtocolEditor(ProcessManager processManager) : this()
         {
             ProcessManager = processManager;
 
             LoadSources();
             CreateStepSelectorPopup();
 
-            LoadSequences();
+            LoadProtocols();
 
-            if (ProcessComboBox.HasItems)
-                ProcessComboBox.SelectedIndex = 0;
+            if (ProtocolComboBox.HasItems)
+                ProtocolComboBox.SelectedIndex = 0;
         }
 
         protected virtual void LoadSources()
         {
             SourceComboBox.ItemsSource = Enum.GetValues(typeof(AeonHacs.InletPortType));
 
-            var selectedSourceBinding = new Binding($"{nameof(Selector.SelectedItem)}.{nameof(ProcessSequence.PortType)}") { Source = ProcessComboBox, UpdateSourceTrigger = UpdateSourceTrigger.Explicit };
+            var selectedSourceBinding = new Binding($"{nameof(Selector.SelectedItem)}.{nameof(Protocol.PortType)}") { Source = ProtocolComboBox, UpdateSourceTrigger = UpdateSourceTrigger.Explicit };
             SourceComboBox.SetBinding(Selector.SelectedItemProperty, selectedSourceBinding);
         }
 
         protected string GetDescription(string stepName)
         {
             if (ParameterizedSteps.TryGetValue(stepName, out Type type))
-                return (type.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)?.Description;
-            return (ProcessManager.ProcessDictionary[stepName].Method.GetCustomAttributes(typeof(DescriptionAttribute), true).FirstOrDefault() as DescriptionAttribute)?.Description;
+                return StepTypeDescription(type);
+            return StepMethodDescription(stepName);
+        }
+
+        protected string GetDescription(ProtocolStep step)
+        {
+            if (!step.Description.IsBlank())
+                return step.Description;
+
+            var desc = StepTypeDescription(step.GetType());
+            if (!desc.IsBlank()) return desc;
+
+            desc = StepMethodDescription(step.Name);
+            return desc;
+        }
+
+        protected virtual string StepTypeDescription(Type type) => (type
+                .GetCustomAttributes(typeof(DescriptionAttribute), false)
+                .FirstOrDefault() as DescriptionAttribute)?.Description;
+        protected virtual string StepMethodDescription(string stepName)
+        {
+            if (ProcessManager.ProcessDictionary.ContainsKey(stepName))
+                return (ProcessManager.ProcessDictionary[stepName].Method.
+                    GetCustomAttributes(typeof(DescriptionAttribute), true).FirstOrDefault() as DescriptionAttribute)?.Description;
+
+            Notify.Announce($"Invalid Process Step Name: " +
+                $"\r\n{stepName}." +
+                $"\r\nCheck spelling and correct settings file.");
+
+            return stepName;
         }
 
         protected virtual void CreateStepSelectorPopup()
@@ -78,6 +112,7 @@ namespace AeonHacs.Wpf.Views
             var stepNames = new List<string>();
             stepNames.AddRange(ProcessManager.ProcessNames);
             stepNames.RemoveAll(step => ProcessManager.ProcessDictionary[step] == null);
+            stepNames.Sort();
             stepNames.InsertRange(0, ParameterizedSteps.Keys);
 
             var lb = new ListBox() { BorderBrush = SystemColors.MenuHighlightBrush };
@@ -95,12 +130,12 @@ namespace AeonHacs.Wpf.Views
                 if (lb.ItemContainerGenerator.ContainerFromItem(lb.SelectedItem) is ListBoxItem lbi && !lbi.IsFocused)
                     return;
 
-                ProcessSequenceStep pss;
+                ProtocolStep pss;
                 string stepName = (lb.SelectedItem as ListBoxItem).Content as string;
                 if (ParameterizedSteps.TryGetValue(stepName, out Type type))
-                    pss = (ProcessSequenceStep)Activator.CreateInstance(type);
+                    pss = (ProtocolStep)Activator.CreateInstance(type);
                 else
-                    pss = new ProcessSequenceStep(stepName);
+                    pss = new ProtocolStep(stepName);
 
                 AddStep(pss);
             };
@@ -114,35 +149,35 @@ namespace AeonHacs.Wpf.Views
             NewStepSelector.StaysOpen = false;
         }
 
-        protected virtual void LoadSequences()
+        protected virtual void LoadProtocols()
         {
-            ProcessSequences.Clear();
-            foreach (var sequence in ProcessManager.ProcessSequences.Values)
+            Protocols.Clear();
+            foreach (var protocol in ProcessManager.Protocols.Values)
             {
-                AddProcess(sequence);
+                AddProtocol(protocol);
             }
-            ProcessComboBox.ItemsSource = ProcessSequences;
-            ProcessComboBox.DisplayMemberPath = "Name";
+            ProtocolComboBox.ItemsSource = Protocols;
+            ProtocolComboBox.DisplayMemberPath = "Name";
         }
 
-        protected virtual void AddProcess(ProcessSequence newSequence)
+        protected virtual void AddProtocol(Protocol newProtocol)
         {
-            ProcessSequences.Add(newSequence);
+            Protocols.Add(newProtocol);
         }
 
         protected virtual void LoadSteps()
         {
-            ProcessStepsList.Items.Clear();
-            if (ProcessComboBox.SelectedItem is ProcessSequence selectedSequence)
+            ProtocolStepsList.Items.Clear();
+            if (ProtocolComboBox.SelectedItem is Protocol selectedProtocol)
             {
-                foreach (var step in selectedSequence.Steps)
+                foreach (var step in selectedProtocol.Steps)
                 {
                     AddStep(step);
                 }
             }
         }
 
-        protected virtual void AddStep(ProcessSequenceStep step)
+        protected virtual void AddStep(ProtocolStep step)
         {
             ListBoxItem displayItem = new ListBoxItem();
             if (step is ParameterStep)
@@ -217,6 +252,7 @@ namespace AeonHacs.Wpf.Views
                 displayItem.Content = panel;
                 // TODO: Update "ToolTip" to be a popup that contains a textbox so description can be edited
                 displayItem.SetBinding(ToolTipProperty, new Binding(nameof(ParameterStep.Description)) { Source = newStep });
+                //displayItem.ToolTip = GetDescription(newStep);
             }
             else if (step is ParameterizedStep)
             {
@@ -229,32 +265,39 @@ namespace AeonHacs.Wpf.Views
                     Header = headerTextBox,
                     Content = new SettingsPanel(true) { Source = newStep }
                 };
+                displayItem.ToolTip = GetDescription(newStep);
             }
             else
+            {
                 displayItem.Content = step;
+                displayItem.ToolTip = GetDescription(step);
+            }
 
-            ProcessStepsList.Items.Add(displayItem);
+            if (ProtocolStepsList.SelectedIndex >= 0)
+                ProtocolStepsList.Items.Insert(ProtocolStepsList.SelectedIndex, displayItem);
+            else
+                ProtocolStepsList.Items.Add(displayItem);
         }
 
         protected virtual void LoadChecklist()
         {
-            ProcessChecklistTextBox.Clear();
+            ProtocolChecklistTextBox.Clear();
             var sb = new StringBuilder();
-            if (ProcessComboBox.SelectedItem is ProcessSequence selectedSequence && selectedSequence.CheckList != null)
+            if (ProtocolComboBox.SelectedItem is Protocol selectedProtocol && selectedProtocol.CheckList != null)
             {
-                foreach (var check in selectedSequence.CheckList)
+                foreach (var check in selectedProtocol.CheckList)
                 {
                     sb.AppendLine(check);
                 }
             }
-            ProcessChecklistTextBox.Text = sb.ToString().TrimEnd(Environment.NewLine.ToCharArray());
-            ProcessChecklistTextBox.InvalidateMeasure();
+            ProtocolChecklistTextBox.Text = sb.ToString().TrimEnd(Environment.NewLine.ToCharArray());
+            ProtocolChecklistTextBox.InvalidateMeasure();
         }
 
         protected virtual void Save()
         {
-            List<ProcessSequenceStep> newSteps = new List<ProcessSequenceStep>();
-            foreach (var item in ProcessStepsList.Items.OfType<ListBoxItem>())
+            List<ProtocolStep> newSteps = new List<ProtocolStep>();
+            foreach (var item in ProtocolStepsList.Items.OfType<ListBoxItem>())
             {
                 if (item.Content is StackPanel p)
                 {
@@ -263,17 +306,17 @@ namespace AeonHacs.Wpf.Views
                 }
                 else if (item.Content is GroupBox gb)
                 {
-                    if (gb.Content is SettingsPanel sp && sp.Source is ProcessSequenceStep step)
+                    if (gb.Content is SettingsPanel sp && sp.Source is ProtocolStep step)
                         newSteps.Add(step);
                 }
-                else if (item.Content is ProcessSequenceStep step)
+                else if (item.Content is ProtocolStep step)
                     newSteps.Add(step);
             }
-            (ProcessComboBox.SelectedItem as ProcessSequence).Steps = newSteps;
-            (ProcessComboBox.SelectedItem as ProcessSequence).CheckList = ProcessChecklistTextBox.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
+            (ProtocolComboBox.SelectedItem as Protocol).Steps = newSteps;
+            (ProtocolComboBox.SelectedItem as Protocol).CheckList = ProtocolChecklistTextBox.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
             BindingOperations.GetBindingExpression(SourceComboBox, Selector.SelectedItemProperty).UpdateSource();
-            (ProcessComboBox.SelectedItem as ProcessSequence).Name = ProcessComboBox.Text;
-            ProcessManager.ProcessSequences = ProcessSequences.ToDictionary(sequence => sequence.Name, sequence => sequence);
+            (ProtocolComboBox.SelectedItem as Protocol).Name = ProtocolComboBox.Text;
+            ProcessManager.Protocols = Protocols.ToDictionary(protocol => protocol.Name, protocol => protocol);
         }
 
         protected virtual void Close()
@@ -281,7 +324,7 @@ namespace AeonHacs.Wpf.Views
             Window.GetWindow(this).Close();
         }
 
-        private void ProcessComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ProtocolComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadSteps();
             LoadChecklist();
@@ -289,60 +332,60 @@ namespace AeonHacs.Wpf.Views
 
         private void NewButton_Click(object sender, RoutedEventArgs e)
         {
-            string name = "sequence";
+            string name = "new protocol";
             int suffix = 1;
-            while (ProcessSequences.Where(sequence => sequence.Name == name + suffix).Count() > 0)
+            while (Protocols.Where(protocol => protocol.Name == name + suffix).Count() > 0)
                 suffix++;
 
-            ProcessSequences.Add(new ProcessSequence(name + suffix));
-            ProcessComboBox.SelectedIndex = ProcessComboBox.Items.Count - 1;
+            Protocols.Add(new Protocol(name + suffix));
+            ProtocolComboBox.SelectedIndex = ProtocolComboBox.Items.Count - 1;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ProcessComboBox.SelectedItem is ProcessSequence sequence)
+            if (ProtocolComboBox.SelectedItem is Protocol protocol)
             {
-                int index = ProcessComboBox.Items.IndexOf(sequence);
-                ProcessSequences.Remove(sequence);
-                ProcessComboBox.SelectedIndex = -1;
-                if (index < ProcessComboBox.Items.Count)
-                    ProcessComboBox.SelectedIndex = index;
-                else if (ProcessComboBox.Items.Count > 0)
-                    ProcessComboBox.SelectedIndex = ProcessComboBox.Items.Count - 1;
+                int index = ProtocolComboBox.Items.IndexOf(protocol);
+                Protocols.Remove(protocol);
+                ProtocolComboBox.SelectedIndex = -1;
+                if (index < ProtocolComboBox.Items.Count)
+                    ProtocolComboBox.SelectedIndex = index;
+                else if (ProtocolComboBox.Items.Count > 0)
+                    ProtocolComboBox.SelectedIndex = ProtocolComboBox.Items.Count - 1;
             }
         }
 
         private void UpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ProcessStepsList.SelectedItem is ListBoxItem selectedItem)
+            if (ProtocolStepsList.SelectedItem is ListBoxItem selectedItem)
             {
-                int index = ProcessStepsList.Items.IndexOf(selectedItem);
+                int index = ProtocolStepsList.Items.IndexOf(selectedItem);
                 if (index == 0)
                 {
-                    FocusManager.SetFocusedElement(Window.GetWindow(this), ProcessStepsList);
+                    FocusManager.SetFocusedElement(Window.GetWindow(this), ProtocolStepsList);
                     return;
                 }
-                ProcessStepsList.Items.RemoveAt(index);
-                ProcessStepsList.Items.Insert(index - 1, selectedItem);
-                ProcessStepsList.SelectedItem = selectedItem;
-                FocusManager.SetFocusedElement(Window.GetWindow(this), ProcessStepsList);
+                ProtocolStepsList.Items.RemoveAt(index);
+                ProtocolStepsList.Items.Insert(index - 1, selectedItem);
+                ProtocolStepsList.SelectedItem = selectedItem;
+                FocusManager.SetFocusedElement(Window.GetWindow(this), ProtocolStepsList);
             }
         }
 
         private void DownButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ProcessStepsList.SelectedItem is ListBoxItem selectedItem)
+            if (ProtocolStepsList.SelectedItem is ListBoxItem selectedItem)
             {
-                int index = ProcessStepsList.Items.IndexOf(selectedItem);
-                if (index == ProcessStepsList.Items.Count - 1)
+                int index = ProtocolStepsList.Items.IndexOf(selectedItem);
+                if (index == ProtocolStepsList.Items.Count - 1)
                 {
-                    FocusManager.SetFocusedElement(Window.GetWindow(this), ProcessStepsList);
+                    FocusManager.SetFocusedElement(Window.GetWindow(this), ProtocolStepsList);
                     return;
                 }
-                ProcessStepsList.Items.RemoveAt(index);
-                ProcessStepsList.Items.Insert(index + 1, selectedItem);
-                ProcessStepsList.SelectedItem = selectedItem;
-                FocusManager.SetFocusedElement(Window.GetWindow(this), ProcessStepsList);
+                ProtocolStepsList.Items.RemoveAt(index);
+                ProtocolStepsList.Items.Insert(index + 1, selectedItem);
+                ProtocolStepsList.SelectedItem = selectedItem;
+                FocusManager.SetFocusedElement(Window.GetWindow(this), ProtocolStepsList);
             }
         }
 
@@ -354,15 +397,15 @@ namespace AeonHacs.Wpf.Views
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ProcessStepsList.SelectedItem is ListBoxItem selectedItem)
+            if (ProtocolStepsList.SelectedItem is ListBoxItem selectedItem)
             {
-                int index = ProcessStepsList.Items.IndexOf(selectedItem);
-                ProcessStepsList.Items.Remove(selectedItem);
-                if (index < ProcessStepsList.Items.Count && ProcessStepsList.Items.GetItemAt(index) is ListBoxItem next)
-                    ProcessStepsList.SelectedItem = next;
-                else if (ProcessStepsList.Items.Count > 0)
-                    ProcessStepsList.SelectedIndex = ProcessStepsList.Items.Count - 1;
-                FocusManager.SetFocusedElement(Window.GetWindow(this), ProcessStepsList);
+                int index = ProtocolStepsList.Items.IndexOf(selectedItem);
+                ProtocolStepsList.Items.Remove(selectedItem);
+                if (index < ProtocolStepsList.Items.Count && ProtocolStepsList.Items.GetItemAt(index) is ListBoxItem next)
+                    ProtocolStepsList.SelectedItem = next;
+                else if (ProtocolStepsList.Items.Count > 0)
+                    ProtocolStepsList.SelectedIndex = ProtocolStepsList.Items.Count - 1;
+                FocusManager.SetFocusedElement(Window.GetWindow(this), ProtocolStepsList);
             }
         }
 
