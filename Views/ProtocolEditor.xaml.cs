@@ -42,7 +42,7 @@ namespace AeonHacs.Wpf.Views
             //    assembly => !assembly.IsDynamic).SelectMany(
             //    assembly => assembly.GetTypes()).Where(
             //    type => type.IsClass && !type.IsAbstract && typeof(ParameterizedStep).IsAssignableFrom(type)).ToDictionary(
-            //        type => type.Name.EndsWith("Status") ? type.Name[0..^4] : type.Name, type => type
+            //        type => type.Name.EndsWith("Step") ? type.Name[0..^4] : type.Name, type => type
             //    );
         }
 
@@ -100,7 +100,7 @@ namespace AeonHacs.Wpf.Views
                 return (ProcessManager.ProcessDictionary[stepName].Method.
                     GetCustomAttributes(typeof(DescriptionAttribute), true).FirstOrDefault() as DescriptionAttribute)?.Description;
 
-            Notify.Announce($"Invalid Process Status Name: " +
+            Notify.Announce($"Invalid Process Step Name: " +
                 $"\r\n{stepName}." +
                 $"\r\nCheck spelling and correct settings file.");
 
