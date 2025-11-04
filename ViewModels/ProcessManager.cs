@@ -22,8 +22,8 @@ public class ProcessManager : HacsBase
 
     public Components.ProcessManager.ProcessStateCode ProcessState => Component.ProcessState;
     public TimeSpan ProcessTime => Component.ProcessTime;
-    public StepTracker ProcessStep => Component.ProcessStep;
-    public StepTracker ProcessSubStep => Component.ProcessSubStep;
+    public StatusChannel ProcessStep => Component.ProcessStep;
+    public StatusChannel ProcessSubStep => Component.ProcessSubStep;
 
     [Editable(false)]
     public string ProcessToRun { get => Component.ProcessToRun; set => Component.ProcessToRun = value; }

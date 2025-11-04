@@ -18,6 +18,9 @@ public class ComponentToolTipBehavior : Behavior<Window>
 {
     ToolTip toolTip = new ToolTip() { Placement = System.Windows.Controls.Primitives.PlacementMode.Relative };
     DispatcherTimer updateTimer = new DispatcherTimer(DispatcherPriority.DataBind) { Interval = TimeSpan.FromMilliseconds(250) };
+    
+    private bool HasContent() =>
+        toolTip.Content is string s && !string.IsNullOrWhiteSpace(s);
 
     protected override void OnAttached()
     {
@@ -34,7 +37,16 @@ public class ComponentToolTipBehavior : Behavior<Window>
         toolTip.SetBinding(ContentControl.ContentProperty, toolTipBinding);
         var toolTipBindingExpression = BindingOperations.GetBindingExpression(toolTip, ContentControl.ContentProperty);
 
-        updateTimer.Tick += (s, e) => toolTipBindingExpression?.UpdateTarget();
+        updateTimer.Tick += (s, e) =>
+        {
+            toolTipBindingExpression?.UpdateTarget();
+
+            // Close tooltip if content became empty, open if it became non-empty
+            if (toolTip.IsOpen && !HasContent())
+                HideToolTip();
+            else if (!toolTip.IsOpen && HasContent())
+                ShowToolTip();
+        };
 
         AssociatedObject.PreviewMouseMove += AssociatedObject_PreviewMouseMove;
         AssociatedObject.MouseLeave += AssociatedObject_MouseLeave;
@@ -55,7 +67,7 @@ public class ComponentToolTipBehavior : Behavior<Window>
 
     protected virtual void ShowToolTip()
     {
-        if (!toolTip.IsOpen)
+        if (!toolTip.IsOpen && HasContent())
         {
             toolTip.IsOpen = true;
             updateTimer.Start();
@@ -84,6 +96,14 @@ public class ComponentToolTipBehavior : Behavior<Window>
             if (View.GetComponent(element) is INotifyPropertyChanged component)
             {
                 View.SetComponent(AssociatedObject, component);
+                var expr = BindingOperations.GetBindingExpression(toolTip, ContentControl.ContentProperty);
+                expr?.UpdateTarget();
+
+                if (HasContent())
+                    ShowToolTip();
+                else
+                    HideToolTip();
+
                 if (helpText.IsBlank())
                 {
                     if (component is ViewModel vm)
