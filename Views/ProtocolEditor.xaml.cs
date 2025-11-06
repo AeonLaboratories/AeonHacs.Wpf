@@ -183,6 +183,7 @@ namespace AeonHacs.Wpf.Views
             if (step is ParameterStep)
             {
                 var newStep = (ParameterStep)step.Clone();
+                newStep.Description = "";       // save space in settings file.
                 var panel = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
@@ -257,6 +258,7 @@ namespace AeonHacs.Wpf.Views
             else if (step is ParameterizedStep)
             {
                 var newStep = (ParameterizedStep)step.Clone();
+                newStep.Description = "";       // save space in settings file.
 
                 var headerTextBox = new TextBox() { BorderThickness = new Thickness(0), Background = Brushes.Transparent };
                 headerTextBox.SetBinding(TextBox.TextProperty, new Binding(nameof(ParameterizedStep.Name)) { Source = newStep });

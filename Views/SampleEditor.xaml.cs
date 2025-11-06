@@ -153,12 +153,16 @@ public partial class SampleEditor : UserControl
 
         Sample.Parameters.Clear();
         foreach (var parameter in SampleData.Parameters)
-            Sample.SetParameter(parameter.Clone());
+        {
+            var p = parameter.Clone();
+            p.Description = "";         // Clear description to avoid redundancy, save space
+            Sample.SetParameter(p);
+        }
 
         // Refresh SampleData in case redundant parameters were removed
         SampleData.Parameters.Clear();
         foreach (var parameter in Sample.Parameters)
-            SampleData.Parameters.Add(parameter.Clone());
+            SampleData.Parameters.Add(parameter.Clone());       // description is already empty
 
         Sample.AliquotsCount = SampleData.AliquotIds.Count();
         for (int i = 0; i < Sample.AliquotsCount; i++)
