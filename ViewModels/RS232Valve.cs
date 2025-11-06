@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using System.Collections.Generic;
+﻿using AeonHacs.Components;
+using System.ComponentModel;
 
 namespace AeonHacs.Wpf.ViewModels;
 
@@ -25,12 +25,32 @@ public class RS232Valve : CpwValve
     public int ControlOutput { get => Component.ControlOutput; }
     public long RS232UpdatesReceived { get => Component.RS232UpdatesReceived; }
 
+    protected override void DefineServiceCommands()
+    {
+        ServiceCommands = new()
+        {
+            { "Close 1/16 turn (6)", () => Component.MoveBy(6) },
+            { "Close 1/8 turn (12)", () => Component.MoveBy(12) },
+            { "Close 1/4 turn (24)", () => Component.MoveBy(24) },
+            { "Close 1/2 turn (48)", () => Component.MoveBy(48) },
+            { "Open 1/16 turn (-6)", () => Component.MoveBy(-6) },
+            { "Open 1/8 turn (-12)", () => Component.MoveBy(-12) },
+            { "Open 1/4 turn (-24)", () => Component.MoveBy(-24) },
+            { "Open 1/2 turn (-48)", () => Component.MoveBy(-48) },
+        };
+    }
 
     protected const string CalibrateCaption = "Calibrate";
 
     protected override void StartContext()
     {
         base.StartContext();
+        if (CegsPreferences.EnableServiceMode)
+        {
+            foreach (var key in ServiceCommands.Keys)
+               ContextStart.Add(new Context(key));
+        }
+
         if (ContextStart.Find(item => item.Label == CalibrateCaption) == null)
             ContextStart.Add(new Context(CalibrateCaption));
     }
