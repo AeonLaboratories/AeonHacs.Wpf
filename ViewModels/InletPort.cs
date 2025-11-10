@@ -9,13 +9,13 @@ public class InletPort : LinePort
     public InletPort() { RunHasDefault = true; }
 
     [Browsable(false)]
-    public new Components.IInletPort Component
+    public new IInletPort Component
     {
-        get => base.Component as Components.IInletPort;
+        get => base.Component as IInletPort;
         protected set => base.Component = value;
     }
 
-    public AeonHacs.InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
+    public InletPortType PortType { get => Component.PortType; set => Component.PortType = value; }
 
     public ViewModel QuartzFurnace
     {
@@ -32,17 +32,12 @@ public class InletPort : LinePort
         }
     }
 
-    public bool NotifySampleFurnaceNeeded { get => Component.NotifySampleFurnaceNeeded; set => Component.NotifySampleFurnaceNeeded = value; }
-    public int WarmTemperature { get => Component.WarmTemperature; set => Component.WarmTemperature = value; }
-
     // TODO Decide context menu for InletPorts
-
-    //void TurnOffFurnaces();
 
     protected string SampleCaption { get; set; } = "Edit Sample";
     protected override void StartContext()
     {
-        ContextStart.Add(new Wpf.Context(SampleCaption, dispatch:false));
+        ContextStart.Add(new Context(SampleCaption, dispatch:false));
         base.StartContext();
     }
 
