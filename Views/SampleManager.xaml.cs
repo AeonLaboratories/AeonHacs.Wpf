@@ -41,7 +41,7 @@ namespace AeonHacs.Wpf.Views
                 SampleList.SelectedIndex = index;
         }
 
-        void Edit(ISample sample)
+        void Edit(Sample sample)
         {
             //HacsCommands.EditSample.Execute(sample, Application.Current.MainWindow);
 
@@ -60,7 +60,7 @@ namespace AeonHacs.Wpf.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SampleList.SelectedItem is ISample sample)
+            if (SampleList.SelectedItem is Sample sample)
                 Edit(sample);
         }
 
@@ -71,7 +71,7 @@ namespace AeonHacs.Wpf.Views
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SampleList.SelectedItem is ISample sample)
+            if (SampleList.SelectedItem is Sample sample)
             {
                 var ports = NamedObject.FindAll<ILinePort>();
                 ports.ForEach(p => { if (p.Sample == sample) p.Aliquot = null; });

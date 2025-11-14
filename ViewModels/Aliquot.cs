@@ -4,13 +4,13 @@ namespace AeonHacs.Wpf.ViewModels;
 public class Aliquot : ViewModel
 {
     [Browsable(false)]
-    public new Components.IAliquot Component
+    public new Components.Aliquot Component
     {
-        get => base.Component as Components.IAliquot;
+        get => base.Component as Components.Aliquot;
         protected set => base.Component = value;
     }
     public string AliquotName { get => Component.Name; set => Component.Name = value; }
-    public Components.ISample Sample { get => Component.Sample; set => Component.Sample = value; }
+    public Components.Sample Sample { get => Component.Sample; set => Component.Sample = value; }
     public string GraphiteReactor { get => Component.GraphiteReactor; set => Component.GraphiteReactor = value; }
     public double MicrogramsCarbon { get => Component.MicrogramsCarbon; set => Component.MicrogramsCarbon = value; }
     public double MicromolesCarbon => Component.MicromolesCarbon;

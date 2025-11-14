@@ -17,10 +17,10 @@ namespace AeonHacs.Wpf.Views
     /// </summary>
     public partial class SampleSelector : UserControl
     {
-        public List<ISample> SelectedSamples { get; protected set; } = new List<ISample>();
+        public List<Sample> SelectedSamples { get; protected set; } = new List<Sample>();
 
-        protected ObservableCollection<ISample> Available = new ObservableCollection<ISample>();
-        protected ObservableCollection<ISample> Selected = new ObservableCollection<ISample>();
+        protected ObservableCollection<Sample> Available = new ObservableCollection<Sample>();
+        protected ObservableCollection<Sample> Selected = new ObservableCollection<Sample>();
 
         protected ICollectionView AvailableView { get; set; }
 
@@ -31,7 +31,7 @@ namespace AeonHacs.Wpf.Views
             InitializeComponent();
 
             foreach (var sample in
-                NamedObject.FindAll<ISample>(s => s.State <= Sample.States.Prepared)
+                NamedObject.FindAll<Sample>(s => s.State <= Sample.States.Prepared)
                 .OrderBy(s => s.InletPort?.Name).ThenBy(s => s.Name))
             {
                 Available.Add(sample);
@@ -94,7 +94,7 @@ namespace AeonHacs.Wpf.Views
             if (selectedIndex == -1)
                 return;
 
-            foreach (ISample sample in AvailableListBox.SelectedItems)
+            foreach (Sample sample in AvailableListBox.SelectedItems)
                 Selected.Add(sample);
 
             AvailableView.Refresh();
@@ -119,7 +119,7 @@ namespace AeonHacs.Wpf.Views
 
             var list = SelectedListBox.SelectedItems;
             for (int i = 0; i < list.Count;)
-                Selected.Remove((ISample)list[i]);
+                Selected.Remove((Sample)list[i]);
 
             AvailableView.Refresh();
 
@@ -137,7 +137,7 @@ namespace AeonHacs.Wpf.Views
 
         private void UpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedListBox.SelectedItem is ISample sample)) return;
+            if (!(SelectedListBox.SelectedItem is Sample sample)) return;
 
             var index = Selected.IndexOf(sample);
             if (index - 1 >= 0)
@@ -148,7 +148,7 @@ namespace AeonHacs.Wpf.Views
 
         private void DownButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SelectedListBox.SelectedItem is ISample sample)) return;
+            if (!(SelectedListBox.SelectedItem is Sample sample)) return;
 
             var index = Selected.IndexOf(sample);
             if (index + 1 < Selected.Count)

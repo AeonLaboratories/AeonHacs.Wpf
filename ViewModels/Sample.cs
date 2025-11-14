@@ -6,9 +6,9 @@ namespace AeonHacs.Wpf.ViewModels;
 public class Sample : HacsComponent
 {
     [Browsable(false)]
-    public new Components.ISample Component
+    public new Components.Sample Component
     {
-        get => base.Component as Components.ISample;
+        get => base.Component as Components.Sample;
         protected set => base.Component = value;
     }
     public string LabId { get => Component.LabId; set => Component.LabId = value; }
@@ -29,6 +29,6 @@ public class Sample : HacsComponent
     public double d13CPartsPerMillion { get => Component.d13CPartsPerMillion; set => Component.d13CPartsPerMillion = value; }
     public int AliquotsCount { get => Component.AliquotsCount; set => Component.AliquotsCount = value; }
     public List<string> AliquotIds { get => Component.AliquotIds; set => Component.AliquotIds = value; }
-    public List<Components.IAliquot> Aliquots { get => Component.Aliquots; set => Component.Aliquots = value; }
+    public List<Components.Aliquot> Aliquots { get => Component.Aliquots; set => Component.Aliquots = value; }
 
 }

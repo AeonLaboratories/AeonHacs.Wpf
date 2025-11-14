@@ -63,7 +63,7 @@ public class SampleData : INotifyPropertyChanged
         set => Ensure(ref inletPort, value);
     }
 
-    public SampleData(ISample sample)
+    public SampleData(Sample sample)
     {
         mwu.PropertyChanged += NotifyPropertyChanged;
         if (sample != null)

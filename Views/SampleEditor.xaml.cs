@@ -37,7 +37,7 @@ public partial class SampleEditor : UserControl
 
     private static readonly DependencyPropertyKey SamplePropertyKey = DependencyProperty.RegisterReadOnly(
         nameof(Sample),
-        typeof(ISample),
+        typeof(Sample),
         typeof(SampleEditor),
         new PropertyMetadata()
     );
@@ -78,9 +78,9 @@ public partial class SampleEditor : UserControl
 
     public static IEnumerable<string> InletPorts { get; } = NamedObject.FindAll<IInletPort>().Select(ip => ip.Name).Prepend("None");
 
-    public ISample Sample
+    public Sample Sample
     {
-        get => (ISample)GetValue(SamplePropertyKey.DependencyProperty);
+        get => (Sample)GetValue(SamplePropertyKey.DependencyProperty);
         protected set => SetValue(SamplePropertyKey, value);
     }
 
@@ -102,7 +102,7 @@ public partial class SampleEditor : UserControl
         set => SetValue(ProcessesProperty, value);
     }
 
-    public SampleEditor(ISample sample = null)
+    public SampleEditor(Sample sample = null)
     {
         InitializeComponent();
         InitializeCommands();
