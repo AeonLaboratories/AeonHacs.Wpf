@@ -430,5 +430,51 @@ namespace AeonHacs.Wpf.Views
             SaveButton.IsEnabled = false;
             Task.Delay(1000).ContinueWith((task) => Dispatcher.Invoke(() => SaveButton.IsEnabled = true));
         }
+
+        private void ProtocolStepsList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            var origin = e.OriginalSource as DependencyObject;
+
+            // If the click is inside an editor (TextBox / ComboBox), don't mess with it.
+            if (origin != null)
+            {
+                if (FindAncestor<TextBoxBase>(origin) != null ||
+                    FindAncestor<ComboBox>(origin) != null)
+                {
+                    return; // let normal editing / selection happen
+                }
+            }
+
+            // Find the ListBoxItem that was clicked, if any
+            var item = ItemsControl.ContainerFromElement(listBox, origin) as ListBoxItem;
+
+            if (item == null)
+            {
+                // Optional: click on empty space clears selection too
+                // listBox.SelectedIndex = -1;
+                return;
+            }
+
+            if (item.IsSelected)
+            {
+                // Toggle off: no selection
+                item.IsSelected = false;
+                listBox.SelectedIndex = -1;
+                e.Handled = true;   // stop normal selection logic
+            }
+            // else: let WPF handle selection normally
+        }
+
+        // Simple visual-tree helper
+        private static T FindAncestor<T>(DependencyObject d) where T : DependencyObject
+        {
+            while (d != null && d is not T)
+            {
+                d = VisualTreeHelper.GetParent(d);
+            }
+            return d as T;
+        }
+
     }
 }
