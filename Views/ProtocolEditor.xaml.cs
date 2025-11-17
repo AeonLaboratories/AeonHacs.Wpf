@@ -179,7 +179,7 @@ namespace AeonHacs.Wpf.Views
 
         protected virtual void AddStep(ProtocolStep step)
         {
-            ListBoxItem displayItem = new ListBoxItem();
+            ListBoxItem displayItem = new();
             if (step is ParameterStep)
             {
                 var newStep = (ParameterStep)step.Clone();
@@ -253,7 +253,7 @@ namespace AeonHacs.Wpf.Views
                 displayItem.Content = panel;
                 // TODO: Update "ToolTip" to be a popup that contains a textbox so description can be edited
                 displayItem.SetBinding(ToolTipProperty, new Binding(nameof(ParameterStep.Description)) { Source = newStep });
-                //displayItem.ToolTip = GetDescription(newStep);
+                displayItem.ToolTip = newStep;
             }
             else if (step is ParameterizedStep)
             {
