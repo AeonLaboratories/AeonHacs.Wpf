@@ -21,9 +21,9 @@
                 <data:PropertyCard DisplayName="Lab ID" Value="{Binding LabId}" />
                 <data:ValueWithUnitsCard DisplayName="Mass" Value="{Binding Mass}"
                                          StandardValues="{x:Static local:SampleEditor.MassUnits}" Units="{Binding Units}" Margin="0,5,0,0"/>
-                <data:SelectorCard DisplayName="Process Type" StandardValues="{x:Static local:SampleEditor.ProcessTypes}"
+                <data:SelectorCard DisplayName="Protocol Type" StandardValues="{x:Static local:SampleEditor.ProtocolTypes}"
                                    Value="{Binding ProcessType, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}}" Margin="0,5,0,0" />
-                <data:SelectorCard DisplayName="Process" StandardValues="{Binding Processes, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}}"
+                <data:SelectorCard DisplayName="Protocol" StandardValues="{Binding Processes, RelativeSource={RelativeSource AncestorType={x:Type local:SampleEditor}}}"
                                    Value="{Binding Process}" Margin="0,5,0,0" />
                 <data:ParametersCard DisplayName="Parameters" Parameters="{Binding Parameters}" Margin="0,5,0,0" />
                 <data:AliquotsCard DisplayName="Aliquots" IDs="{Binding AliquotIds}" Margin="0,5,0,0" />

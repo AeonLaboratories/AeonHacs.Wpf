@@ -31,11 +31,11 @@ public class SampleData : INotifyPropertyChanged
         set => mwu.Units = value;
     }
 
-    string process;
-    public string Process
+    string protocol;
+    public string Protocol
     {
-        get => process;
-        set => Ensure(ref process, value);
+        get => protocol;
+        set => Ensure(ref protocol, value);
     }
 
     public ObservableCollection<Parameter> Parameters { get; } = [];
@@ -70,7 +70,7 @@ public class SampleData : INotifyPropertyChanged
         {
             LabId = sample.LabId;
             Mass = sample.Grams;
-            Process = sample.Protocol;
+            Protocol = sample.Protocol;
             sample.Parameters.ForEach(p => Parameters.Add(p.Clone()));
             AliquotIds = new(sample.AliquotIds.Select(id => new AliquotId() { Id = id }));
             Take_d13C = sample.Take_d13C;

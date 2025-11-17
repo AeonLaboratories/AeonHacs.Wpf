@@ -52,26 +52,26 @@ public partial class SampleEditor : UserControl
     public static IEnumerable<Data.MassUnits> MassUnits { get; } = typeof(Data.MassUnits).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)
         .Select(f => (Data.MassUnits)f.GetValue(null));
 
-    public static readonly DependencyProperty ProcessTypeProperty = DependencyProperty.Register(
-        nameof(ProcessType),
+    public static readonly DependencyProperty ProtocolTypeProperty = DependencyProperty.Register(
+        nameof(ProtocolType),
         typeof(string),
         typeof(SampleEditor),
-        new PropertyMetadata(ProcessTypeChanged)
+        new PropertyMetadata(ProtocolTypeChanged)
     );
 
-    private static void ProcessTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void ProtocolTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is SampleEditor se)
-            se.FilterProcesses();
+            se.FilterProtocols();
     }
 
-    public static readonly DependencyProperty ProcessesProperty = DependencyProperty.Register(
-        nameof(Processes),
+    public static readonly DependencyProperty ProtocolProperty = DependencyProperty.Register(
+        nameof(Protocols),
         typeof(IEnumerable<string>),
         typeof(SampleEditor)
     );
 
-    public static IEnumerable<string> ProcessTypes { get; } = Enum.GetNames<InletPortType>().Prepend("Any");
+    public static IEnumerable<string> ProtocolTypes { get; } = Enum.GetNames<InletPortType>().Prepend("Any");
 
     public static Visibility Take13CVisibility { get; } =
         NamedObject.FindAll<Id13CPort>().Count > 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -90,16 +90,16 @@ public partial class SampleEditor : UserControl
         protected set => SetValue(SampleDataPropertyKey, value);
     }
 
-    public string ProcessType
+    public string ProtocolType
     {
-        get => (string)GetValue(ProcessTypeProperty);
-        set => SetValue(ProcessTypeProperty, value);
+        get => (string)GetValue(ProtocolTypeProperty);
+        set => SetValue(ProtocolTypeProperty, value);
     }
 
-    public IEnumerable<string> Processes
+    public IEnumerable<string> Protocols
     {
-        get => (IEnumerable<string>)GetValue(ProcessesProperty);
-        set => SetValue(ProcessesProperty, value);
+        get => (IEnumerable<string>)GetValue(ProtocolProperty);
+        set => SetValue(ProtocolProperty, value);
     }
 
     public SampleEditor(Sample sample = null)
@@ -110,17 +110,17 @@ public partial class SampleEditor : UserControl
         Sample = sample;
         SampleData = new(sample);
 
-        if (Sample?.InletPort?.PortType is InletPortType processType)
-            ProcessType = processType.ToString();
+        if (Sample?.InletPort?.PortType is InletPortType protocolType)
+            ProtocolType = protocolType.ToString();
         else
-            ProcessType = "Any";
+            ProtocolType = "Any";
     }
 
     public SampleEditor(IInletPort ip) : this(ip?.Sample)
     {
         SampleData.InletPort = ip?.Name ?? "None";
-        if (ProcessType == "Any")
-            ProcessType = ip?.PortType.ToString() ?? "Any";
+        if (ProtocolType == "Any")
+            ProtocolType = ip?.PortType.ToString() ?? "Any";
     }
 
     protected virtual void InitializeCommands()
@@ -135,7 +135,7 @@ public partial class SampleEditor : UserControl
         //e.CanExecute =
         //    Sample.LabId != SampleData.LabId ||
         //    Sample.Grams != SampleData.Grams ||
-        //    Sample.Process != SampleData.Process ||
+        //    Sample.Protocol != SampleData.Protocol ||
         //    Sample.AliquotsCount != SampleData.AliquotsCount ||
         //    //Sample.AliquotIds != SampleData.AliquotIds ||
         //    Sample.Take_d13C != SampleData.Take_d13C ||
@@ -149,7 +149,7 @@ public partial class SampleEditor : UserControl
 
         Sample.LabId = SampleData.LabId;
         Sample.Grams = SampleData.Units.ToGrams(SampleData.Mass);
-        Sample.Protocol = SampleData.Process;
+        Sample.Protocol = SampleData.Protocol;
 
         Sample.Parameters.Clear();
         foreach (var parameter in SampleData.Parameters)
@@ -210,7 +210,7 @@ public partial class SampleEditor : UserControl
         Updated?.Invoke();
     }
 
-    protected virtual void FilterProcesses()
+    protected virtual void FilterProtocols()
     {
         InletPortType ToIPType(string type) => type switch
         {
@@ -223,13 +223,13 @@ public partial class SampleEditor : UserControl
             _ => InletPortType.Combustion
         };
 
-        IEnumerable<Protocol> processes = NamedObject.FindAll<Protocol>();
+        IEnumerable<Protocol> protocols = NamedObject.FindAll<Protocol>();
 
-        var process = SampleData.Process;
-        if (ProcessType != "Any")
-            processes = processes.Where(p => p.PortType == ToIPType(ProcessType));
-        Processes = processes.Select(p => p.Name);
-        if (!Processes.Contains(process))
-            SampleData.Process = Processes.FirstOrDefault() ?? "";
+        var protocol = SampleData.Protocol;
+        if (ProtocolType != "Any")
+            protocols = protocols.Where(p => p.PortType == ToIPType(ProtocolType));
+        Protocols = protocols.Select(p => p.Name);
+        if (!Protocols.Contains(protocol))
+            SampleData.Protocol = Protocols.FirstOrDefault() ?? "";
     }
 }

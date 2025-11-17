@@ -100,7 +100,7 @@ namespace AeonHacs.Wpf.Views
                 return (ProcessManager.ProcessDictionary[stepName].Method.
                     GetCustomAttributes(typeof(DescriptionAttribute), true).FirstOrDefault() as DescriptionAttribute)?.Description;
 
-            Notify.Announce($"Invalid Process Step Name: " +
+            Notify.Announce($"Invalid Protocol Step Name: " +
                 $"\r\n{stepName}." +
                 $"\r\nCheck spelling and correct settings file.");
 
