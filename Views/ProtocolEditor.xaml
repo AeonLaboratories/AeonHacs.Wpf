@@ -34,12 +34,16 @@
                 <ColumnDefinition Width="Auto" SharedSizeGroup="SaveOKCancel"/>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="SaveOKCancel"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="SaveButton" Grid.Column="1" Content="Save" Margin="0,5,5,5" Click="SaveButton_Click"/>
-            <Button x:Name="OKButton" Grid.Column="2" Content="OK" Margin="0,5,5,5" Click="OKButton_Click"/>
-            <Button x:Name="CancelButton" Grid.Column="3" Content="Cancel" Margin="0,5,10,5" Padding="3,1" Click="CancelButton_Click"/>
+            <Button x:Name="SaveButton" Grid.Column="1" Content="Save" Margin="0,5,5,5" Click="SaveButton_Click"
+                ToolTip="Save Progress"/>
+            <Button x:Name="OKButton" Grid.Column="2" Content="OK" Margin="0,5,5,5" Click="OKButton_Click"
+                ToolTip="Save and exit the editor"/>
+            <Button x:Name="CancelButton" Grid.Column="3" Content="Cancel" Margin="0,5,10,5" Padding="3,1" Click="CancelButton_Click"
+                ToolTip="Exit the editor, losing unsaved changes"/>
         </Grid>        
         <ScrollViewer DockPanel.Dock="Bottom" Margin="10,0,10,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderBrush="{Binding BorderBrush, ElementName=ProtocolChecklistTextBox}" BorderThickness="1" MinHeight="50">
-            <TextBox x:Name="ProtocolChecklistTextBox" AcceptsReturn="True" BorderThickness="0" VerticalAlignment="Top" MinHeight="50"/>
+            <TextBox x:Name="ProtocolChecklistTextBox" AcceptsReturn="True" BorderThickness="0" VerticalAlignment="Top" MinHeight="50"
+                ToolTip="Enter reminder checklist for operator, one item per line"/>
         </ScrollViewer>        
         <TextBlock DockPanel.Dock="Bottom" Margin="10,5,10,0" Text="Checklist:"/>
 
@@ -57,7 +61,7 @@
                     <Path Data="M 0,0 0.5,0.9 1,0 Z" Fill="Black" Stretch="Uniform"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="AddButton" Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="AddButton_Click" ToolTip="Open the Step picker. Double-click to add a step">
+            <Button x:Name="AddButton" Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="AddButton_Click" ToolTip="Open the Step picker. Then double-click on a step to add it to the protocol">
                 <Button.Content>
                     <Grid>
                         <Path Data="M 0,0 7,0 7,1 0,1 Z" Fill="Black" Stretch="Uniform"/>
