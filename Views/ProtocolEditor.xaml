@@ -13,14 +13,17 @@
     <DockPanel MinWidth="300" LastChildFill="True">
         <DockPanel DockPanel.Dock="Top" Margin="10,10,10,0" LastChildFill="True">
             <UniformGrid Rows="2" DockPanel.Dock="Right">
-                <Button x:Name="NewButton" Content="New..." Margin="10,2,0,2" Padding="5,0" Click="NewButton_Click"/>
-                <Button Content="Delete" Margin="10,2,0,2" Width="{Binding ActualWidth,ElementName=NewButton}" Click="DeleteButton_Click"/>
+                <Button x:Name="NewButton" Content="New..." Margin="10,2,0,2" Padding="5,0" Click="NewButton_Click"
+                    ToolTip="Create a new, empty protocol (then give it a name)" />
+                <Button Content="Delete" Margin="10,2,0,2" Width="{Binding ActualWidth,ElementName=NewButton}" Click="DeleteButton_Click"
+                    ToolTip="Delete this protocol (cannot be undone)"/>
             </UniformGrid>
             <UniformGrid Rows="2">
-                 <ComboBox x:Name="ProtocolComboBox" Margin="0,2,0,2" IsEditable="True" IsTextSearchEnabled="False" SelectionChanged="ProtocolComboBox_SelectionChanged"/>
+                 <ComboBox x:Name="ProtocolComboBox" Margin="0,2,0,2" IsEditable="True" IsTextSearchEnabled="False" SelectionChanged="ProtocolComboBox_SelectionChanged" ToolTip="Give the protocol a unique name" />
                 <DockPanel LastChildFill="True">
-                     <Label Content="Source:" Margin="0,2,5,2" Padding="0" VerticalContentAlignment="Center" />
-                    <ComboBox x:Name="SourceComboBox" Margin="0,2,0,2" VerticalContentAlignment="Center" />
+                     <Label Content="Protocol Type:" Margin="0,2,5,2" Padding="0" VerticalContentAlignment="Center" />
+                    <ComboBox x:Name="ProtocolTypeComboBox" Margin="0,2,0,2" VerticalContentAlignment="Center" 
+                         ToolTip="Required inlet port configuration" />
                 </DockPanel>
             </UniformGrid>
         </DockPanel>
@@ -40,20 +43,21 @@
         </ScrollViewer>        
         <TextBlock DockPanel.Dock="Bottom" Margin="10,5,10,0" Text="Checklist:"/>
 
-        <TextBlock DockPanel.Dock="Top" Margin="10,5,10,0" Text="Protocol Steps:"/>
+        <TextBlock DockPanel.Dock="Top" Margin="10,5,10,0" Text="Protocol Steps:"
+             ToolTip="These steps define the recipe for this sample-processing protocol."/>
         <DockPanel DockPanel.Dock="Top" Margin="10,2,10,0" LastChildFill="True">
             <StackPanel Margin="10,0,0,0" DockPanel.Dock="Right">
-            <Button Padding="5" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="UpButton_Click">
+                <Button Padding="5" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="UpButton_Click" ToolTip="Move the selected step up in the list">
                 <Button.Content>
                     <Path Data="M 0.5,0 0,0.9 1,0.9 Z" Fill="Black" Stretch="Uniform"/>
                 </Button.Content>
             </Button>
-            <Button Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="DownButton_Click">
+                <Button Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="DownButton_Click" ToolTip="Move the selected step down in the list">
                 <Button.Content>
                     <Path Data="M 0,0 0.5,0.9 1,0 Z" Fill="Black" Stretch="Uniform"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="AddButton" Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="AddButton_Click" ToolTip="Double Click steps to add them to the current Protocol">
+            <Button x:Name="AddButton" Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="AddButton_Click" ToolTip="Open the Step picker. Double-click to add a step">
                 <Button.Content>
                     <Grid>
                         <Path Data="M 0,0 7,0 7,1 0,1 Z" Fill="Black" Stretch="Uniform"/>
@@ -61,7 +65,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="RemoveButton_Click">
+                <Button Padding="5" Margin="0,5,0,0" Height="{Binding ActualHeight, ElementName=NewButton}" Width="{Binding ActualHeight, ElementName=NewButton}" Click="RemoveButton_Click" ToolTip="Delete the selected step">
                 <Button.Content>
                     <Path Data="M 0,0 7,0 7,1 0,1 Z" Fill="Black" Stretch="Uniform"/>
                 </Button.Content>

@@ -66,10 +66,10 @@ namespace AeonHacs.Wpf.Views
 
         protected virtual void LoadSources()
         {
-            SourceComboBox.ItemsSource = Enum.GetValues(typeof(AeonHacs.InletPortType));
+            ProtocolTypeComboBox.ItemsSource = Enum.GetValues(typeof(AeonHacs.InletPortType));
 
-            var selectedSourceBinding = new Binding($"{nameof(Selector.SelectedItem)}.{nameof(Protocol.PortType)}") { Source = ProtocolComboBox, UpdateSourceTrigger = UpdateSourceTrigger.Explicit };
-            SourceComboBox.SetBinding(Selector.SelectedItemProperty, selectedSourceBinding);
+            var selectedProtocolTypeBinding = new Binding($"{nameof(Selector.SelectedItem)}.{nameof(Protocol.PortType)}") { Source = ProtocolComboBox, UpdateSourceTrigger = UpdateSourceTrigger.Explicit };
+            ProtocolTypeComboBox.SetBinding(Selector.SelectedItemProperty, selectedProtocolTypeBinding);
         }
 
         protected string GetDescription(string stepName)
@@ -316,7 +316,7 @@ namespace AeonHacs.Wpf.Views
             }
             (ProtocolComboBox.SelectedItem as Protocol).Steps = newSteps;
             (ProtocolComboBox.SelectedItem as Protocol).CheckList = ProtocolChecklistTextBox.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
-            BindingOperations.GetBindingExpression(SourceComboBox, Selector.SelectedItemProperty).UpdateSource();
+            BindingOperations.GetBindingExpression(ProtocolTypeComboBox, Selector.SelectedItemProperty).UpdateSource();
             (ProtocolComboBox.SelectedItem as Protocol).Name = ProtocolComboBox.Text;
             ProcessManager.Protocols = Protocols.ToDictionary(protocol => protocol.Name, protocol => protocol);
         }
