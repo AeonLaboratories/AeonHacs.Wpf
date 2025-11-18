@@ -177,13 +177,19 @@ namespace AeonHacs.Wpf.Views
             }
         }
 
+        List<Parameter> defaultParameters => 
+            NamedObject.FindAll<CegsPreferences>()?.FirstOrDefault()?.DefaultParameters?.OrderBy(p => p.ParameterName)?.ToList() ?? [];
         protected virtual void AddStep(ProtocolStep step)
         {
             ListBoxItem displayItem = new();
             if (step is ParameterStep)
             {
                 var newStep = (ParameterStep)step.Clone();
-                newStep.Description = "";       // save space in settings file.
+
+                // save space in the settings file if description is default
+                if (newStep.Description == defaultParameters.FirstOrDefault(p => p.ParameterName == newStep.Name)?.Description)
+                    newStep.Description = "";       // clear redundant description to save space in settings file
+
                 var panel = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
@@ -192,7 +198,7 @@ namespace AeonHacs.Wpf.Views
 
                 var comboBox = new ComboBox
                 {
-                    ItemsSource = NamedObject.FindAll<CegsPreferences>().First().DefaultParameters.OrderBy(p => p.ParameterName),
+                    ItemsSource = defaultParameters,
                     DisplayMemberPath = nameof(Parameter.ParameterName),
                     SelectedValuePath = nameof(Parameter.ParameterName),
                     SelectedValue = newStep.Name,
