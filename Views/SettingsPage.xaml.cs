@@ -1,13 +1,10 @@
-﻿using AeonHacs;
-using AeonHacs.Wpf.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 
 namespace AeonHacs.Wpf.Views
 {
@@ -42,16 +39,16 @@ namespace AeonHacs.Wpf.Views
         public bool MatchCase { get => (bool)GetValue(MatchCaseProperty); set => SetValue(MatchCaseProperty, value); }
         #endregion MatchCase
 
-        protected AeonHacs.HacsBase Hacs { get; set; }
+        protected HacsBase Hacs { get; set; }
 
-        protected List<List<AeonHacs.HacsComponent>> Components { get; set; } = new List<List<AeonHacs.HacsComponent>>();
+        protected List<List<HacsComponent>> Components { get; set; } = [];
 
         protected SettingsPage()
         {
             InitializeComponent();
         }
 
-        public SettingsPage(AeonHacs.HacsBase hacs) : this()
+        public SettingsPage(HacsBase hacs) : this()
         {
             Hacs = hacs;
             GetComponents();
@@ -61,9 +58,14 @@ namespace AeonHacs.Wpf.Views
 
         protected virtual void GetComponents()
         {
-            foreach (var componentsOfType in AeonHacs.NamedObject.CachedList<AeonHacs.HacsComponent>().OrderBy(x => x.Name, new AlphanumericComparer()).OrderBy(x => x.GetType().Name).GroupBy(x => x.GetType().Name))
+            var componentGroups = NamedObject.CachedList<HacsComponent>()
+                .OrderBy(c => c.Name, StringComparer.Create(CultureInfo.CurrentUICulture, CompareOptions.NumericOrdering))
+                .OrderBy(c => c.GetType().Name)
+                .GroupBy(c => c.GetType().Name);
+
+            foreach (var componentsOfType in componentGroups)
             {
-                Components.Add(componentsOfType.ToList());
+                Components.Add([.. componentsOfType]);
             }
         }
 
