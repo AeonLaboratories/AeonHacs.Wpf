@@ -194,6 +194,8 @@ public partial class SampleEditor : UserControl
             {
                 ip.Sample = Sample;
                 ip.State = LinePort.States.Loaded;
+                if (Sample.State == Sample.States.Unknown)
+                    Sample.State = Sample.States.Loaded;
             }
 
             if (ip.Sample == Sample)
