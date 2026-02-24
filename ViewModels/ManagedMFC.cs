@@ -1,8 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 namespace AeonHacs.Wpf.ViewModels
 {
     public class ManagedMFC : ManagedDevice
     {
+        public ManagedMFC() { RunHasDefault = true; }
+
         [Browsable(false)]
         public new Components.ManagedMFC Component
         {
@@ -17,12 +20,21 @@ namespace AeonHacs.Wpf.ViewModels
         public double FlowRate => Component.FlowRate;
         public double TargetSetpoint { get => Component.Setpoint; set => Component.Setpoint = value; }
 
-
         protected string ResetTrackedFlowCaption { get; set; } = "Reset Tracked Flow";
         protected string ZeroNowCaption { get; set; } = "Zero Now";
         protected string CheckProgrammedGasCaption { get; set; } = "Check Programmed Gas";
         protected string CheckMaximumSetpointCaption { get; set; } = "Check Maximum Setpoint";
         protected string CheckSetpointCaption { get; set; } = "Check Setpoint";
+
+        protected string TurnOnCaption { get; set; } = "Turn on";
+        protected string TurnOffCaption { get; set; } = "Turn off";
+
+        public override List<Context> Context()
+        {
+            var valid = new List<Context>(base.Context());
+            valid.Add(new Context(Component.IsOn ? TurnOffCaption : TurnOnCaption));
+            return valid;
+        }
 
         protected override void StartContext()
         {
@@ -36,7 +48,11 @@ namespace AeonHacs.Wpf.ViewModels
 
         public override void Run(string command = "")
         {
-            if (command == ResetTrackedFlowCaption)
+            if (command == TurnOnCaption || command.IsBlank() && !Component.IsOn)
+                Component?.TurnOn();
+            else if (command == TurnOffCaption || command.IsBlank() && Component.IsOn)
+                Component?.TurnOff();
+            else if (command == ResetTrackedFlowCaption)
                 Component?.ResetTrackedFlow();
             else if (command == ZeroNowCaption)
                 Component?.ZeroNow();
