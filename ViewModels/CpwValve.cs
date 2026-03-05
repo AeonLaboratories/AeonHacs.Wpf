@@ -35,14 +35,14 @@ public class CpwValve : CpwActuator
     {
         ServiceCommands = new()
         {
-            { "Close More (10)", Component.CloseABitMore },
-            { "Close More (50)", Component.CloseMore },
-            { "Close Less (10)", Component.CloseABitLess },
-            { "Close Less (50)", Component.CloseLess },
-            { "Open More (10)", Component.OpenABitMore },
-            { "Open More (50)", Component.OpenMore },
-            { "Open Less (10)", Component.OpenABitLess },
-            { "Open Less (50)", Component.OpenLess },
+            { "Close More (10)", () => Component.AdjustClose(10) },
+            { "Close More (50)", () => Component.AdjustClose(50) },
+            { "Close Less (10)", () => Component.AdjustClose(-10) },
+            { "Close Less (50)", () => Component.AdjustClose(-50) },
+            { "Open More (10)", () => Component.AdjustOpen(10) },
+            { "Open More (50)", () => Component.AdjustOpen(50) },
+            { "Open Less (10)", () => Component.AdjustOpen(-10) },
+            { "Open Less (50)", () => Component.AdjustOpen(-50) },
         };
     }
 
