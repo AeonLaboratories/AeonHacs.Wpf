@@ -128,6 +128,10 @@ public class SettingsPanel : StackPanel
         {
             PopulateFrom(collection);
         }
+        else if (Source is PchipInterpolator interpolator)
+        {
+            Children.Add(new PchipInterpolatorCard() { Interpolator = interpolator });
+        }
         else
         {
             var properties = GetPropertiesToShow(Source.GetType());
