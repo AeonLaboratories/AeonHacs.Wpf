@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace AeonHacs.Wpf.Data;
@@ -13,7 +14,19 @@ public class PchipInterpolatorCard : Control
     public static readonly RoutedUICommand UpdateDataPoint = new("Update", nameof(UpdateDataPoint), typeof(PchipInterpolatorCard));
 
     public static readonly DependencyProperty InterpolatorProperty =
-        DependencyProperty.Register(nameof(Interpolator), typeof(PchipInterpolator), typeof(PchipInterpolatorCard));
+        DependencyProperty.Register(
+            nameof(Interpolator),
+            typeof(PchipInterpolator),
+            typeof(PchipInterpolatorCard),
+            new PropertyMetadata(InterpolatorChanged));
+
+    private static void InterpolatorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.OldValue is PchipInterpolator oldInterpolator)
+            BindingOperations.DisableCollectionSynchronization(oldInterpolator.CalibrationData);
+        if (e.NewValue is PchipInterpolator newInterpolator)
+            BindingOperations.EnableCollectionSynchronization(newInterpolator.CalibrationData, new());
+    }
 
     public PchipInterpolator Interpolator
     {
