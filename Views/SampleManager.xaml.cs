@@ -73,13 +73,8 @@ namespace AeonHacs.Wpf.Views
         {
             if (SampleList.SelectedItem is Sample sample)
             {
-                var ports = NamedObject.FindAll<ILinePort>();
-                ports.ForEach(p => { if (p.Sample == sample) p.Aliquot = null; });
-                var grs = NamedObject.FindAll<IGraphiteReactor>();
-                grs.ForEach(gr => { if (gr.Sample == sample) gr.Aliquot = null; });
-                var cegs = NamedObject.FindAll<ICegs>();
-                cegs.ForEach(c => { if (c.Sample == sample) c.Sample = null; });
-                sample.Name = null; // remove from NamedObjects
+                var cegs = NamedObject.FindAll<Cegs>();
+                cegs.ForEach(c => { c.DeleteSample(sample); });
             }
             RefreshSampleList();
         }
