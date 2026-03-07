@@ -31,7 +31,7 @@ namespace AeonHacs.Wpf.Views
         {
             var value = SampleList.SelectedValue;
             var index = SampleList.SelectedIndex;
-            var list = new ObservableCollection<Sample>(NamedObject.FindAll<Sample>());
+            var list = new ObservableCollection<Sample>(NamedObject.FindAll<Sample>().OrderBy(s => s.Name));
             if (index < 0) index = 0;
             if (index > list.Count - 1) index = list.Count - 1;
             SampleList.ItemsSource = list;
