@@ -1,13 +1,10 @@
-﻿using AeonHacs;
-using AeonHacs.Wpf.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 
 namespace AeonHacs.Wpf.Views
 {
@@ -61,7 +58,7 @@ namespace AeonHacs.Wpf.Views
 
         protected virtual void GetComponents()
         {
-            foreach (var componentsOfType in AeonHacs.NamedObject.CachedList<AeonHacs.HacsComponent>().OrderBy(x => x.Name, new AlphanumericComparer()).OrderBy(x => x.GetType().Name).GroupBy(x => x.GetType().Name))
+            foreach (var componentsOfType in AeonHacs.NamedObject.CachedList<AeonHacs.HacsComponent>().OrderBy(x => x.Name, StringComparer.Create(CultureInfo.CurrentCulture, CompareOptions.NumericOrdering)).OrderBy(x => x.GetType().Name).GroupBy(x => x.GetType().Name))
             {
                 Components.Add(componentsOfType.ToList());
             }
