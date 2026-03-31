@@ -146,7 +146,8 @@
                             </TextBlock>
                             <StackPanel Grid.RowSpan="2" Grid.Column="2">
                                 <ItemsControl Grid.RowSpan="2" Grid.Column="2"
-                                          ItemsSource="{Binding Parameters, RelativeSource={RelativeSource TemplatedParent}}">
+                                              IsTabStop="False"
+                                              ItemsSource="{Binding Parameters, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Margin="0,0,0,5">
@@ -212,7 +213,9 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" SharedSizeGroup="Single" />
                                 </Grid.RowDefinitions>
-                                <ItemsControl Grid.Row="0" ItemsSource="{Binding IDs, RelativeSource={RelativeSource TemplatedParent}}" AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}">
+                                <ItemsControl Grid.Row="0"
+                                              IsTabStop="False"
+                                              ItemsSource="{Binding IDs, RelativeSource={RelativeSource TemplatedParent}}" AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Margin="0,0,0,5">

@@ -21,6 +21,7 @@ public class PropertyCard : Control
     static PropertyCard()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(PropertyCard), new FrameworkPropertyMetadata(typeof(PropertyCard)));
+        IsTabStopProperty.OverrideMetadata(typeof(PropertyCard), new FrameworkPropertyMetadata(false));
     }
 
     public string DisplayName

@@ -26,6 +26,7 @@ public class ParametersCard : Control
     static ParametersCard()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(ParametersCard), new FrameworkPropertyMetadata(typeof(ParametersCard)));
+        IsTabStopProperty.OverrideMetadata(typeof(ParametersCard), new FrameworkPropertyMetadata(false));
         DefaultParameters = NamedObject.FindAll<CegsPreferences>().FirstOrDefault()?.DefaultParameters;
     }
 
